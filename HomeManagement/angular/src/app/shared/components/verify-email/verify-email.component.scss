@@ -1,0 +1,131 @@
+@import 'src/sass/variables';
+
+.ps {
+  height: calc(100vh - 70px);
+  max-width: 100%;
+  position: relative;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (pointer: coarse) {
+  .ps {
+    overflow-y: auto $i;
+  }
+}
+
+.homemanagement-content {
+  border-radius: 0;
+  
+  .logo-section {
+    height: 70px;
+    box-shadow: 0 8px 4px 0 #cecccc;
+    background-color: $white;
+  }
+  
+  .logo-icon {
+    img {
+      width: 130px;
+    }
+  }
+}
+
+.card {
+  background: $white;
+  border-radius: 0;
+  border: 0;
+  height: 100%;
+
+  .card-left {
+    width: 37.5%;
+  }
+
+  .card-right {
+    background: $white;
+    padding: 0;
+    width: 62.5%;
+    height: 100%;
+  }
+}
+
+.card-content {
+  height: 98%;
+  width: 100%;
+
+  .card-title {
+    @include font-size($font-24);
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.95;
+    letter-spacing: normal;
+    color: $homemanagePrimaryBlueColor;
+    margin-bottom: 5%;
+  }
+}
+
+.btn-disabled {
+  color: $homemanagePrimaryBlueColor;
+}
+
+a {
+  @include font-size($font-md);
+  font-weight: bold;
+	
+	&.btn-secondary {
+    color: $white;
+	}
+	
+	&.btn-light {
+		color: $homemanageDarkGrey;
+	}
+}
+
+.timer {
+	color: $homemanagePrimaryBlueColor;
+}
+
+.email-text {
+  font-weight: bold;
+}
+
+.alert-warning {
+	@include font-size($font-12);
+	text-align: center;
+	padding: 5px;
+	margin: auto;
+	width: 270px;
+}
+
+.email-text {
+  font-weight: bold;
+}
+
+.footer-text {
+  @include font-size($font-sm);
+  color: $homemanage-Light-Grey;
+  width: 100%;
+}
+
+@media (min-width: 300px) and (max-width: 767px) {
+  .homemanagement-content {
+    .logo-section {
+      height: 75px;
+    }
+  } 
+
+  .logo-icon {
+    text-align: center;
+    box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+    height: 70px;
+  }
+
+  .card-title {
+    margin-top: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .card-body {
+    padding: 0;
+    width: 100%;
+  }
+}

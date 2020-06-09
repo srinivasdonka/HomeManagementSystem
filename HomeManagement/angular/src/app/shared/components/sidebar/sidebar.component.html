@@ -1,0 +1,35 @@
+<div class="layout-container">
+  <div class="layout-menu">
+    <ul class="d-block d-sm-none">
+      <li class="d-flex justify-content-between">
+        <span class="back-btn">
+          <a title="Go back">
+            <img src="assets/homemanage_icons/shared/back_web.svg" (click)="menuClick(0)" class="backbtn mr-2" alt="Go back" />
+          </a>
+        </span>
+        <span class="add-expendature pr-3">
+        <span class="add-expendature pr-3">
+          <a class="">
+            <button type="button" class="btn btn-secondary btn-sm" (click)="addDevice()">+
+              {{labels.BUTTONS.ADD_DEVICE}}</button>
+          </a>
+        </span>
+        </span>
+      </li>
+    </ul>
+    <p-scrollPanel [style]="{height: 'calc(100% - 165px)'}">
+      <ul>
+        <li *ngFor="let route of routesList; let i = index" [ngClass]="route.customClass" [id]="getMenuId(i+1)">
+          <a *ngIf="route.isEnabled" routerLink="{{route.routerLink}}" routerLinkActive="menu-active" #routeActive="routerLinkActive"
+            [routerLinkActiveOptions]="{exact: true}" (click)="menuClick(i)">
+            <span>{{route.label}}</span>
+            <span class="float-right">
+              <img src="assets/homemanage_icons/shared/arrow_right_active.svg" *ngIf="selectedIdx === i" />
+              <img src="assets/homemanage_icons/shared/menu_arrow_right.svg" *ngIf="selectedIdx !== i" />
+            </span>
+          </a>
+        </li>
+      </ul>
+    </p-scrollPanel>
+  </div>
+</div>

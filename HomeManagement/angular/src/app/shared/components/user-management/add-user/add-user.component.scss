@@ -1,0 +1,152 @@
+@import 'src/sass/variables';
+
+.close-icon {
+  width: 16px;
+}
+
+.ps {
+  height: calc(100vh - 175px);
+  max-width: 100%;
+  position: relative;
+  padding: 0;
+  transform: translateZ(0);
+}
+
+@media (pointer: coarse) {
+  .ps {
+    overflow-y: auto $i;
+  }
+}
+
+.role,
+.permissions {
+  .btn {
+    @include font-size($font-16);
+    font-weight: bold;
+    color: $primaryColor;
+    background-color: $white;
+    border: 1px solid $primaryColor;
+    border-radius: 4px;
+    &.btn-primary {
+      color: $white;
+      background-color: $primaryColor;
+    }
+  }
+}
+
+.add-user-form {
+	.minus-icon {
+    width: 16px;
+	}
+	
+	.plus-icon {
+		width: 16px;
+	}
+}
+
+.form-inline {
+
+	.form-control {
+		// width: 89%;
+	 }
+ 
+	 .form-label-group {
+		 color: $homemanageDarkGrey;
+		 position: relative;
+		 min-height: 70px;
+		 display: inline-flex;
+		 margin: 0px 15px;
+	 
+		 .is-required-icon {
+			 position: absolute;
+			 top: 0px;
+			 font-weight: bold;
+			 font-size: 25px;
+			 padding-left: 5px;
+			 padding-top: 5px;
+		 }
+	 }
+ }
+
+.user-col-1 {
+  width: 150px;
+}
+
+.user-col-2 {
+  width: 290px;  
+}
+
+.user-col {
+  width: 20%;
+}
+
+.activeColor {
+  color: $green;
+}
+.deactiveColor {
+  color: $grey;
+}
+
+.w-10 {
+  min-width: 130px;
+}
+
+.jumbotron {
+  padding: 2rem 2rem;
+}
+
+.page-title {
+  padding: 15px;
+
+  &.bottom-shadow {
+    box-shadow: 0;
+  }
+
+  &.page-title-m3 {
+    margin: 0;
+  }
+}
+
+.user-name {
+  color: $primaryBlueColor;
+  font-weight: bold;
+}
+
+.list-group-flush {
+  .list-group-item {
+    @include font-size($font-12);
+  }
+}
+
+.mobile-actions {
+  background: $white;
+  // position: fixed;
+  // bottom: 0;
+  width: 100%;
+  z-index: 9;
+}
+
+@media (min-width: 300px) and (max-width: 767px) {
+  .jumbotron {
+    padding: 1rem;
+    margin: 5px;
+  }
+
+  .ps {
+    height: calc(100vh - 165px);
+  }
+
+  .page-title {
+    &.page-title-m3 {
+      margin: 0;
+    }
+  }
+
+  .user-col-1 {
+    width: 100%;
+  }
+  
+  .user-col-2 {
+    width: 100%px;  
+  }
+}

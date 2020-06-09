@@ -1,0 +1,31 @@
+<div class="notification-content">
+  <h4 class="title mt-3">{{labels.COMMON.NOTIFICATIONS}}</h4>
+  
+  <section class="notification-onscreen" *ngIf="isOnScreen">
+      <div class="notification-onscreen-content">
+        On-screen notifications have been turned off. To enable them, please go to 
+        <a href="#/admin/admin-root/profile" class="settings">Settings</a> to then it on.
+      </div>
+    </section>
+
+  <section id="scroll-container" [perfectScrollbar]="config" class="ps" *ngIf="!isOnScreen">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item list-group-item-action" *ngFor="let notification of notificationList">
+        <a class="content">
+          <div class="notification-item">
+            <div class="d-flex justify-content-between">
+              <span class="flag">New</span>
+              <span class="item-title">{{notification.title}}</span>
+            </div>
+            <div class="item-info">{{notification.description}}</div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </section>
+</div>
+<div class="d-block" *ngIf="notificationList.length > 0 || !isOnScreen">
+  <a (click)="viewAllNotifications()" class="list-group-item list-group-item-action text-left view-all">
+    {{labels.COMMON.VIEW_ALL}}
+  </a>
+</div>

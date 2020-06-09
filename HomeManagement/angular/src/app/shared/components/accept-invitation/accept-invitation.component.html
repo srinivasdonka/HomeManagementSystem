@@ -1,0 +1,130 @@
+<div class="container-fluid p-0">
+  <div class="row m-0">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 homemanagement-content p-0">
+      <div class="logo-section">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 logo-icon p-3">
+          <a href="#/login"><img class="ml-3" src="http://192.168.0.30:8080/assets/homemanage_icons/shared/ds_logo.jpg" /></a>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row">
+        <div class="card-left d-none d-md-flex">
+          <left-banner-image></left-banner-image>
+        </div>
+        <div class="card-body card-right" *ngIf="userInfo">
+
+          <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+
+            <div class="d-flex align-items-start flex-column card-content">
+
+              <div class="my-auto p-2 w-100">
+
+                  <div class="p-3 primary-grey-color" *ngIf="!isInvitationAccepted">
+                      <h5 class="card-title text-center">{{labels.COMMON.REGISTRATION_SUCCESSFULLY}}</h5>
+                      <div class="text-center mb-4 email-text">
+                          {{labels.COMMON.THANK_YOU_JOINING}}                           
+                          <br/>
+                          {{labels.COMMON.YOU_REGISTERED_SUCCESSFULLY}}                          
+                          <br>
+                          {{labels.COMMON.PLEASE_CLICK_LOGIN_CONTINUE}}
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-12 text-center mb-4 email-text">
+                        <a class="btn btn-primary col-sm-12 col-sm-6 col-md-4" href="#/login">{{labels.COMMON.LOGIN}}</a>
+                      </div>
+                    </div>
+
+                    <div *ngIf="isInvitationAccepted">
+                      <h5 class="card-title text-center mb-2">{{labels.COMMON.ACCEPT_INVITATION}}</h5>
+                      <div class="text-center mb-4 email-text">{{ userInfo.username }} | {{userInfo.designation}}</div>
+
+                      <form method="post" [formGroup]="invitationForm" novalidate class="d-flex flex-column align-items-center">
+
+                        <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                          <input type="text" id="inputUserame" class="form-control col-md-12" name="username" formControlName="username" placeholder="{{labels.PLACEHOLDERS.NAME}}">
+                        </div>
+
+                        <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                          <input [type]="showPassword ? 'text' : 'password'" class="form-control col-md-12" id="inputPassword" name="password" formControlName="password"
+                            maxlength="24" required placeholder="{{labels.PLACEHOLDERS.PASSWORD}}">
+                          <label for="inputPassword" class="is-required-icon">*</label>
+                          <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                            <img [hidden]="!showPassword" src="http://192.168.0.30:8080/assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                            <img [hidden]="showPassword" src="http://192.168.0.30:8080/assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                          </span>
+
+                          <div *ngIf="password.errors &amp;&amp; (password.dirty || password.touched)" class="invalid-feedback">
+                            <div *ngIf="password.errors.required">
+                              {{validations.FIELD_REQ}}
+                            </div>
+                            <div *ngIf="password.errors.maxlength">
+                              {{validations.PWD_MAX_REQ}}
+                            </div>                            
+                            <div [hidden]="!password.errors.pattern">
+                              {{validations.PWD_PATTERN}}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                          <input [type]="showPassword ? 'text' : 'password'" class="form-control col-md-12" id="inputConfirmPassword" name="confirmpassword"
+                            formControlName="confirmpassword" maxlength="24" required placeholder="{{labels.PLACEHOLDERS.CONFIRM_PASSWORD}}">
+                          <label for="inputConfirmPassword" class="is-required-icon">*</label>
+                          <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                            <img [hidden]="!showPassword" src="http://192.168.0.30:8080/assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                            <img [hidden]="showPassword" src="http://192.168.0.30:8080/assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                          </span>
+
+                          <div *ngIf="confirmpassword.errors &amp;&amp; (confirmpassword.dirty || confirmpassword.touched)" class="invalid-feedback">
+                            <div *ngIf="confirmpassword.errors.required">
+                              {{validations.FIELD_REQ}}
+                            </div>
+                            <div *ngIf="confirmpassword.errors.maxlength">
+                              {{validations.PWD_MAX_REQ}}
+                            </div>
+                            <div [hidden]="!confirmpassword.errors.pattern">
+                              {{validations.PWD_PATTERN}}
+                            </div>
+                            <div [hidden]="!invitationForm.controls['confirmpassword'].errors?.matchOther">
+                                {{validations.PWD_NOT_MATCHED}}
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" id="inputAgree" class="form-check-input" name="agree" formControlName="agree">
+                              <span class="box"></span>
+                              <div class="d-inline agree-text pl-3">{{labels.COMMON.I_AGREE_POLICY}}</div>
+                            </label>
+                          </div>
+                          <div *ngIf="agree.invalid && agree.dirty" class="text-danger">
+                            <div *ngIf="agree.errors.required">
+                              {{validations.FIELD_REQ}}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="fform-label-group loginbtn col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                          <button type="submit" class="btn btn-primary col-md-12" [disabled]="!invitationForm.valid" (click)="onSubmit()">
+                              {{labels.BUTTONS.ACCEPT_INVITATION}}
+                          </button>
+                        </div>
+
+                      </form>
+                    </div>
+
+              </div>
+
+              <homemanagement-copyright-text></homemanagement-copyright-text>
+
+            </div>
+
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

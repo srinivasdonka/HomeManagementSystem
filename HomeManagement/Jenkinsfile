@@ -1,0 +1,96 @@
+def mvn_version = 'maven_3_5_0'
+
+def remote = [:]
+remote.name = "staging-1"
+remote.host = "192.168.0.29"
+remote.allowAnyHosts = true
+
+pipeline 
+{
+    agent any
+    stages
+    {
+        stage('Clone repository') 
+        {
+            steps
+            {
+                slackSend (color: '#FFFF00', message: "${env.JOB_NAME} Build ${env.BUILD_NUMBER} Started" )
+                /* Let's make sure we have the repository cloned to our workspace */
+                //checkout scm
+                sh 'docker ps -a'
+                //sh "exit 1"
+            }		
+        }	
+        stage('Build Package') 
+        {
+            steps{
+                //maven package changed to maven install for prerequisites
+                
+                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                //sh "mvn package"
+                //sh "rm -R target"
+                //sh "pwd"
+                //sh "rm -rf /var/jenkins_home/workspace/HomeManagement-Pipeline/target/*"
+                // sh "cp -R /var/jenkins_home/workspace/HomeManagement-Pipeline/angular/dist/HomeManagement/ /var/jenkins_home/workspace/HomeManagement-Pipeline/target/HomeManagement-0.1.0/WEB-INF/classes/static/"
+                    sh "mvn  install"
+                }
+            }
+        }
+        stage('Build Image') 
+        {
+            steps{
+                //cleanup image and stop any previously running images
+                //perform a build of the dockercontainer from the scm docker file
+                sh 'docker stop HomeManagement | true'
+                sh 'docker rm HomeManagement | true'
+                sh 'docker build -t name/HomeManagement .'
+            
+            }
+        }
+        stage('Executing'){  
+            steps{
+            //we need to run the docker container to make sure that no errors come in place here
+            sh 'docker run -p 9191:9191 --name HomeManagement -d hyrosri/HomeManagement'    	  
+            //TODO - hyrosri - we need to make an authoratative test on deployment to ensure spring is starting up properly
+            }
+        }
+        stage('Push container changes')
+        {
+            steps
+            {
+                //Once the container is validated, push the image changes to docker hub
+                sh 'docker login -u="name" -p="*****"'
+                sh 'docker push hyrosri/HomeManagement'
+            }
+        }
+        stage('Trigger Server Environment Changes')
+        {
+            steps
+            {
+                script 
+                {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'XXXXXXX', usernameVariable: 'userName', keyFileVariable: 'identity')]) 
+                    {
+                        remote.user = userName
+                        remote.identityFile = identity
+                        sshCommand remote: remote, command: 'sudo /XXXX/XXXX/XXXX'           
+                    }
+                }
+                
+
+            }
+        }
+    }
+    post
+    {
+        failure 
+        {
+            slackSend (color: '#FF0000', message: "BUILD FAILED" )
+            sh "curl -F file=@${JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${env.BUILD_ID}/log -F channels=buildstatus -F token=XXXX https://slack.com../api.../...files.upload"
+        }
+        success
+        {
+            slackSend (color: '#00FF00', message: "${env.JOB_NAME} Build ${env.BUILD_NUMBER} SUCCEEDED" )
+        }
+    }
+}

@@ -1,0 +1,152 @@
+<div class="container-fluid p-0">
+  <div class="row m-0">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 homemanagement-content p-0">
+      <div class="logo-section">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 logo-icon p-3">
+          <a href="#/login"><img class="ml-3" src="assets/homemanage_icons/shared/ds_logo.jpg" /></a>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row">
+        <div class="card-left d-none d-md-flex">
+          <left-banner-image></left-banner-image>
+        </div>
+        <div class="card-body card-right">
+
+          <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+
+            <div class="d-flex align-items-start flex-column card-content">
+
+              <div class="my-auto p-2 w-100">
+
+                <h5 class="card-title text-center">{{labels.COMMON.REGISTER}}</h5>
+                <form method="post" [formGroup]="registerForm" novalidate class="d-flex flex-column align-items-center justify-content-center">
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                    <input type="text" id="inputUserame" class="form-control col-md-12" name="username" formControlName="username" placeholder="{{labels.PLACEHOLDERS.NAME}}">
+                  </div>
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0"
+                  [ngClass]="{ 'has-error': email.errors &amp;&amp; (email.dirty || email.touched) }">
+                    <input type="email" id="inputemail" class="form-control col-md-12" name="email" formControlName="email" pattern="[^ @]*@[^ @]*"
+                      required placeholder="{{labels.PLACEHOLDERS.EMAIL}}">
+                    <label for="inputemail" class="is-required-icon">*</label>
+                    <div *ngIf="email.errors &amp;&amp; (email.dirty || email.touched)" class="invalid-feedback has-danger">
+                      <div [hidden]="!email.errors.required">
+                        {{validations.FIELD_REQ}}
+                      </div>
+                      <div *ngIf="email.errors.pattern">
+                        {{validations.EMAIL_PATTERN}}
+                      </div>
+                      <div [hidden]="!email.errors.maxlength">
+                        {{validations.EMAIL_MAX_REQ}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                    <input type="text" id="inputCompanyname" class="form-control col-md-12" name="companyname" formControlName="companyname"
+                      placeholder="{{labels.PLACEHOLDERS.COMPANY_NAME}}" required>
+                    <label for="inputCompanyname" class="is-required-icon">*</label>
+                    <div *ngIf="companyname.errors &amp;&amp; (companyname.dirty || companyname.touched)" class="invalid-feedback" class="text-danger">
+                      <div *ngIf="companyname.errors.required">
+                        {{validations.FIELD_REQ}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control col-md-12" id="inputPassword" name="password" formControlName="password"
+                      maxlength="24" required placeholder="{{labels.PLACEHOLDERS.PASSWORD}}">
+                    <label for="inputPassword" class="is-required-icon">*</label>
+                    <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                      <img [hidden]="!showPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                      <img [hidden]="showPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                    </span>
+
+                    <div *ngIf="password.errors &amp;&amp; (password.dirty || password.touched)" class="invalid-feedback">
+                      <div *ngIf="password.errors.required">
+                        {{validations.FIELD_REQ}}
+                      </div>
+                      <div *ngIf="password.errors.maxlength">
+                        {{validations.PWD_MAX_REQ}}
+                      </div>
+                      <div [hidden]="!password.errors.pattern">
+                        {{validations.PWD_PATTERN}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control col-md-12" id="inputConfirmPassword" name="confirmpassword"
+                      formControlName="confirmpassword" maxlength="24" required placeholder="{{labels.PLACEHOLDERS.CONFIRM_PASSWORD}}">
+                    <label for="inputConfirmPassword" class="is-required-icon">*</label>
+                    <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                      <img [hidden]="!showPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                      <img [hidden]="showPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                    </span>
+
+                    <div *ngIf="confirmpassword.errors &amp;&amp; (confirmpassword.dirty || confirmpassword.touched)" class="invalid-feedback">
+                      <div *ngIf="confirmpassword.errors.required">
+                        {{validations.FIELD_REQ}}
+                      </div>
+                      <div *ngIf="confirmpassword.errors.maxlength">
+                        {{validations.PWD_MAX_REQ}}
+                      </div>
+                      <div [hidden]="!confirmpassword.errors.pattern">
+                        {{validations.PWD_PATTERN}}
+                      </div>
+                      <div [hidden]="!registerForm.controls['confirmpassword'].errors?.matchOther">
+                          {{validations.PWD_NOT_MATCHED}}
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0 form-label-group-agree">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="inputAgree" class="form-check-input" name="agree" formControlName="agree">
+                        <span class="box"></span>
+                        <div class="d-inline agree-text pl-3 primary-grey-color">{{labels.COMMON.I_AGREE_POLICY}}</div>
+                      </label>
+                    </div>
+                    <div *ngIf="agree.invalid && agree.dirty" class="text-danger">
+                      <div *ngIf="agree.errors.required">
+                        {{validations.FIELD_REQ}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-label-group loginbtn col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0">
+                    <button type="submit" class="btn btn-primary col-md-12" [disabled]="!registerForm.valid" (click)="register()">
+                      {{labels.BUTTONS.REGISTER}}
+                    </button>
+                  </div>
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 p-0 text-center">
+                    <span class="primary-color mt-2 col-md-6">
+                      <strong>{{labels.COMMON.ALREADY_MEMBER}}</strong>
+                    </span>
+                    <a class="btn btn-light" href="#/login">{{labels.COMMON.LOGIN_HERE}}</a>
+                  </div>
+
+                  <div class="form-label-group col-sm-12 col-md-10 col-lg-7 col-xl-6 mb-2 mt-2 p-0 text-center">
+                    <button type="button" class="btn btn-secondary" (click)="configDevice()">{{labels.BUTTONS.CONFIGURE_DEVICE_WITHOUT_LOGIN}}</button>
+                  </div>
+
+                </form>
+
+              </div>
+
+              <homemanagement-copyright-text></homemanagement-copyright-text>
+
+            </div>
+
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

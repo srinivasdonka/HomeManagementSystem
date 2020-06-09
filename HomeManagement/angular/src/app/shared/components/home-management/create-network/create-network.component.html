@@ -1,0 +1,352 @@
+<div class="d-flex justify-content-between d-block d-sm-none page-title page-title-m3">
+  <div class="p0">
+    <strong>{{userInfoTitle}}</strong>
+    <br>
+  </div>
+  <div class="p-0 ml-auto">
+
+  </div>
+</div>
+
+<div class="d-none d-sm-flex p-2">
+  <div class="pl-0 pt-2">
+    <homemanagement-page-title *ngIf="currentPage === 1" [title]="userInfoTitle"></homemanagement-page-title>
+    <span *ngIf="currentPage > 1 && currentPage < 4" class="back-btn">
+      <button type="button" class="btn btn-secondary btn-sm backbtn mr-2" (click)="goBack()">{{labels.BUTTONS.BACK}}</button>
+    </span>
+    <h4 *ngIf="currentPage > 1">
+      <span class="pb-1 title" *ngIf="userInfoTitle">{{userInfoTitle}}</span>
+    </h4>
+  </div>
+  <div class="ml-auto p-2">
+    <button type="submit" *ngIf="currentPage < 2" (click)="next()" class="btn btn-secondary" [disabled]="!createNetworkForm.valid">
+      {{labels.BUTTONS.NEXT}}</button>
+    <button type="submit" *ngIf="currentPage === 2" (click)="next()" class="btn btn-secondary" [disabled]="!createNetworkLicenseForm.valid">
+      {{labels.BUTTONS.NEXT}}</button>
+    <button type="submit" *ngIf="currentPage === 4" (click)="done()" class="btn btn-secondary" [disabled]="!createNetworkForm.valid">
+      {{labels.BUTTONS.DONE}}</button>
+  </div>
+</div>
+
+<section id="scroll-container" [perfectScrollbar]="config" class="ps">
+  <form [formGroup]="createNetworkForm" novalidate>
+
+    <div class="jumbotron no-bg rounded-5 primary-color p-0" *ngIf="currentPage === 1">
+      <div class="jumbotron white-bg rounded-5">
+
+        <div class="row-title">{{labels.HOME_MANAGEMENT.SETUP_ADMIN_ACCOUNT}}</div>
+
+        <div class="row">
+          <div class="form-group form-group-sm col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+                <input type="text" id="accountUserName" class="form-control col-md-12" name="accountUserName"
+                  formControlName="accountUserName" required placeholder="{{labels.PLACEHOLDERS.USERNAME}}">
+
+                <div *ngIf="accountUserName.errors &amp;&amp; (accountUserName.dirty || accountUserName.touched)" class="invalid-feedback">
+                  <div *ngIf="accountUserName.errors.required">
+                    {{validations.FIELD_REQ}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group form-group-sm col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="accountPassword" name="accountPassword"
+                  formControlName="accountPassword" placeholder="{{labels.PLACEHOLDERS.PASSWORD}}">
+                <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                  <img [hidden]="!showPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                  <img [hidden]="showPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                </span>
+                <div *ngIf="accountPassword.errors &amp;&amp; (accountPassword.dirty || accountPassword.touched)" class="invalid-feedback has-error">
+                  <div *ngIf="accountPassword.errors.required">
+                    {{validations.FIELD_REQ}}
+                  </div>
+                  <div *ngIf="accountPassword.errors.maxlength">
+                    {{validations.PWD_MAX_REQ}}
+                  </div>
+                  <div [hidden]="!accountPassword.errors.pattern">
+                    {{validations.PWD_PATTERN}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group form-group-sm col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="accountConfirmPassword"
+                  name="accountConfirmPassword" formControlName="accountConfirmPassword" placeholder="{{labels.PLACEHOLDERS.CONFIRM_PASSWORD}}">
+                <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                  <img [hidden]="!showPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                  <img [hidden]="showPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                </span>
+                <div *ngIf="accountConfirmPassword.errors &amp;&amp; (accountConfirmPassword.dirty || accountConfirmPassword.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="accountConfirmPassword.errors.required">
+                    {{validations.FIELD_REQ}}
+                  </div>
+                  <div *ngIf="accountConfirmPassword.errors.maxlength">
+                    {{validations.PWD_MAX_REQ}}
+                  </div>
+                  <div [hidden]="!accountConfirmPassword.errors.pattern">
+                    {{validations.PWD_PATTERN}}
+                  </div>
+                  <div [hidden]="!createNetworkForm.controls['accountConfirmPassword'].errors?.matchOther">
+                    {{validations.PWD_NOT_MATCHED}}
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="jumbotron white-bg rounded-5">
+
+        <div class="row-title">{{labels.HOME_MANAGEMENT.SETUP_WIFI_NETWORK}}</div>
+
+        <div class="row">
+          <div class="form-group form-group-sm col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+                <input type="text" id="networkNameSSID" class="form-control col-md-12" name="networkNameSSID"
+                  formControlName="networkNameSSID" required placeholder="{{labels.PLACEHOLDERS.NETWORK_NAME_SSID}}">
+
+                <div *ngIf="networkNameSSID.errors &amp;&amp; (networkNameSSID.dirty || networkNameSSID.touched)" class="invalid-feedback">
+                  <div *ngIf="networkNameSSID.errors.required">
+                    {{validations.FIELD_REQ}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group form-group-sm col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+                <input [type]="showNetworkPassword ? 'text' : 'password'" class="form-control" id="networkPassword"
+                  name="networkPassword" formControlName="networkPassword" placeholder="{{labels.PLACEHOLDERS.PASSWORD}}">
+                <span class="ui-inputgroup-addon show-password" (click)="showNetworkPassword = !showNetworkPassword">
+                  <img [hidden]="!showNetworkPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showNetworkPassword On" />
+                  <img [hidden]="showNetworkPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showNetworkPassword Off" />
+                </span>
+                <div *ngIf="networkPassword.errors &amp;&amp; (networkPassword.dirty || networkPassword.touched)" class="invalid-feedback has-error">
+                  <div *ngIf="networkPassword.errors.required">
+                    {{validations.FIELD_REQ}}
+                  </div>
+                  <div *ngIf="networkPassword.errors.maxlength">
+                    {{validations.PWD_MAX_REQ}}
+                  </div>
+                  <div [hidden]="!networkPassword.errors.pattern">
+                    {{validations.PWD_PATTERN}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group form-group-sm col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+                <input [type]="showNetworkPassword ? 'text' : 'password'" class="form-control" id="networkConfirmPassword"
+                  name="networkConfirmPassword" formControlName="networkConfirmPassword" placeholder="{{labels.PLACEHOLDERS.CONFIRM_PASSWORD}}">
+                <span class="ui-inputgroup-addon show-password" (click)="showNetworkPassword = !showNetworkPassword">
+                  <img [hidden]="!showNetworkPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showNetworkPassword On" />
+                  <img [hidden]="showNetworkPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showNetworkPassword Off" />
+                </span>
+                <div *ngIf="networkConfirmPassword.errors &amp;&amp; (networkConfirmPassword.dirty || networkConfirmPassword.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="networkConfirmPassword.errors.required">
+                    {{validations.FIELD_REQ}}
+                  </div>
+                  <div *ngIf="networkConfirmPassword.errors.maxlength">
+                    {{validations.PWD_MAX_REQ}}
+                  </div>
+                  <div [hidden]="!networkConfirmPassword.errors.pattern">
+                    {{validations.PWD_PATTERN}}
+                  </div>
+                  <div [hidden]="!createNetworkForm.controls['networkConfirmPassword'].errors?.matchOther">
+                    {{validations.PWD_NOT_MATCHED}}
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group form-group-sm col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+                <select class="form-control col-md-12 country" formControlName="networkCountry" id="networkCountry">
+                  <option value="">{{labels.PLACEHOLDERS.SELECT_COUNTRY}}</option>
+                  <option *ngFor="let country of countriesList" [value]="country.countryName">
+                    {{country.countryName}}
+                  </option>
+                </select>
+
+                <div *ngIf="networkCountry.errors &amp;&amp; (networkCountry.dirty || networkCountry.touched)" class="invalid-feedback">
+                  <div *ngIf="networkCountry.errors.required">
+                    {{validations.FIELD_REQ}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="jumbotron white-bg rounded-5">
+
+        <div class="row-title d-inline">
+          {{labels.HOME_MANAGEMENT.SETUP_OPERATION_MODE}}
+        </div>
+        <div class="checkbox d-md-inline access-srm">
+          <span>{{labels.HOME_MANAGEMENT.ALLOW_EXTERNAL_ACCESS_TO_SRM}}</span>
+          <label class="switch ml-3">
+            <input type="checkbox" id="allowExternalAccessToSRM" name="allowExternalAccessToSRM" formControlName="allowExternalAccessToSRM">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="col-12 px-0 mt-3">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="operationModeWirelessRouter" name="operationModeWirelessRouter"
+                formControlName="operationModeWirelessRouter">
+              <span class="box"></span>
+              <span>{{labels.HOME_MANAGEMENT.WIRELESS_ROUTER}} </span>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="col-12 px-0">
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="operationModeWirelessRouterAP" name="operationModeWirelessRouterAP"
+                formControlName="operationModeWirelessRouterAP">
+              <span class="box"></span>
+              <span>{{labels.HOME_MANAGEMENT.WIRELESS_ROUTER_AP}} </span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+  <div class="jumbotron no-bg rounded-5 primary-color p-0" *ngIf="currentPage === 2">
+    <div class="jumbotron white-bg rounded-5">
+      <form [formGroup]="createNetworkLicenseForm" novalidate>
+        <div class="row-title">
+          {{labels.HOME_MANAGEMENT.FOLLOW_LICENSE_AGREEMENT}}
+          <div class="checkbox d-inline float-right">
+            <label>
+              <input type="checkbox" id="followAgreement" name="followAgreement" formControlName="followAgreement"
+                required>
+              <span class="box"></span>
+            </label>
+          </div>
+        </div>
+      </form>
+
+      <div class="row">
+        <div class="accordion">
+          <div class="card">
+            <div class="card-header">
+              <a class="card-link" data-toggle="collapse" (click)="showPrivacyStatement = !showPrivacyStatement">
+                Privacy statement
+                <img class="float-right" alt="arrow" src="assets/homemanage_icons/shared/top_menu_arrow_down.svg">
+              </a>
+            </div>
+            <div id="collapseOne" class="collapse show" *ngIf="showPrivacyStatement">
+              <div class="card-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <a class="card-link" data-toggle="collapse" (click)="showEULA = !showEULA">
+                EULA
+                <img class="float-right" alt="arrow" src="assets/homemanage_icons/shared/top_menu_arrow_down.svg">
+              </a>
+            </div>
+            <div id="collapseTwo" class="collapse show" *ngIf="showEULA">
+              <div class="card-body">
+                123 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                ut aliquip ex ea commodo consequat.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="jumbotron no-bg rounded-5 primary-color p-0" *ngIf="currentPage === 3">
+    <div class="jumbotron white-bg rounded-5 jumbotron white-bg rounded-5 text-center">
+
+      <div class="row-title">
+        <img class="apply-settings-icon" src="assets/homemanage_icons/shared/loading.svg" alt="applying settings">
+      </div>
+      <div class="row-title">
+        {{labels.HOME_MANAGEMENT.YOUR_ROUTER_READY_IN_MINUTES}}
+      </div>
+      <div class="row-title grey-text">
+        {{labels.HOME_MANAGEMENT.PLEASE_DO_NOT_SHUTDOWN_DEVICE}}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="jumbotron no-bg rounded-5 primary-color p-0" *ngIf="currentPage === 4">
+    <div class="jumbotron white-bg rounded-5 jumbotron white-bg rounded-5 text-center">
+      <div class="row row-title">
+        <div class="col-sm-12 col-md-1">
+          <img class="circle-tick" src="assets/homemanage_icons/shared/circle_tick.svg" alt="applying settings">
+        </div>
+        <div class="col-sm-12 col-md-9 text-left">
+          <div class="config-success pb-2">{{hardwareId}} Configuration Successfully</div>
+          <span class="bootoast-alert-content success-alert-content">{{labels.HOME_MANAGEMENT.CONFIGURATION_SUCCESSFULLY_MESSAGE}}</span>
+        </div>
+        <div class="col-sm-12 col-md-2">
+          <button type="button" class="btn btn-secondary mr-1" (click)="addMoreDevice()">{{labels.BUTTONS.ADD_MORE_DEVICES}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="mobileFilterSection" class="d-block d-sm-none mobile-actions">
+  <div class="d-flex justify-content-around p-2">
+    <div>
+      <button type="submit" class="btn btn-secondary mr-1" (click)="done()" [disabled]="!createNetworkForm.valid">{{labels.BUTTONS.CONTINUE}}</button>
+    </div>
+  </div>
+</div>

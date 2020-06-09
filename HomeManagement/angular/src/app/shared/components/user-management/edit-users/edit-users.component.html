@@ -1,0 +1,116 @@
+<div *ngIf="usersList.length > 0">
+  <div>
+
+    <div class="d-flex justify-content-between d-block d-sm-none page-title page-title-m3">
+      <div class="p0">
+        <strong>{{labels.COMMON.EDIT_USER}}</strong>
+        <br>
+      </div>
+      <div class="p-0 ml-auto">
+
+      </div>
+    </div>
+
+    <div class="d-none d-sm-flex p-2">
+      <div class="pl-0 pt-2">
+        <span class="hamburger-back">
+          <button type="button" class="btn btn-secondary btn-sm" (click)="goBack()">{{labels.BUTTONS.BACK}}</button>
+        </span>
+      </div>
+      <div class="ml-auto p-2">
+        <button type="button" class="btn btn-disabled mr-1">{{labels.BUTTONS.CANCEL}}</button>
+        <button type="submit" class="btn btn-secondary mr-1" (click)="updateUser()">{{labels.BUTTONS.SAVE}}</button>
+      </div>
+    </div>
+
+    <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+      <div class="alert alert-success fade show" role="alert" *ngIf="showAlert">
+        <strong>User Updated Successfully..!</strong> You should check in on some of those fields below.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="jumbotron no-bg user-info m-0">
+
+        <form [formGroup]="editUserForm">
+
+          <div class="edit-user-form" formArrayName="users" [ngClass]=" showLess ? 'show-less' : 'show-more'">
+            <div class="d-inline-block grey-bg edit-user-form-group rounded-5 grey-border" *ngFor="let comp of editUserForm.get('users')['controls']; let i=index"
+              [formGroupName]="i">
+              <span class="pb-1 user-name">
+                <input [size]="homemanagementAutoWidthInput.value.length" #homemanagementAutoWidthInput type="text" formControlName="firstName" class="custom-control primary-color"
+                  id="firstName" name="firstName" placeholder="{{labels.PLACEHOLDERS.NAME}}" required>
+              </span>
+              <span class="ml-2 mr-2">|</span>
+              <span class="pb-1 user-name">
+                {{ this.editUserForm.value.users[i].username }}
+              </span>
+              <span class="ml-2 mr-2">
+                <a (click)="deleteUser(i)">
+                  <img src="assets/homemanage_icons/shared/close.svg" class="close-icon" />
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </form>
+
+        <div class="col-12 show-less-btn">
+          <a (click)="showLess = !showLess">
+            <img src="assets/homemanage_icons/shared/arrow_up.svg" class="up-icon" *ngIf="!showLess" />
+            <img src="assets/homemanage_icons/shared/arrow_down.svg" class="down-icon" *ngIf="showLess" />
+            <span *ngIf="!showLess">{{labels.COMMON.LESS}}</span>
+            <span *ngIf="showLess">{{labels.COMMON.MORE}}</span>
+          </a>
+        </div>
+      </div>
+      <div class="jumbotron white-bg rounded-5 mb-2">
+        <div class="d-block d-md-none w-100 h-100 align-self-center">*{{labels.COMMON.ROLE}}:</div>
+        <div class="d-flex flex-row mb-3">
+          <div class="d-none d-md-block w-10 h-100 align-self-center">*{{labels.COMMON.ROLE}}:</div>
+          <div class="p-0 role">
+            <p-selectButton [options]="roleTypes" [(ngModel)]="selectedRoleType" (ngModelChange)="selectedRoleTypeChanged(selectedRoleType)"></p-selectButton>
+          </div>
+        </div>
+        <div class="d-block d-md-none w-100 h-100 align-self-center">{{labels.COMMON.PERMISSIONS}}:</div>
+        <div class="d-flex flex-row">
+          <div class="d-none d-md-block w-10 h-100 align-self-center">{{labels.COMMON.PERMISSIONS}}:</div>
+          <div class="p-0 permissions">
+            <span *ngFor="let privilege of privileges">
+              <button class="btn btn-disabled m-1" [ngClass]="privilege.checked ? 'btn-primary' : ''" (click)="(selectedRoleType != 'Administrator') && setPrivilege(privilege)">{{privilege.name}}
+                <i class="fa" *ngIf="selectedRoleType != 'Administrator'" [ngClass]="privilege.checked ? 'fa-minus-circle' : 'fa-plus-circle'"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <div *ngIf="mobileFilterSection" class="d-block d-sm-none mobile-actions">
+    <div class="d-flex justify-content-around p-2">
+      <div>
+        <button type="button" class="btn btn-disabled mr-1">{{labels.BUTTONS.CANCEL}}</button>
+        <button type="submit" class="btn btn-secondary mr-1" (click)="updateUser()">{{labels.BUTTONS.SAVE}}</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="mobileFilterSection">
+    <p-sidebar [(visible)]="mobileFilter" position="bottom" appendTo="body">
+      <div class="d-flex justify-content-around p-2">
+        <div>
+          <button type="button" class="btn btn-disabled mr-1">{{labels.BUTTONS.CANCEL}}</button>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-secondary mr-1" (click)="updateUser()">{{labels.BUTTONS.SAVE}}</button>
+        </div>
+      </div>
+    </p-sidebar>
+  </div>
+
+</div>

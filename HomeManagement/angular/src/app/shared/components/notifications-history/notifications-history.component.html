@@ -1,0 +1,17 @@
+<h4 class="title">{{labels.COMMON.NOTIFICATIONS}}</h4>
+
+<div class="notification-content">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item list-group-item-action" *ngFor="let notification of notificationList">
+      <a class="content" [ngClass]="{'today-items': notification.isToday}">
+        <div class="d-flex justify-content-between">
+          <div class="item-info">
+            <span class="item-title">{{notification.date}}</span> | 
+            <span class="item-title">{{notification.description}}</span>            
+          </div>
+          <div class="flag" *ngIf="notification.isToday">New</div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

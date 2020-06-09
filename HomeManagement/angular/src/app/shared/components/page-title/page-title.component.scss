@@ -1,0 +1,21 @@
+@import 'src/sass/variables';
+
+.back-btn {
+    padding: 0;
+    position: relative;
+    top: -3px;
+
+    a {
+        padding: 0
+    }
+
+    img {
+        width: 20px;
+    }
+}
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.25;
+    color: $primaryBlueColor;
+}

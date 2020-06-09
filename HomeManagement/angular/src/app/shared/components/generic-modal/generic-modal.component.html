@@ -1,0 +1,7 @@
+<div class="modal-body">
+  <img class="tick-icon" *ngIf="modalOptions.icon" [src]="modalOptions.icon" /> 
+  <span class="body-text">{{modalOptions.bodyText}}</span>
+  <button *ngIf="modalOptions.actionButtonText" type="button" data-dismiss="modal" class="btn btn-primary btn-sm" (click)="modalRef.hide()">
+    {{modalOptions.actionButtonText}}
+  </button>  
+</div>

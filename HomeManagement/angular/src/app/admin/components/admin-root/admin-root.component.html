@@ -1,0 +1,20 @@
+<header>
+  <homemanagement-header (showMenu)="onMenuClicked($event)"></homemanagement-header>
+</header>
+<section>
+  <p-sidebar [(visible)]="showMenu" [fullScreen]="false">
+    <homemanagement-sidebar [showMenu]="showMenu" (menuClicked)="onMenuClicked($event)" [routes]="sidebarRoutes" [alwaysOpen]="isAlwaysOpen">
+    </homemanagement-sidebar>
+  </p-sidebar>
+</section>
+<section id="scroll-container" [perfectScrollbar]="config" class="ps" [ngClass]="{'menu-static': isAlwaysOpen, '': !isAlwaysOpen}">
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
+</section>
+<p-sidebar [(visible)]="acceptCookie" position="bottom" [baseZIndex]="1005" appendTo="body">
+  <div class="d-flex align-items-center accept-cookie">
+    <p>
+      {{labels.COMMON.WEBSITE_USES_COOKIES}}.
+      <button type="button" (click)="acceptCookieChecked()" class="btn btn-secondary">{{labels.BUTTONS.I_Accept}}</button>
+    </p>
+  </div>
+</p-sidebar>

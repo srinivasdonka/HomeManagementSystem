@@ -1,0 +1,23 @@
+@import 'src/sass/variables';
+
+.bgimg {
+  background-position: center;
+  background-size: cover;
+  color: $homemanagePrimaryDarkColor;
+  font-size: 25px;
+  height: 100%;
+  position: relative;
+}
+
+.middle {
+  left: 50%;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+hr {
+  margin: auto;
+  width: 40%;
+}

@@ -1,0 +1,360 @@
+@import 'src/sass/variables';
+@import "../../node_modules/primeng/resources/primeng.min.css";
+@import "theme-indigo.scss";
+@import '../../node_modules/material-design-icons/iconfont/material-icons.css';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: $homemanageBodyBG;
+  color: $textColor;
+  font-family: 'Quicksand';
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-size: $fontSize;
+  font-weight: 600;
+  height: 100%;
+  line-height: $lineHeight;
+  margin: 0;
+  min-height: 100%;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+
+  a {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+    box-shadow: 0;
+    outline: none;
+    text-decoration: none !important;
+  }
+
+  .list-unstyled {
+    margin-bottom: 0;
+  }
+
+  .form-control {
+    line-height: 1.5;
+    color: $homemanageDarkGrey;
+    background-color: $homemanage-input-bg;
+    border: 1px solid $homemanage-input-bg;
+    
+    &:focus {
+      background-color: transparent;
+      box-shadow: 0;
+    }
+  }
+
+  .form-label-group {
+    color: #a8a8a8;
+    position: relative;
+    min-height: 70px;
+
+    &.has-error {      
+      .form-control {
+        color: $red;
+        border: 1px solid $red;
+      }
+    }    
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .close {
+    outline: none;
+  }
+  
+  .primary-color {
+    color: $homemanagePrimaryDarkColor;
+  }
+
+  .primary-blue-color {
+    color: $homemanagePrimaryBlueColor;
+  }
+
+  .primary-grey-color {
+    color: $homemanageDarkGrey;
+  }
+
+  .no-bg {
+    background: transparent;
+  }
+
+  .white-bg {
+    background: $white;
+  }
+
+  .grey-bg {
+    background: $lightgrey;
+  }
+
+  .btn {
+    font-weight: bold;
+    min-width: 45px;
+  }
+
+  .btn-primary {
+    background-color: $homemanagePrimaryDarkColor;
+    border-color: $homemanagePrimaryDarkColor;
+    
+    &:hover {
+      background-color: $homemanagePrimaryDarkColor;
+      border-color: $homemanagePrimaryDarkColor;
+    }
+  }
+  .btn-primary.disabled, 
+  .btn-primary:disabled {
+    background-color: $homemanagePrimaryDarkColor;
+    border-color: $homemanagePrimaryDarkColor;
+  }
+
+  .btn-secondary {
+    color: $white;
+    background-color: $homemanagePrimaryBlueColor;
+    border-color: $homemanagePrimaryBlueColor;
+
+    &:hover {
+      background-color: $homemanagePrimaryBlueColor;
+      border-color: $homemanagePrimaryBlueColor;
+      color: $white;
+    }
+  }
+
+  .btn-light {
+    background-color: $homemanage-btn-disabled;
+    border-color: $homemanage-btn-disabled;
+    color: $homemanagePrimaryBlueColor;
+
+    &:hover {
+      background-color: $homemanage-btn-disabled;
+      border-color: $homemanage-btn-disabled;
+      color: $homemanagePrimaryBlueColor;
+    }
+  }
+
+  .btn-outline-primary {
+    border-color: $homemanagePrimaryBlueColor;
+    color: $homemanagePrimaryBlueColor;
+
+    &:hover {
+      background-color: $homemanagePrimaryBlueColor;
+      border-color: $homemanagePrimaryBlueColor;
+      color: $white;
+    }
+  } 
+
+  .copy-device-config, .add-to-existing-network {
+    .ui-dropdown {
+      background-image: none;
+      .ui-dropdown-label {
+        color: $white;
+        background-color: $primaryBlueColor;
+        border-radius: 4px;
+        font-family: Quicksand;
+        font-weight: bold;
+        padding: 7px 14px !important;
+      }
+      .ui-dropdown-trigger .ui-dropdown-trigger-icon {
+        color: $white;
+        margin-top: -7px;
+      }
+
+      &.ui-dropdown-open {
+        .ui-dropdown-label {
+          color: $primaryBlueColor;
+          background-color: $white;
+        }
+        .ui-dropdown-trigger .ui-dropdown-trigger-icon {
+          color: $primaryBlueColor;
+        }
+      }
+    }
+    .ui-dropdown-panel {
+      box-shadow: none;
+      .ui-dropdown-item {
+        font-weight: bold;
+        color: $grey_b9;
+        &.ui-state-highlight {
+          color: $primaryBlueColor;
+          background-color: $white;
+        }
+      }
+      .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+        color: $primaryBlueColor;
+        background-color: $white;
+      }
+      
+    }
+  }
+
+  @media (min-width: 300px) and (max-width: 767px) {
+    .create-networks {
+      .add-to-existing-network, .copy-device-config {
+        .ui-dropdown {
+          width: 100% !important;
+          margin-bottom: 7px;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .ui-inputswitch {
+    height: 10px;
+
+    .ui-inputswitch-handle {
+      height: 15px $i;
+      top: -2px;
+      width: 15px $i;
+    }
+  }
+
+  .modal-full {
+    min-width: 100%;
+    margin: 0;
+  }
+
+  .modal-half {
+    min-width: 50%;
+  }
+
+
+  .text-danger {
+    @include font-size($font-12);
+  }
+
+  @media (min-width: 1000px) {
+    .modal-lg {
+      max-width: 70%;
+    }
+  }
+
+  .modal-dialog {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  select{
+    font-weight: bold;
+    padding: 0 5px;
+    line-height: 1;
+    border: 0;
+    border-radius: 5px;
+    height: 35px;
+    background: url('src/assets/homemanage_icons/shared/arrow_down.svg') no-repeat right;
+    -webkit-appearance: none;
+    background-size: 14px; 
+    background-position-x: 25px;
+    min-width: 50px;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  select,
+  button,
+  textarea {
+    outline: none;
+    box-shadow:none !important;
+  }
+
+  .ui-accordion {
+    .ui-accordion-header > a {
+      text-decoration: none;
+    }
+  }
+
+  .ui-growl {
+    top: 70px;
+  }
+
+  /* Material style */
+  .overlay {
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    z-index: 999;
+  }
+
+  .ui-scrollpanel-hidden {
+    visibility: hidden;
+  }
+
+  .word-wrap {
+    word-wrap: break-word;
+  }
+
+  .tab-arrow {
+    width: 14px;
+  }
+}
+
+.ui-accordion-content {
+  background: $white;
+}
+
+.ios,
+.ios * {
+    // causes dom events events to be fired
+    cursor: pointer;
+}
+
+.rounded-5 {
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 300px) and (max-width: 767px) {
+  body {
+    font-size: $mobileFontSize;
+  }
+}
+
+[id^='ngx_captcha_id'] > div,
+[id^='ngx_captcha_id'] iframe {
+  padding: 0;
+  margin: 0 auto;
+  // width: 100% !important;
+}
+
+#landscape {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: $black;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 20000;
+  opacity: 0.9;
+  margin: 0 auto;
+}
+
+#landscape div {
+  color: $white;
+  opacity: 1;
+  top: 50%;
+  position: absolute;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}

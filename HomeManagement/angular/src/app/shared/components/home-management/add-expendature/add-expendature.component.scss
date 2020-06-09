@@ -1,0 +1,108 @@
+@import 'src/sass/variables';
+
+.ps {
+  height: calc(100vh - 175px);
+  max-width: 100%;
+  position: relative;
+  padding: 0;
+  transform: translateZ(0);
+}
+
+@media (pointer: coarse) {
+  .ps {
+    overflow-y: auto $i;
+  }
+}
+
+.form-inline {
+	.form-label-group {
+		color: $homemanage-Text-Dark-Color;
+		position: relative;
+		min-height: 70px;
+		display: inline-flex;
+		margin: 0px 15px;
+	 
+		.is-required-icon {
+			position: absolute;
+			top: 0px;
+			font-weight: bold;
+			font-size: 25px;
+			padding-left: 5px;
+			padding-top: 5px;
+		 }
+	 }
+ }
+
+.user-col-1 {
+  width: 150px;
+}
+
+.user-col-2 {
+  width: 290px;  
+}
+
+.user-col {
+  width: 20%;
+}
+
+.w-10 {
+  min-width: 130px;
+}
+
+.jumbotron {
+  padding: 2rem 2rem;
+}
+
+.page-title {
+  padding: 15px;
+
+  &.bottom-shadow {
+    box-shadow: 0;
+  }
+
+  &.page-title-m3 {
+    margin: 0;
+  }
+}
+
+.user-name {
+  color: $homemanage-Text-Blue-Color;
+  font-weight: bold;
+}
+
+.mobile-actions {
+  background: $white;
+  width: 100%;
+  z-index: 9;
+}
+
+.row-title {
+	color: $homemanage-Text-Dark-Color;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+@media (min-width: 300px) and (max-width: 767px) {
+  .jumbotron {
+    padding: 1rem;
+    margin: 5px;
+  }
+
+  .ps {
+    height: calc(100vh - 165px);
+  }
+
+  .page-title {
+    &.page-title-m3 {
+      margin: 0;
+    }
+  }
+
+  .user-col-1 {
+    width: 100%;
+  }
+  
+  .user-col-2 {
+    width: 100%px;  
+  }
+}

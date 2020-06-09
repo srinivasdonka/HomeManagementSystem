@@ -1,0 +1,38 @@
+{
+  "deviceName": "Device Name@123",
+  "hardwareId": "334340280XA00DA10",
+  "status": true,
+  "createdDate": "2019-01-24 13:47:55.141",
+  "updatedDate": "2019-01-24 13:47:55.141",
+  "deviceModelName": "XA248DA123",
+  "deviceType": "Mesh Router",
+  "hardwareVersion": "Version name@123",
+  "serialNumber": "1890QDAQ567865JWM",
+  "is_active": true,
+  "childDevices": [
+    {
+      "id": "1",
+      "deviceName": "Router Name@1",
+      "deviceStatus": true
+    },
+    {
+      "id": "2",
+      "deviceName": "Router Name@2",
+      "deviceStatus": false
+    },
+    {
+      "id": "3",
+      "deviceName": "Router Name@3",
+      "deviceStatus": false
+    }
+  ],
+  "networkName": "Network Name@123",
+  "networkPassword": "test@1",
+  "firmwareVersion": "Version Name# 2.5",
+  "firmwareLastUpdate": "2019-01-24 13:47:55.141",
+  "firmwareUpdateStatus": "Update is Available",
+  "firmwareUpdateSettings": "2019-01-24 13:47:55.141",
+  "statusOfLink": "Status of Link",
+  "bankdwidthSpeed": "1000Mbps",
+  "totalUsage": "20 GB left / 300 GB"
+}

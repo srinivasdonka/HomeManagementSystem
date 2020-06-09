@@ -1,0 +1,345 @@
+<div *ngIf="userProfile">
+
+  <div class="d-block d-sm-none page-title page-title-m3">
+    <div class="d-flex flex-column">
+      <div class="p0">
+        <strong>
+          <span class="pb-1 user-name">{{userProfile.firstName}}, {{userProfile.lastName}}</span>
+        </strong>
+        <br>
+      </div>
+      <div class="p-0 ml-auto">
+        <div class="user-col-1 mr-2">
+          <span class="grey-color">{{labels.COMMON.ROLE}}:&nbsp;</span>
+          <span>{{userProfile.designation}}</span>
+        </div>
+        <div class="user-col-2 mr-2">
+          <span class="grey-color">{{labels.COMMON.REGISTERED_DATE}}:&nbsp;</span>
+          <span class="deactiveColor">{{registeredDate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-none d-sm-block page-title page-title-m3">
+    <div class="d-flex flex-column jumbotron no-bg user-info m-0 p-0">
+      <h4 class="">
+        <span class="pb-1 user-name">{{userProfile.firstName}}, {{userProfile.lastName}}</span>
+      </h4>
+      <div class="d-flex flex-row m-0">
+        <div class="user-col-1 mr-2">
+          <span class="grey-color">{{labels.COMMON.ROLE}}:&nbsp;</span>
+          <span>{{userProfile.designation}}</span>
+        </div>
+        <div class="user-col-2 mr-2">
+          <span class="grey-color">{{labels.COMMON.REGISTERED_DATE}}:&nbsp;</span>
+          <span class="deactiveColor">{{registeredDate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-3 mb-4">
+    <a *ngFor="let profileTab of profileTabs; let idx = index; let first = first;" [ngClass]="{firstItem: first}" [class.active]="selectedTab === profileTab"
+      (click)="toggleTabs(profileTab, idx)" class="tabBtn" routerLink="." fragment="tab{{idx}}">{{profileTab}}</a>
+  </div>
+
+  <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+
+    <form method="post" [formGroup]="userProfileForm" novalidate class="myprofile-form">
+      <div id="tab0">
+
+        <div class="jumbotron white-bg rounded-5 mb-2">
+          <h4 class="sub-headings">
+            {{labels.PROFILE.GENERAL_INFO}}
+            <button type="button" *ngIf="isGeneralInfoReadOnly" class="btn btn-secondary btn-sm float-right" (click)="editGeneralInfo()">{{labels.BUTTONS.EDIT}}</button>
+            <button type="button" *ngIf="!isGeneralInfoReadOnly" [disabled]="!userProfileForm.valid" class="btn btn-secondary btn-sm float-right"
+              (click)="saveGeneralInfo()">{{labels.BUTTONS.SAVE}}</button>
+          </h4>
+
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="validationCustom01">{{labels.COMMON.NAME}}</label>
+                <input [readonly]="isGeneralInfoReadOnly" type="text" id="inputUserame" class="form-control" name="username" formControlName="username"
+                  placeholder="{{labels.PLACEHOLDERS.NAME}}">
+              </div>
+
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="validationCustom02">{{labels.COMMON.EMAIL}}</label>
+                <input [readonly]="true" type="email" id="inputemail" class="form-control" name="email" formControlName="email" pattern="[^ @]*@[^ @]*"
+                  required placeholder="{{labels.PLACEHOLDERS.EMAIL}}">
+                <label for="inputemail" class="is-required-icon">*</label>
+              </div>
+              <div *ngIf="email.errors &amp;&amp; (email.dirty || email.touched)" class="text-danger">
+                <div [hidden]="!email.errors.required">
+                  {{validations.FIELD_REQ}}
+                </div>
+                <div *ngIf="email.errors.pattern">
+                  {{validations.EMAIL_PATTERN}}
+                </div>
+                <div [hidden]="!email.errors.maxlength">
+                  {{validations.EMAIL_MAX_REQ}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="validationCustom01">{{labels.COMMON.COMPANY_NAME}}</label>
+                <input [readonly]="true" type="text" id="inputCompanyname" class="form-control" name="companyname" formControlName="companyname"
+                  placeholder="{{labels.PLACEHOLDERS.COMPANY_NAME}}">
+                <label for="inputCompanyname" class="is-required-icon">*</label>
+              </div>
+              <div *ngIf="companyname.invalid && companyname.dirty" class="text-danger">
+                <div *ngIf="companyname.errors.required">
+                  {{validations.FIELD_REQ}}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="validationCustom02">{{labels.COMMON.ADDRESS}}</label>
+                <input [readonly]="isGeneralInfoReadOnly" type="text" id="address" class="form-control col-md-12" name="address" formControlName="address"
+                  placeholder="{{labels.PLACEHOLDERS.ADDRESS}}">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+      <div id="tab1">
+
+        <div class="jumbotron white-bg rounded-5 mb-2">
+
+          <h4 class="sub-headings">
+            {{labels.COMMON.SETTINGS}}
+            <button type="button" *ngIf="isGeneralInfoReadOnly" class="btn btn-secondary btn-sm float-right" (click)="editGeneralInfo()">{{labels.BUTTONS.EDIT}}</button>
+            <button type="button" *ngIf="!isGeneralInfoReadOnly" [disabled]="!userProfileForm.valid" class="btn btn-secondary btn-sm float-right"
+              (click)="saveGeneralInfo()">{{labels.BUTTONS.SAVE}}</button>
+          </h4>
+
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="validationCustom01">{{labels.COMMON.OLD_PASSWORD}}</label>
+                <input [readonly]="true" [type]="showPassword ? 'text' : 'password'" class="form-control col-md-12" id="oldpassword" name="oldpassword"
+                  formControlName="oldpassword" maxlength="24" required placeholder="{{labels.PLACEHOLDERS.OLD_PASSWORD}}">
+                <label for="oldpassword" class="is-required-icon">*</label>
+                <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                  <img [hidden]="!showPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                  <img [hidden]="showPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                </span>
+              </div>
+              <div *ngIf="!isPasswordReadOnly &amp;&amp; oldpassword.errors &amp;&amp; (oldpassword.dirty || oldpassword.touched)" class="text-danger">
+                <div *ngIf="oldpassword.errors.required">
+                  {{validations.FIELD_REQ}}
+                </div>
+                <div *ngIf="oldpassword.errors.maxlength">
+                  {{validations.PWD_MAX_REQ}}
+                </div>
+                <div [hidden]="!oldpassword.errors.pattern">
+                  {{validations.PWD_PATTERN}}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="validationCustom01">{{labels.COMMON.NEW_PASSWORD}}</label>
+                <input [readonly]="isPasswordReadOnly" [type]="showPassword ? 'text' : 'password'" class="form-control col-md-12" id="newpassword"
+                  name="password" formControlName="newpassword" maxlength="24" placeholder="{{labels.PLACEHOLDERS.NEW_PASSWORD}}">
+                <label for="newpassword" class="is-required-icon">*</label>
+                <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                  <img [hidden]="!showPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                  <img [hidden]="showPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                </span>
+              </div>
+              <div *ngIf="!isPasswordReadOnly &amp;&amp; newpassword.errors &amp;&amp; (newpassword.dirty || newpassword.touched)" class="text-danger">
+                <div *ngIf="newpassword.errors.required">
+                  {{validations.FIELD_REQ}}
+                </div>
+                <div *ngIf="newpassword.errors.maxlength">
+                  {{validations.PWD_MAX_REQ}}
+                </div>
+                <div [hidden]="!newpassword.errors.pattern">
+                  {{validations.PWD_PATTERN}}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="validationCustom02">{{labels.COMMON.CONFIRM_PASSWORD}}</label>
+                <input [readonly]="isPasswordReadOnly" [type]="showPassword ? 'text' : 'password'" class="form-control col-md-12" id="inputConfirmPassword"
+                  name="confirmpassword" formControlName="confirmpassword" maxlength="24" placeholder="{{labels.PLACEHOLDERS.CONFIRM_PASSWORD}}">
+                <label for="inputConfirmPassword" class="is-required-icon">*</label>
+                <span class="ui-inputgroup-addon show-password" (click)="showPassword = !showPassword">
+                  <img [hidden]="!showPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
+                  <img [hidden]="showPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showPassword Off" />
+                </span>
+              </div>
+              <div *ngIf="!isPasswordReadOnly &amp;&amp; confirmpassword.errors &amp;&amp; (confirmpassword.dirty || confirmpassword.touched)"
+                class="text-danger">
+                <div *ngIf="confirmpassword.errors.required">
+                  {{validations.FIELD_REQ}}
+                </div>
+                <div *ngIf="confirmpassword.errors.maxlength">
+                  {{validations.PWD_MAX_REQ}}
+                </div>
+                <div [hidden]="!confirmpassword.errors.pattern">
+                  {{validations.PWD_PATTERN}}
+                </div>
+                <div [hidden]="!userProfileForm.controls['confirmpassword'].errors?.matchOther">
+                  {{validations.PWD_NOT_MATCHED}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+
+            <div class="col-lg-12 col-sm-12 col-12">
+              <div class="checkbox d-inline">
+                <label>
+                  <input type="checkbox" id="notificationOnscreen" class="form-check-input" name="notificationOnscreen" formControlName="notificationOnscreen">
+                  <span class="box"></span>
+                  <div class="d-inline agree-text pl-3">{{labels.PROFILE.NOTIFICATIONS_ONSCREEN}}</div>
+                </label>
+              </div>
+              <div class="checkbox d-inline ml-3">
+                  <label>
+                    <input type="checkbox" id="notificationByEmail" class="form-check-input" name="notificationByEmail" formControlName="notificationByEmail">
+                    <span class="box"></span>
+                    <div class="d-inline agree-text pl-3">{{labels.PROFILE.NOTIFICATIONS_BYEMAIL}}</div>
+                  </label>
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <div id="tab2">
+      <div class="jumbotron white-bg rounded-5">
+        <h4 class="sub-headings">
+          {{labels.PROFILE.MY_ACTIVITY}}
+          <button type="button" class="btn btn-secondary btn-sm float-right">{{labels.BUTTONS.CLEAR_ALL}}</button>
+        </h4>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+            <div class="alert p-0">
+              <div>Oct 30, 02:30, 2018</div>
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span class="glyphicon glyphicon-ok"></span>
+              <strong>LoginInto Portal</strong>
+              <hr class="message-inner-separator">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+</div>

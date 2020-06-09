@@ -1,0 +1,312 @@
+@import 'src/sass/mixins';
+
+$homemanagePrimaryDarkColor: #002a3a;
+$homemanagePrimaryBlueColor: #41b6e6;
+$homemanageBodyBG: #eeeeee;
+$homemanageMobileBodyBG: #fdfdfd;
+$homemanageDarkGrey: #a8a8a8;
+$homemanage-Light-Grey: #c8c8c8;
+$homemanage-input-bg: #efefef;
+$homemanage-btn-disabled: #f5f5f5;
+$homemanage-Sidebar-Border: #0F3746;
+$homemanage-table-header: #e4e4e4;
+$homemanage-checkbox-border: #cfcfcf;
+$homemanage-checkbox-background: #f6f6f6;
+
+$homemanage-Text-Dark-Color: #002a3a;
+$homemanage-Text-Grey-Color: #818181;
+$homemanage-Text-light-Grey-Color: #c8c8c8;
+$homemanage-Text-Blue-Color: #41b6e6;
+
+/* Common */
+$blueGrey:#607D8B;
+$blueGreyHover:#37474F;
+$cyan:#00BCD4;
+$cyanHover:#00838F;
+$teal:#009688;
+$tealHover:#00695C;
+$red:#F44336;
+$redHover:#C62828;
+$green:#4CAF50;
+$greenHover:#2E7D32;
+$deepOrange:#FF5722;
+$deepOrangeHover:#D84315;
+$purple:#673AB7;
+$purpleHover:#4527A0;
+$pink:#E91E63;
+$pinkHover:#AD1457;
+$amber:#FFC107;
+$amberHover:#FF8F00;
+$orange:#FF9800;
+$orangeHover:#EF6C00;
+$brown:#795548;
+$brownHover:#4E342E;
+$indigo:#3F51B5;
+$indigoHover:#283593;
+$blue:#03A9F4;
+$blueHover:#0277BD;
+$grayBgColor:#757575;
+$white: #ffffff;
+$red: #e74c3c;
+$orange: #ff6633;
+$lightorange: #FF9900;
+$green: #339933;
+$yellow: #F3C13A;
+$purple: #875F9A;
+$blue: #3B5998;
+$pink: #aa6813;
+$grey: #757575;
+$lightgrey: #dddddd;
+$starColor: #2E99CC;
+$border: #d7d7d7;
+$midgrey: #6c757d;
+$lightgreen: #30b90f;
+$grey_b9: #b9b9b9;
+$grey_bb: #bbbbbb;
+
+// General
+$inlineSpacing: .5em;
+$i: unquote("!important");
+$borderRadius:3px;
+$transitionDuration: .3s;
+$inputOptionPadding:.625em .875em;
+
+/* Layout */
+$textColor: $homemanagePrimaryDarkColor;
+$textSecondaryColor:#757575;
+$hoverBgColor:#e8e8e8;
+$hoverTextColor:#000000;
+$activeMenuItemBadgeColor:$white;
+$activeMenuItemBadgeTextColor:#212121;
+$dividerColor:#bdbdbd;
+$primaryColor: #002a3a;
+$accentColor: #002a3a;
+$accentDarkColor: #002a3a;
+$accentLightColor: #74b3ee;
+$accentTextColor: $white;
+$lightPrimaryColor: #F4F4F4; 
+$primaryLightColor: #9fa8da;
+$primaryGreyColor: #757575;
+$primaryBlueColor: #41b6e6;
+
+$secondaryGreyColor: #f2f2f2;
+$secondryColor1: #212121; // $textColor
+$secondryColor2: #757575; // $textSecondaryColor
+$secondryColor3: #939393; // $darkBorderColor
+$secondryColor4: #b0b0a7; // $rating-0
+$secondryColor5: #eeeeee; // $menuBorderColor
+$secondryColor6: #f7f7f7; // $secondryDarkColor
+$secondryColor7: #fbfbfb; // $secondryLightColor, $bodyBgColor
+$secondryColor8: #515151;
+
+$lightBorder: #dee2e6;
+$secondaryLightColor : #d8d8d8;
+
+$lightBoxShadow1: #e6e6e4;
+$lightBoxShadow2: #dbdada;
+$lightBoxShadow3: #dddada;
+
+$contentBgColor: $white;
+$contentIconColor: $primaryGreyColor;
+$headerBgColor: $homemanagePrimaryDarkColor;
+$headerTextColor: $white;
+$headerIconColor:$white;
+$overlayBgColor:#58575c;
+
+
+// InputText
+$inputHeaderFontSize:1em;
+$inputHeaderPadding:.625em 1em;
+$inputFontSize:1em;
+$inputOptionFontSize:1em;
+$inputBgColor: transparent;
+$inputBorderColor:#bdbdbd;
+$inputBorderErrorColor:#e62a10;
+$inputErrorTextColor:#e62a10;
+$inputFieldLabelTextColor:#999999;
+$inputFieldBoxBgColor:#f7f7f7;
+$inputFieldFillBgColor:#f7f7f7;
+$inputAutoFillBorderColor: #bdbdbd;
+
+// Button
+$buttonFontSize:1em;
+$buttonTextColor:$white;
+
+// Input lists
+$inputListItemBgColor:$white;
+$inputListItemCheckboxBorderColor:$white;
+$inputListItemFilterTextColor:$white;
+
+//input switch
+$inputSwitchOffHandleBgColor:$white;
+
+//checkbox
+$checkboxBorderColor:#757575;
+
+//radiobutton
+$radioButtonBorderColor:#757575;
+
+//calendar
+$calendarNavIconColor:$white;
+$calendarCellTextColor:$white;
+
+//messages, growl, toast
+$messageIconColor:$white;
+$infoMessageBgColor:#2196F3;
+$infoMessageBorderColor:#2196F3;
+$infoMessageTextColor:$white;
+
+$successMessageBgColor:#8BC34A;
+$successMessageBorderColor:#8BC34A;
+$successMessageTextColor:$white;
+
+$warnMessageBgColor:#ffc107;
+$warnMessageBorderColor:#ffc107;
+$warnMessageTextColor:$white;
+
+$errorMessageBgColor:#e62a10;
+$errorMessageBorderColor:#e62a10;
+$errorMessageTextColor:$white;
+
+//editor
+$editorHeaderBgColor:#e8e8e8;
+
+//paginator
+$paginatorIconColor:$white;
+
+//turbo table
+$dividerLightColor:#cacaca;
+$tableOddRowBgColor:#f4f4f4;
+$tableHeaderCellBgColor:$white;
+$tableHeaderCellTextColor:$textColor;
+$tableContentLoadIconColor:$white;
+$tableBodyRowBgColor:$white;
+
+//datatable
+$datatableEvenRowBgColor:#f4f4f4;
+$datatableHeaderCellBgColor:$white;
+$datatableHighlightTextColor:$white;
+
+//dataview
+$dataviewHeaderBgColor:$white;
+
+//schedule
+$scheduleEventBgColor:$primaryLightColor;
+$scheduleEventTextColor:$white;
+
+//steps
+$stepsItemBgColor:$white;
+$stepsItemNumberColor:$white;
+$stepsItemTextColor: $textSecondaryColor;
+$menuitemIconColor:#757575;
+
+//tabview
+$tabsNavBgColor:$white;
+
+//panel common
+$panelHeaderBgColor: $primaryColor;
+$panelHeaderBorderColor: $primaryColor;
+$panelHeaderTextColor:$white;
+$panelHeaderIconColor:$white;
+
+//dialog
+$dialogHeaderBgColor:$white;
+$dialogHeaderTextColor:$textColor;
+$dialogFooterButtonBgColor:$white;
+$dialogFooterButtonTextColor:$textColor;
+
+//tooltip
+$tooltipBgColor:#323232;
+
+$maskBgColor:#424242;
+$topbarButtonColor:$white;
+$topbarButtonHoverColor:#e8e8e8;
+$topbarSearchBorderColor:$white;
+$topbarSearchColor:$white;
+$topbarIconColor:$white;
+$topbarIconHoverColor:#e8e8e8;
+$topbarMenuBgColor:$white;
+$layoutMenuBgColor:$white;
+$layoutMenuScrollbarBgColor:#aaaaaa;
+$layoutMenuItemIconColor:#757575;
+$layoutMenuItemActiveColor:#e8e8e8;
+$horizontalLayoutMenuItemTextColor:$white;
+$horizontalLayoutMenuItemHoverBgColor:#e8e8e8;
+$horizontalLayoutMenuSubMenuBgColor:$white;
+$horizontalLayoutMenuSubMenuActiveBgColor:#e8e8e8;
+$horizontalDarkLayoutMenuItemTextColor:$white;
+$slimLayoutMenuSubMenuBgColor:$white;
+$slimMenuTooltipColor:$white;
+$rightPanelBgColor:$white;
+$topbarSubmenuBgColor:$white;
+
+$profileMenuBorderBottomColor:#d6d5d5;
+$profileMenuDarkBorderBottomColor:#545454;
+$darkMenuColor:$white;
+$profileTextColor: $white;
+
+/* Theme */
+$headerFontSize:1em;
+$headerPadding:.625em 1em;
+$contentFontSize:1em;
+$contentPadding:.625em 1em;
+$inputHeaderFontSize:1em;
+$inputHeaderPadding:.625em 1em;
+$inputBorderColor:#bdbdbd;
+$inputBorderErrorColor:#e62a10;
+$inputErrorTextColor:#e62a10;
+$textboxBgColor:#f7f7f7;
+$inputFontSize:1em;
+$buttonFontSize:1em;
+$inputOptionFontSize:1em;
+$inputOptionPadding:.625em .875em;
+$hoverBgColor:#e8e8e8;
+$hoverTextColor:#000000;
+$dividerColor:#bdbdbd;
+$dividerLightColor:#cacaca;
+$grayBgColor:#757575;
+$invalidInputLabelColor:#e62a10;
+$invalidInputBorderColor:#e62a10;
+$activeMenuItemBadgeColor:$white;
+$activeMenuItemBadgeTextColor:#212121;
+
+/* Respective font sizes */
+$fontSize: 16px;
+$mobileFontSize: 14px;
+$lineHeight: 1.5;
+
+$font-xxs: (mobile: 8px, tablet: 8px, desktops: 9px, larger: 10px);
+$font-xs: (mobile: 10px, tablet: 10px, desktops: 11px, larger: 12px);
+$font-sm: (mobile: 12px, tablet: 12px, desktops: 13px, larger: 14px);
+$font-md: (mobile: 14px, tablet: 14px, desktops: 15px, larger: 16px);
+$font-lg: (mobile: 16px, tablet: 16px, desktops: 17px, larger: 18px);
+$font-xl: (mobile: 18px, tablet: 18px, desktops: 19px, larger: 20px);
+
+$font-10: (mobile: 10px, tablet: 10px, desktops: 10px, larger: 10px);
+$font-12: (mobile: 12px, tablet: 12px, desktops: 12px, larger: 12px);
+$font-13: (mobile: 13px, tablet: 13px, desktops: 13px, larger: 13px);
+$font-14: (mobile: 14px, tablet: 14px, desktops: 14px, larger: 14px);
+$font-16: (mobile: 16px, tablet: 16px, desktops: 16px, larger: 16px);
+$font-18: (mobile: 18px, tablet: 18px, desktops: 18px, larger: 18px);
+$font-20: (mobile: 20px, tablet: 20px, desktops: 21px, larger: 22px);
+$font-22: (mobile: 22px, tablet: 22px, desktops: 23px, larger: 24px);
+$font-24: (mobile: 24px, tablet: 24px, desktops: 28px, larger: 30px);
+$font-26: (mobile: 26px, tablet: 26px, desktops: 27px, larger: 28px);
+$font-28: (mobile: 28px, tablet: 28px, desktops: 29px, larger: 30px);
+$font-30: (mobile: 30px, tablet: 30px, desktops: 31px, larger: 32px);
+$font-32: (mobile: 32px, tablet: 32px, desktops: 33px, larger: 34px);
+$font-34: (mobile: 34px, tablet: 34px, desktops: 35px, larger: 36px);
+$font-36: (mobile: 36px, tablet: 36px, desktops: 37px, larger: 38px);
+$font-40: (mobile: 40px, tablet: 40px, desktops: 40px, larger: 40px);
+
+$font-18-18-20-20: (mobile: 18px, tablet: 18px, desktops: 20px, larger: 20px);
+
+$font-default: (mobile: 12px, tablet: 14px, desktops: 14px, larger: 14px);
+$font-main-heading: (mobile: 24px, tablet: 24px, desktops: 24px, larger: 24px);
+$font-sub-heading: (mobile: 22px, tablet: 22px, desktops: 22px, larger: 22px);
+$font-panel-heading: (mobile: 20px, tablet: 20px, desktops: 20px, larger: 20px);
+$font-section-heading: (mobile: 18px, tablet: 18px, desktops: 18px, larger: 18px);
+
+$font-icon-sm: (mobile : 18px, tablet : 18px, desktops: 18px, larger : 18px);
+$font-icon-md: (mobile : 26px, tablet : 26px, desktops: 26px, larger : 26px);
+$font-icon-lg: (mobile : 34px, tablet : 34px, desktops: 34px, larger : 34px);

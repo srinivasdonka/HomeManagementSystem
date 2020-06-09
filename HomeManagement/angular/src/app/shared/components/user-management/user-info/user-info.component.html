@@ -1,0 +1,121 @@
+<div *ngIf="userInfo">
+  <div class="d-flex justify-content-between d-block d-sm-none page-title page-title-m3">
+    <div class="p0">
+      <strong>{{userInfoTitle}}</strong>
+      <br>
+    </div>
+    <div class="p-0 ml-auto">
+
+    </div>
+  </div>
+
+  <div class="d-none d-sm-flex p-2">
+    <div class="pl-0 pt-2">
+      <homemanagement-page-title [title]="userInfoTitle"></homemanagement-page-title>
+    </div>
+    <div class="ml-auto p-2">
+      <button type="button" *ngIf="checkUserCanEditByStatus()" class="btn btn-secondary mr-1" (click)="editUser()">{{labels.BUTTONS.EDIT}}</button>
+      <button type="button" class="btn btn-secondary mr-1" (click)="setStatus()">{{ getStatusTest() }}</button>
+    </div>
+  </div>
+
+  <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+
+    <div class="jumbotron no-bg user-info m-0 pt-0">
+      <h4 class="">
+        <span class="pb-1 user-name">{{userInfo.firstName}}, {{userInfo.lastName}}</span>
+      </h4>
+      <div class="pt-2 pb-2">
+        {{userInfo.username}}
+        <span class="d-block d-sm-none float-right" [ngClass]=" userInfo.status === 'Active' ? 'activeColor' : 'deactiveColor' ">{{userInfo.status}}</span>
+      </div>
+      <div class="row m-0">
+        <div class="d-none d-sm-block user-col-1 mr-2">{{labels.COMMON.STATUS}}:
+          <span [ngClass]=" userInfo.status === 'Active' ? 'activeColor' : 'deactiveColor' ">{{userInfo.status}}</span>
+        </div>
+        <div class="user-col-2 mr-2">{{labels.COMMON.REGISTERED_DATE}}:
+          <span class="deactiveColor">{{registeredDate}}</span>
+        </div>
+        <div class="user-col-2 mr-2">{{labels.COMMON.LAST_LOGIN_DATE}}:
+          <span class="deactiveColor">{{userInfo.lastLogin}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron white-bg rounded-5 mb-2">
+      <div class="d-block d-md-none w-100 h-100 align-self-center">{{labels.COMMON.ROLE}}:</div>
+      <div class="d-flex flex-row mb-3">
+        <div class="d-none d-md-block w-10 h-100 align-self-center">{{labels.COMMON.ROLE}}:</div>
+        <div class="p-0 role">
+          <button type="button" class="btn btn-primary m-1">{{selectedRoleType}}</button>
+        </div>
+      </div>
+      <div class="d-block d-md-none w-100 h-100 align-self-center">{{labels.COMMON.PERMISSIONS}}:</div>
+      <div class="d-flex flex-row">
+        <div class="d-none d-md-block w-10 h-100 align-self-center">{{labels.COMMON.PERMISSIONS}}:</div>
+        <div class="p-0 permissions">
+          <span *ngFor="let privilege of privileges">
+            <button *ngIf="privilege.checked" class="btn btn-disabled m-1" >{{privilege.name}}
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron white-bg rounded-5">
+      <h3>{{labels.COMMON.HISTORY}}</h3>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+        <li class="list-group-item">Oct. 30, 2018 Notification History Log content rating is Everyone. This app is listed in Productivity category of
+          app store.
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+</div>
+
+
+<div *ngIf="mobileFilterSection" class="d-block d-sm-none mobile-actions">
+  <div class="d-flex justify-content-around p-2">
+    <div>
+      <button type="button" *ngIf="checkUserCanEditByStatus()" class="btn btn-primary mr-1" (click)="editUser()">{{labels.BUTTONS.EDIT}}</button>
+      <button type="button" class="btn btn-primary mr-1" (click)="setStatus()">{{ getStatusTest() }}</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mobileFilterSection">
+  <p-sidebar [(visible)]="mobileFilter" position="bottom" appendTo="body">
+    <div class="d-flex justify-content-around p-2">
+      <div>
+        <button type="button" *ngIf="checkUserCanEditByStatus()" class="btn btn-primary mr-1" (click)="editUser()">{{labels.BUTTONS.EDIT}}</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-primary mr-1" (click)="setStatus()">{{ getStatusTest() }}</button>
+      </div>
+    </div>
+  </p-sidebar>
+</div>

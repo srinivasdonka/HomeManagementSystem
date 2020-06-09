@@ -1,0 +1,54 @@
+@import 'src/sass/variables';
+@import 'src/sass/mixins';
+
+// Absolute Center loader
+.loading {
+  bottom: 0;
+  height: 2em;
+  left: 0;
+  margin: auto;
+  overflow: show;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 2em;
+  z-index: 999;
+
+  // Transparent Overlay
+  &::before {
+    background-color: $secondryColor1;
+    content: '';
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0.3;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  &:not(:required) {
+    &::after {
+      @include animation(0, 1.2s, loader);
+      border: 5px solid transparent;
+      border-color: $homemanagePrimaryDarkColor transparent;
+      border-radius: 50%;
+      content: ' ';
+      display: block;
+      height: 46px;
+      margin: 1px;
+      width: 46px;
+    }
+  }
+}
+
+// Animation
+@keyframes loader {
+  0% {
+    @include rotate(0deg);
+  }
+
+  100% {
+    @include rotate(360deg);
+  }
+}

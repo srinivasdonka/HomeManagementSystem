@@ -1,0 +1,66 @@
+
+@import 'src/sass/variables';
+
+:host,
+.admin-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ps {
+  height: 100vh;
+  max-width: 100%;
+  position: relative;
+  padding: 15px;
+  transform: translateZ(0);
+}
+
+@media (pointer: coarse) {
+  .ps {
+    overflow-y: auto $i;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 767px) {
+  .ps {
+    padding: 0;
+    height: calc(100vh - 60px);
+  }
+}
+
+.menu-static {
+  margin-left: 251px;
+}
+
+router-outlet {
+  display: flex;
+}
+
+section {
+  &:nth-child(2) {
+    padding-bottom: 70px;
+  }
+}
+
+@media(max-width: 575.98px) {
+  section {
+    &:nth-child(2) {
+      padding-bottom: 60px;
+    }
+  }
+
+  .empty-div {
+    height: 90px;
+  }
+}
+
+.accept-cookie {
+	height: 70px;
+	
+	p {
+    text-align: center;
+    margin: 0 auto;
+    width: 90%;
+	}
+}

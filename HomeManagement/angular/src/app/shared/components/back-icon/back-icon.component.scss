@@ -1,0 +1,12 @@
+@import 'src/sass/variables';
+
+.hamburger-back {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 0;
+  width: 24px;
+  
+  img {
+    width: 24px;
+  }
+}

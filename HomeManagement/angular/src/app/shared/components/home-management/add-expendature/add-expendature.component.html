@@ -1,0 +1,142 @@
+<div class="d-flex justify-content-between d-block d-sm-none page-title page-title-m3">
+    <div class="p0">
+      <strong>{{userInfoTitle}}</strong>
+      <br>
+    </div>
+    <div class="p-0 ml-auto">
+  
+    </div>
+  </div>
+  
+  <div class="d-none d-sm-flex p-2">
+    <div class="pl-0 pt-2">
+      <homemanagement-page-title [title]="userInfoTitle"></homemanagement-page-title>
+    </div>
+    <div class="ml-auto p-2">
+  
+    </div>
+  </div>
+  
+  <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+  
+    <div class="jumbotron no-bg rounded-5 primary-color p-0">
+  
+      <form class="add-user-form" [formGroup]="addExpForm" novalidate>
+        <div class="jumbotron white-bg rounded-5">
+  
+          <div class="row-title">{{labels.HOME_MANAGEMENT.TYPE_HOME_DAILY_EXP}}</div>
+  
+          <div class="row">
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" id="inputUserame" class="form-control col-md-12" name="itemName" formControlName="itemName"
+                    required placeholder="{{labels.PLACEHOLDERS.ITEM_NAME}}">
+  
+                  <div *ngIf="itemName.errors &amp;&amp; (itemName.dirty || itemName.touched)" class="invalid-feedback">
+                    <div *ngIf="itemName.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+  
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemId" formControlName="itemId" placeholder="{{labels.PLACEHOLDERS.ITEM_ID}}">
+  
+                  <div *ngIf="itemId.errors &amp;&amp; (itemId.dirty || itemId.touched)" class="invalid-feedback">
+                    <div *ngIf="itemId.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemType" formControlName="itemType" placeholder="{{labels.PLACEHOLDERS.ITEM_TYPE}}">
+  
+                  <div *ngIf="itemType.errors &amp;&amp; (itemType.dirty || itemType.touched)" class="invalid-feedback">
+                    <div *ngIf="itemType.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemPrice" formControlName="itemPrice" placeholder="{{labels.PLACEHOLDERS.ITEM_PRICE}}">
+  
+                  <div *ngIf="itemPrice.errors &amp;&amp; (itemPrice.dirty || itemPrice.touched)" class="invalid-feedback">
+                    <div *ngIf="itemPrice.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" id="name"  name="itemPurchaseDate" formControlName="itemPurchaseDate" placeholder="{{labels.PLACEHOLDERS.ITEM_PURCHASE_DATE}}">
+  
+                  
+                  <div *ngIf="itemPurchaseDate.errors &amp;&amp; (itemPurchaseDate.dirty || itemPurchaseDate.touched)" class="invalid-feedback">
+                    <div *ngIf="itemPurchaseDate.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemStatus" formControlName="itemStatus" placeholder="{{labels.PLACEHOLDERS.ITEM_STATUS}}">
+  
+                  <div *ngIf="itemStatus.errors &amp;&amp; (itemStatus.dirty || itemStatus.touched)" class="invalid-feedback">
+                    <div *ngIf="itemStatus.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-sm col-sm-4 d-none d-sm-block">
+              <div class="row">
+                <div class="col-sm-12">
+                  <button type="submit" (click)="addExpendature()" class="btn btn-secondary" [disabled]="!addExpForm.valid">
+                    {{labels.BUTTONS.CONTINUE}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </form>
+  
+    </div>
+  
+  </section>
+  
+  <div *ngIf="mobileFilterSection" class="d-block d-sm-none mobile-actions">
+    <div class="d-flex justify-content-around p-2">
+      <div>
+        <button type="submit" class="btn btn-secondary mr-1" (click)="addExpendature()" [disabled]="!addExpForm.valid">{{labels.BUTTONS.CONTINUE}}</button>
+      </div>
+    </div>
+  </div>

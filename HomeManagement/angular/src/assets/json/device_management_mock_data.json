@@ -1,0 +1,126 @@
+{
+	"result" : {
+		"content" : [
+			{
+				"id": 1,
+				"hardware_id": "MESH000A01",
+				"model_name": "XA248DA0001",
+				"device_name": "Name #001",
+				"device_type": "Mesh Router",
+				"deviceKey": "A1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 2,
+				"hardware_id": "MESH000A02",
+				"model_name": "XA248DA0002",
+				"device_name": "Name #002",
+				"device_type": "Mesh Router",
+				"deviceKey": "B1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 3,
+				"hardware_id": "MESH000A03",
+				"model_name": "XA248DA0003",
+				"device_name": "Name #003",
+				"device_type": "Mesh Router",
+				"deviceKey": "C1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 4,
+				"hardware_id": "MESH000A04",
+				"model_name": "XA248DA0004",
+				"device_name": "Name #004",
+				"device_type": "Mesh Router",
+				"deviceKey": "D1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 5,
+				"hardware_id": "MESH000A05",
+				"model_name": "XA248DA0005",
+				"device_name": "Name #005",
+				"device_type": "Mesh Router",
+				"deviceKey": "E1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 6,
+				"hardware_id": "MESH000A06",
+				"model_name": "XA248DA0006",
+				"device_name": "Name #006",
+				"device_type": "Mesh Router",
+				"deviceKey": "F1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 7,
+				"hardware_id": "MESH000A07",
+				"model_name": "XA248DA0007",
+				"device_name": "Name #007",
+				"device_type": "Mesh Router",
+				"deviceKey": "G1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 8,
+				"hardware_id": "MESH000A08",
+				"model_name": "XA248DA0008",
+				"device_name": "Name #008",
+				"device_type": "Mesh Router",
+				"deviceKey": "H1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 9,
+				"hardware_id": "MESH000A09",
+				"model_name": "XA248DA0009",
+				"device_name": "Name #009",
+				"device_type": "Mesh Router",
+				"deviceKey": "I1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Online"
+			},
+			{
+				"id": 10,
+				"hardware_id": "MESH000A10",
+				"model_name": "XA248DA010",
+				"device_name": "Name #010",
+				"device_type": "Mesh Router",
+				"deviceKey": "J1234567890",
+				"hardware_version": "Version name#12.05",
+				"serial_number": "1890QDAQ567865JWM",
+				"updatedTimestamp": "1546405170",
+				"status" : "Not Online"
+			}
+		]
+	}	 
+}

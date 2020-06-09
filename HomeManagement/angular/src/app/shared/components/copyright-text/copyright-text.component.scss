@@ -1,0 +1,11 @@
+@import 'src/sass/variables';
+
+:host {
+	width: 100%;
+}
+
+.footer-text {
+  @include font-size($font-sm);
+  color: $homemanage-Light-Grey;
+  width: 100%;
+}

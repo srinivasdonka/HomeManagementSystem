@@ -1,0 +1,119 @@
+<!-- Header for Mobile Start -->
+<section class="d-block d-sm-none">
+  <div class="flex-parent bottom-shadow">
+    <div>
+      <span *ngIf="headerObject && headerObject.menu">
+        <span class="hamburger-menu" (click)="onMenuClick();">
+          <img src="assets/homemanage_icons/shared/menu.svg" alt="menu" />
+        </span>
+      </span>
+      <span *ngIf="headerObject && headerObject.back">
+        <homemanagement-back-icon></homemanagement-back-icon>
+      </span>
+      <span *ngIf="headerObject && headerObject.reload">
+        <span class="hamburger-reload" (click)="reloadPage()">
+          <img src="assets/homemanage_icons/shared/back_web.svg" alt="back" />
+        </span>
+      </span>
+    </div>
+
+    <span class="p-0 text-truncate">
+      <!-- <div class="title" *ngIf="headerObject && headerObject.title">{{headerObject.title}}</div> -->
+      <a class="mob-logo" (click)="navigateToRoot()" *ngIf="headerObject && headerObject.title">
+        <img class="img-fluid fade-in animated" src="assets/homemanage_icons/shared/ds_logo.jpg" />
+      </a>
+    </span>
+
+    <div class="flex-child short-and-fixed my-auto h-100">
+
+      <div class="topbar-menu">
+        <!-- Notification For Mobile *ngIf="headerObject.notification" -->
+        <div class="notifications">
+          <span class="notifications-section" (click)="toggleNotificationPanel($event, notificationMobTarget)">
+            <img src="assets/homemanage_icons/shared/notification.svg" alt="notifications">
+            <span class="badge badge-notify" *ngIf="notifications.length > 0">{{notifications.length}}</span>
+          </span>
+          <div #notificationMobTarget></div>
+        </div>
+        <!-- Notification For Mobile End-->
+      </div>
+
+      <!-- Action Icons Only for Mobile -->
+      <div class="topbar-menu">
+        <div class="d-none d-md-block" (click)="logout()">
+          <span>
+            <img alt="logout">
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Header for Mobile End -->
+
+
+<!-- Header for Desktop Start -->
+<section class="d-none d-sm-block">
+  <!-- <a class="navbar-brand logo" (click)="navigateToRoot()">
+    <img src="assets/homemanage_icons/shared/ds_logo.jpg" class="d-inline-block align-top" alt="">
+  </a> -->
+  <ul class="topbar-menu-left">
+    <li>
+      <span class="hamburger-menu" (click)="onMenuClick();">
+        <img src="assets/homemanage_icons/shared/menu.svg" alt="menu" />
+      </span>
+    </li>
+    <li>
+      <!-- *ngIf="headerObject && headerObject.title" -->
+      <a class="navbar-brand logo mob-logo" (click)="navigateToRoot()">
+        <img class="img-fluid fade-in animated ml-3" src="assets/homemanage_icons/shared/ds_logo.jpg" />
+      </a>
+    </li>
+  </ul>
+
+  <ul class="topbar-menu">
+    <li class="add-expendature d-none d-sm-block">
+      <button type="button" class="btn btn-secondary mr-4" (click)="addDevice()">+ {{labels.BUTTONS.ADD_EXPENDATURE}}</button>
+    </li>
+    <li class="notifications right-menu-has-bg" (click)="toggleNotificationPanel($event, notificationTarget)">
+      <span class="cursor-pointer">
+        <img class="hide-in-tablet" src="assets/homemanage_icons/shared/notification.svg" alt="notifications">
+        <span class="badge" [ngClass]="notifications.length > 0 ? 'badge-notify' : ''">
+          <span *ngIf="notifications.length > 0">{{notifications.length}}</span>
+        </span>
+      </span>
+      <div #notificationTarget></div>
+    </li>
+    <li class="profile right-menu-has-bg" (click)="toggleProfilenPanel($event, profileTarget)">
+      <span class="cursor-pointer">
+        <img src="assets/homemanage_icons/shared/man.svg" alt="man">
+        <span class="ml-2 mr-2" *ngIf="userProfile">{{userProfile.firstName}}</span>
+        <img src="assets/homemanage_icons/shared/top_menu_arrow_down.svg" alt="arrow">
+      </span>
+      <div #profileTarget></div>
+    </li>
+  </ul>
+</section>
+<!-- Header for Desktop End -->
+
+<p-overlayPanel #notificationOP>
+  <span class="triangle"></span>
+  <homemanagement-notifications (hideOnClick)="hideNotifications()" [notificationList]="notifications"></homemanagement-notifications>
+</p-overlayPanel>
+
+<p-overlayPanel #profileOP>
+  <span class="triangle"></span>
+  <ul class="list-group list-group-flush profile-menu">
+    <li class="list-group-item list-group-item-action first-child">
+      <a (click)="showProfile()">
+        My Profile
+        <span class="arrow-right float-right">
+          <img src="assets/homemanage_icons/shared/arrow_right.svg" />
+        </span>
+      </a>
+    </li>
+    <li class="list-group-item list-group-item-action">
+      <a (click)="logout()">Logout</a>
+    </li>
+  </ul>
+</p-overlayPanel>

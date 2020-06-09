@@ -1,0 +1,324 @@
+@import 'src/sass/variables';
+
+homemanagement-sidebar {
+  .ui-scrollpanel-content {
+    background: $homemanagePrimaryDarkColor;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .layout-container {
+      p-scrollpanel {
+        .ui-scrollpanel {
+          height: calc(100% - 96px) $i;
+        }
+      }
+    }
+    .ui-scrollpanel-content {
+      // background: $white;
+      height: 100%;
+    }
+  }
+}
+
+modal-container {
+  .preview {
+    top: 20%;
+  }
+}
+
+body {
+  perfect-scrollbar,
+  homemanagement-root {
+    .ps__thumb-y,
+    .ps__rail-y,
+    .ps__rail-y:hover>.ps__thumb-y,
+    .ps__rail-y:focus>.ps__thumb-y,
+    >.ps.ps--active-y>.ps__rail-y:hover {
+      width: 4px;
+    }
+    .ps__thumb-x,
+    .ps__rail-x,
+    .ps__rail-x:hover>.ps__thumb-x,
+    .ps__rail-x:focus>.ps__thumb-x,
+    >.ps.ps--active-y>.ps__rail-y:hover {
+      height: 4px;
+    }
+  }
+
+  p-selectbutton {
+    .ui-button {
+      background-color: $white;
+      color: #002a3a;
+    }
+
+    .ui-button:hover { 
+      background-color: #002a3a;
+      color: $white;
+    }
+  }
+}
+
+homemanagement-header {
+  .ui-overlaypanel-content {
+    padding: 0;
+  }
+
+  p-overlaypanel {
+    .ui-overlaypanel {
+      top: 80px $i;
+    }
+
+    .ui-overlaypanel-content {
+      padding: 0;
+    }
+  }
+}
+
+@media (min-width: 300px) and (max-width: 767px) {
+  homemanagement-header {
+    p-overlaypanel {
+      .ui-overlaypanel {
+        top: 70px $i;
+      }
+    }  
+  }
+}
+
+homemanagement-dashboard {
+  .cards-section {
+    padding: 0;
+  }
+}
+
+p-checkbox {
+  label {
+    margin-bottom: 0;
+  }
+}
+
+p-sidebar {
+  .ui-sidebar-right {
+    width: 420px;
+  }
+}
+
+homemanagement-header {
+  p-sidebar {
+    .ui-sidebar-right {
+      width: 300px;
+    }
+  }
+}
+
+.ui-sidebar-close {
+  display: none;
+}
+
+homemanagement-accept-invitation,
+homemanagement-registration,
+homemanagement-login {
+  .invalid-feedback {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+}
+
+homemanagement-root {
+  .form-control {
+    &:focus {
+      -webkit-box-shadow: 0 0 0 0;
+      box-shadow: 0 0 0 0;
+    }
+  }
+}
+
+body {
+  .ui-state-highlight {
+    background-color: initial;
+    color: initial;
+  }
+}
+
+homemanagement-switch {
+  .switch {
+    position: relative;
+    display: inline-block;
+    height: 23px;
+    margin: 0;
+    top: 5px;
+    width: 40px;
+  }
+
+  .switch input {
+    display:none;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: $white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: $homemanagePrimaryDarkColor;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px $homemanagePrimaryDarkColor;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+}
+
+.jumbotron {
+  &.no-bg {
+    background-color: transparent;
+  }
+}
+
+.ui-scrollpanel-bar-y {
+  width: 3px;
+}
+
+.ngx-pagination {
+  padding-left: 0;
+  margin-bottom: 0 $i;
+
+  li {
+    border-radius: 5px $i;
+    background: $white $i;
+    color: $homemanagePrimaryDarkColor $i;
+    margin: 0 5px;
+
+    &.pagination-next,
+    &.pagination-previous {
+      &.disabled {
+        &::before {
+          margin-right: 0;
+        }
+        &::after {
+          margin-left: 0;
+        }
+      }
+
+      a {
+        &::before {
+          margin-right: 0;
+        }
+        &::after {
+          margin-left: 0;
+        }
+      }
+    }
+
+    &.ellipsis {
+      overflow: visible;
+    }
+  
+    &.current {
+      background: $homemanagePrimaryDarkColor $i;
+      color: $white $i;
+    }
+  
+    &.disabled {
+      background: #cacaca $i;
+      color: #cacaca;
+  
+      ::before {
+        margin-right: 0 $i;
+      }
+    }
+
+    a {
+      &::before {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.checkbox {
+  position: relative;
+
+  label {
+    padding-left: 24px;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"] + .box:before,
+  input[type="checkbox"] + .box:after {
+    transition: all 0.3s;
+  }
+  input[type="checkbox"] + .box:after {
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    margin-top: -5px;
+    margin-left: -4px;
+    display: inline-block;
+    content: ' ';
+    width: 20px;
+    height: 20px;
+    border: 2px solid $homemanage-checkbox-border;
+    border-radius: 4px;
+    background-color: $homemanage-checkbox-background;
+    z-index: 1000;
+  }
+  input[type="checkbox"]:checked + .box:after {
+    background-color: $homemanagePrimaryDarkColor;
+    border-color: $homemanagePrimaryDarkColor;
+  }
+  input[type="checkbox"]:checked + .box:before {
+    transform: rotate(45deg);
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 13px;
+    border-width: 2px;
+    border-style: solid;
+    border-top: 0;
+    border-left: 0;
+    border-color: $white;
+    content: '';
+    z-index: 10000;
+  }
+}
+
+
+  
