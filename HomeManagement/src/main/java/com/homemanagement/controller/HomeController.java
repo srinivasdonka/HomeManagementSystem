@@ -83,20 +83,13 @@ public class HomeController {
 		{
 			try {
 				logger.info("addExpendature"+homeExp.getItem_id());
-				HomeExpendature isDeviceExists= homeRepository.getItemeByItemId(homeExp.getItem_id());
-				if(isDeviceExists!=null)
-				{
-					serviceStatus.setStatus("failure");
-					serviceStatus.setMessage("Device Id Already Exist");
-				}
-				else {
-					String itemId = UUID.randomUUID().toString();
-					homeExp.setId(itemId);
-					homeRepository.addDevice(homeExp);
-					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("successfully added home expedature ");	
 
-				}
+				String itemId = UUID.randomUUID().toString();
+				homeExp.setId(itemId);
+				homeRepository.addDevice(homeExp);
+				serviceStatus.setStatus("success");
+				serviceStatus.setMessage("successfully added home expedature ");	
+
 				return serviceStatus;
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -116,7 +109,7 @@ public class HomeController {
 
 		return serviceStatus;
 	}
-	
+
 	@RequestMapping(value="/getDeviceListByCompanyIdAndActiveStatus",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<List<HomeExpendature>> checkDeviceMaster(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active){
 
