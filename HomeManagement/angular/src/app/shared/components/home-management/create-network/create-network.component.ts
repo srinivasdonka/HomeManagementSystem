@@ -43,7 +43,7 @@ export class CreateNetworkComponent implements OnInit {
   currentPage = 1;
   hardwareId: any;
   devicesList = [];
-  deviceInfo: any;
+  itemInfo: any;
   countriesList: any;
   showPassword = false;
   showNetworkPassword = false;
@@ -208,23 +208,23 @@ export class CreateNetworkComponent implements OnInit {
 
       this.homeManagementService.addDeviceNetwork(networkInfo).subscribe(data => {
         if(data["status"] == "success") {
-          const deviceInfo = UserSettings.getDeviceInfo;
-          const deviceInfoUpdated = {
-            "device_id": deviceInfo.device_mac_id,
+          const itemInfo = UserSettings.getItemInfo;
+          const itemInfoUpdated = {
+            "device_id": itemInfo.device_mac_id,
             "device_name": "Router",
             "device_feed_type": "JSON",
-            "is_active": deviceInfo.is_active,
+            "is_active": itemInfo.is_active,
             "company_id": "123456",
-            "device_type": deviceInfo.device_type,
-            "hardware_key": deviceInfo.hardware_key,
-            "hardware_version": deviceInfo.hardware_version,
-            "model_name": deviceInfo.model_name,
-            "serial_number": deviceInfo.serial_number,
+            "device_type": itemInfo.device_type,
+            "hardware_key": itemInfo.hardware_key,
+            "hardware_version": itemInfo.hardware_version,
+            "model_name": itemInfo.model_name,
+            "serial_number": itemInfo.serial_number,
             "device_parent_id": null,
             "user_id": userProfile.id,
             "network_id": data.result
           }
-          this.homeManagementService.addDeviceToCompany(deviceInfoUpdated).subscribe(data => {
+          this.homeManagementService.addDeviceToCompany(itemInfoUpdated).subscribe(data => {
             if(data["status"] == "success") {
               this.currentPage = 4;
               this.currentPageTitle();

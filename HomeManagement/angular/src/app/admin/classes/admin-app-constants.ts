@@ -11,7 +11,13 @@ export class AdminAppConstants {
     {
       routerLink: './homemanagement',
       customClass: '',
-      label: 'Billing management',
+      label: 'Home Management',
+      roleObject: ''
+    },
+    {
+      routerLink: './propertymanagement',
+      customClass: '',
+      label: 'Property Management',
       roleObject: ''
     },
     

@@ -70,7 +70,7 @@ export class DeviceInfoComponent implements OnInit {
             }
           }, err => {
           });
-          UserSettings.setDeviceInfo = this.itemInfo;
+          UserSettings.setItemInfo = this.itemInfo;
           const d_list = data['deviceList'];
           this.itemList = [];
           d_list.forEach(ele => {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderService } from 'src/app/shared/services/header.service';
 
 @Component({
-  selector: 'homemanagement-comming-soon',
+  selector: 'propertymanagement-property-management',
   templateUrl: './comming-soon.component.html',
   styleUrls: ['./comming-soon.component.scss']
 })

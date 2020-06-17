@@ -9,15 +9,16 @@ import * as moment from 'moment';
 import { ItemStatus } from 'src/app/shared/enums/device-status.enum';
 
 @Component({
-  selector: 'homemanagement-info-device',
+  selector: 'homemanagement-info-expendature',
   templateUrl: './info-device.component.html',
   styleUrls: ['./info-device.component.scss']
 })
-export class InfoDeviceComponent implements OnInit {
+export class 
+InfoDeviceComponent implements OnInit {
   labels: any;
   homeExpInfoTitle = 'Info Home Expendature';
 
-  itemId: any;
+  id: any;
   itemList = [];
   itemInfo: any;
   mobileFilterSection = false;
@@ -28,7 +29,7 @@ export class InfoDeviceComponent implements OnInit {
     private route: ActivatedRoute,
     private appConfigService: AppConfigService,
     private router: Router,
-    private deviceManagementService: HomeManagementService,
+    private homeManagementService: HomeManagementService,
     private headerService: HeaderService,
     private windowService: WindowService
   ) { }
@@ -52,7 +53,7 @@ export class InfoDeviceComponent implements OnInit {
     this.innerWidth = this.windowService.windowRef.innerWidth;
     this.mobileFilterSection = (this.innerWidth < 768) ? true: false;
     this.route.params.subscribe(params => {
-      this.itemId = params['itemId'];
+      this.id = params['itemId'];
       this.getItemByItemId();
     });
   }
@@ -65,20 +66,21 @@ export class InfoDeviceComponent implements OnInit {
   }
 
   getItemByItemId() {
-    this.deviceManagementService.getItemByItemId(this.itemId).subscribe(data => {
+    this.homeManagementService.getItemByItemId(this.id).subscribe(data => {
       this.itemInfo = data;
-      this.itemInfo.registeredDate =  moment(this.itemInfo.createdDate).format("MMM DD, HH:mm, YYYY");
-      this.itemInfo.lastModifiedDate =  moment(this.itemInfo.updatedDate).format("MMM DD, HH:mm, YYYY");
-      this.itemInfo.firmwareLastUpdatedDate =  moment(this.itemInfo.firmwareLastUpdate).format("MMM DD, HH:mm, YYYY");
-      this.itemInfo.firmwareUpdateSettingTime =  moment(this.itemInfo.firmwareUpdateSettings).format("MMM DD, HH:mm, YYYY");
-    }, err => {
+      this.itemInfo.item_id =  this.itemInfo.result.item_id;
+      this.itemInfo.item_name  = this.itemInfo.result.item_name;
+      this.itemInfo.item_type  =  this.itemInfo.result.item_type;
+      this.itemInfo.item_price  =  this.itemInfo.result.item_price;
+      this.itemInfo.item_purchase_date  =  moment(this.itemInfo.result.item_purchase_date).format("MMM DD, HH:mm, YYYY");
+      this.itemInfo.item_status  =  this.itemInfo.result.item_status;
     });
 
     console.log(this.itemInfo);
   }
 
   reconfigureDevice() {
-    this.router.navigate(['/admin/admin-root/homemanagement/create-network/' + this.itemId]);
+    this.router.navigate(['/admin/admin-root/homemanagement/create-network/' + this.id]);
   }
 
   getStatusTest() {
@@ -90,12 +92,12 @@ export class InfoDeviceComponent implements OnInit {
   }
 
   setStatus() {
-    if (this.itemInfo.is_active === true) {
-      this.itemInfo.is_active = false;
+    if (this.itemInfo.paid === true) {
+      this.itemInfo.paid = false;
     } else {
-      this.itemInfo.is_active = true;
+      this.itemInfo.paid = true;
     }
-    this.deviceManagementService.updateDevice(this.itemInfo).subscribe(result => {
+    this.homeManagementService.updateDevice(this.itemInfo).subscribe(result => {
       console.log(result);
       this.checkUserCanEditDeviceByStatus();      
     }, error => {
@@ -104,7 +106,7 @@ export class InfoDeviceComponent implements OnInit {
   }
 
   checkUserCanEditDeviceByStatus() {
-    if (this.itemInfo.is_active === true) {
+    if (this.itemInfo.paid === true) {
       return true;
     } else {
       return false;
@@ -112,7 +114,7 @@ export class InfoDeviceComponent implements OnInit {
   }
 
   editDevice() {
-    this.router.navigate(['/admin/admin-root/homemanagement/edit-device/' + this.itemId]);
+    this.router.navigate(['/admin/homemanagement/edit-expendature/' + this.id]);
   }
 
 }

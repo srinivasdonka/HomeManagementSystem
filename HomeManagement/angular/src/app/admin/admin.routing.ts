@@ -53,11 +53,11 @@ export const adminRoutes: Routes = [
         component: DevicesListComponent
       },
       {
-        path: 'homemanagement/edit-device/:hardwareId',
+        path: 'homemanagement/edit-expendature/:itemId',
         component: EditDeviceComponent
       },
       {
-        path: 'homemanagement/info-device/:hardwareId',
+        path: 'homemanagement/info-expendature/:itemId',
         component: InfoDeviceComponent
       },
       {
@@ -65,7 +65,7 @@ export const adminRoutes: Routes = [
         component: AddExpendatureComponent
       },
       {
-        path: 'homemanagement/device-info/:hardwareId/:deviceKey',
+        path: 'homemanagement/item-expendature/:itemId',
         component: DeviceInfoComponent
       },
       {
@@ -74,7 +74,7 @@ export const adminRoutes: Routes = [
       },      
      
       {
-        path: 'billingmanagement',
+        path: 'propertymanagement',
         component: CommingSoonComponent
       },
       

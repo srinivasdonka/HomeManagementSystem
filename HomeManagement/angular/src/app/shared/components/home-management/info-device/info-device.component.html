@@ -1,189 +1,65 @@
-<div class="d-flex justify-content-between d-block d-sm-none page-title page-title-m3">
-  
-</div>
+
 
 <div class="d-none d-sm-flex p-2 pl-0" *ngIf="itemInfo">
   <div class="pl-0 pt-2">
     <homemanagement-page-title [title]="userInfoTitle"></homemanagement-page-title>
   </div>
   <div class="ml-auto p-2">
-    <button type="button" *ngIf="checkUserCanEditDeviceByStatus()" class="btn btn-secondary mr-1" (click)="editDevice()">{{labels.BUTTONS.EDIT}}</button>
-    <button type="button" class="btn btn-secondary mr-1" (click)="setStatus()">{{ getStatusTest() }}</button>
+    <button type="button"  class="btn btn-secondary mr-1" (click)="editDevice()">{{labels.BUTTONS.EDIT}}</button>
   </div>
 </div>
 
-
-<div class="jumbotron no-bg user-info m-0 pt-0 pb-3" *ngIf="deviceInfo">
-  <h4 class="">
-    <span class="pb-1 user-name">{{itemInfo.itemName}}</span>
-    <span class="status-parent">{{labels.COMMON.PARENT}}</span>
-  </h4>
-  <div class="pt-2 pb-2">
-    {{labels.COMMON.ITEM_ID}}: {{itemInfo.itemId}}
-    <span class="d-block d-sm-none float-right" [ngClass]="itemInfo.status ? 'activeColor' : 'offline'">{{deviceInfo.status
-      ? 'Online' : 'Offline'}}</span>
-  </div>
-  <div class="row m-0">
-    <div class="d-none d-sm-block user-col-1 mr-5">{{labels.COMMON.STATUS}}:
-      <span [ngClass]="deviceInfo.status ? 'activeColor' : 'offline'">{{deviceInfo.status ? 'Online' : 'Offline'}}</span>
-    </div>
-    <div class="user-col-2 mr-5">{{labels.COMMON.REGISTERED_DATE}}:
-      <span class="deactiveColor">{{deviceInfo.registeredDate}}</span>
-    </div>
-    <div class="user-col-2">{{labels.HOME_MANAGEMENT.LAST_MODIFIED_DATE}}:
-      <span class="deactiveColor">{{deviceInfo.lastModifiedDate}}</span>
-    </div>
-  </div>
-</div>
 
 
 <form>
-  <div class="card mb-2" *ngIf="deviceInfo">
+  <div class="card mb-2" *ngIf="itemInfo">
     <div class="card-body">
       <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.DEVICE_INFO}}:</span>
+        <span class="pb-1 user-name">{{labels.COMMON.ITEM}}:</span>
       </h5>
 
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label>{{labels.COMMON.MODEL_NAME}}:</label>
+          <label>{{labels.COMMON.ITEM_NAME}}:</label>
           <div>
-            {{deviceInfo.deviceModelName}}
+            {{itemInfo.item_name}}
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label>{{labels.COMMON.DEVICE_TYPE}}:</label>
+          <label>{{labels.COMMON.ITEM_ID}}:</label>
           <div>
-            {{deviceInfo.deviceType}}
+            {{itemInfo.item_id}}
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label>{{labels.COMMON.ITEM_TYPE}}:</label>
+          <div>
+            {{itemInfo.item_type}}
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label>{{labels.COMMON.ITEM_PRICE}}:</label>
+          <div>
+            {{itemInfo.item_price}}
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label>{{labels.COMMON.ITEN_PURCHASE_DATE}}:</label>
+          <div>
+            {{itemInfo.item_purchase_date}}
           </div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label>{{labels.COMMON.HARDWARE_VERSION}}:</label>
+          <label>{{labels.PLACEHOLDERS.ITEM_STATUS}}:</label>
           <div>
-            {{deviceInfo.hardwareVersion}}
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.SERIAL_NUMBER}}:</label>
-          <div>
-            {{deviceInfo.serialNumber}}
+            {{itemInfo.item_status}}
           </div>
         </div>
       </div>
 
     </div>
-  </div>
-
-  <div class="card mb-2" *ngIf="deviceInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.CHILD_DEVICES}}:</span>
-      </h5>
-
-      <div class="form-row">
-        <div class="form-group col-md-6 child-device" *ngFor="let child of deviceInfo.childDevices">
-            <input type="text" class="device-name" class="col-lg-6" [value]="child.deviceName" disabled>
-            <span class="device-status" [ngClass]=" child.deviceStatus ? 'activeColor' : 'offline' ">{{child.deviceStatus ? 'Online' : 'Offline'}}</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="card mb-2" *ngIf="deviceInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.NETWORK}}:</span>
-      </h5>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="text" id="network-name" class="col-lg-6" [value]="deviceInfo.networkName" disabled>
-        </div>
-        <div class="form-group col-md-6">
-            <input type="password" id="network-password" class="col-lg-6" [value]="deviceInfo.networkPassword" disabled>
-            <span class="ui-inputgroup-addon show-password">
-                <img src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
-              </span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-2" *ngIf="deviceInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.FOTA}}:</span>
-      </h5>
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.FIRMWARE_VERSION}}:</label>
-          <div>
-            {{deviceInfo.firmwareVersion}}
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.LAST_UPDATE}}:</label>
-          <div>
-            {{deviceInfo.firmwareLastUpdatedDate}}
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.UPDATE_STATUS}}:</label>
-          <div class="col-xl-6 px-0">
-            {{deviceInfo.firmwareUpdateStatus}}
-            <button class="firmware-update pull-right">{{labels.HOME_MANAGEMENT.UPDATE_NOW}}</button>
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.UPDATE_SETTINGS}}:</label>
-          <div class="col-xl-6 px-0">
-            {{labels.HOME_MANAGEMENT.SCHEDULE_TIME}}
-            <div class="firmware-update-time pull-right">{{deviceInfo.firmwareUpdateSettingTime}}</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="card mb-2" *ngIf="deviceInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.INTERNET}}:</span>
-      </h5>
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.STATUS_OF_LINK}}:</label>
-          <div>
-            {{deviceInfo.statusOfLink}}
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.BANDWIDTH_SPEED}}:</label>
-          <div>
-            {{deviceInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon ml-2 mr-4" />
-            {{deviceInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon ml-2" />
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.TOTAL_USAGE}}:</label>
-          <div>
-            {{deviceInfo.totalUsage}}
-          </div>
-        </div>
-      </div>
-
-    </div>
-
   </div>
 
 </form>
@@ -191,8 +67,8 @@
 <div *ngIf="mobileFilterSection" class="d-block d-sm-none mobile-actions">
     <div class="d-flex justify-content-around p-2">
       <div>
-        <button type="button" *ngIf="checkUserCanEditDeviceByStatus()" class="btn btn-primary mr-1" (click)="editDevice()">{{labels.BUTTONS.EDIT}}</button>
-        <button type="button" class="btn btn-primary mr-1" (click)="setStatus()">{{ getStatusTest() }}</button>
+        <button type="button"  class="btn btn-primary mr-1" (click)="editDevice()">{{labels.BUTTONS.EDIT}}</button>
+        
       </div>
     </div>
   </div>

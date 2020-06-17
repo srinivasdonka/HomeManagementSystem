@@ -54,11 +54,14 @@ export class AdminRoutes {
   }
   // #end Users Management
 
-  // Device Management
-  public static ITEM_LIST(user_id) {
+  // Home Management
+  public static GET_ITEMS(user_id) {
     return `${HOMEMANAGEMENT_API_URL}homeExp/getHomeExpendature?userId=${user_id}`;
   }
 
+   public static GET_ITEM(id) {
+    return `${HOMEMANAGEMENT_API_URL}homeExp/getSingleItemById?id=${id}`;
+   }
   public static GET_PHONE_HOME_DATA(device_mac_id, hardware_key) {
     return `${HOMEMANAGEMENT_API_URL}phoneHome/getPhoneHomeData?device_mac_id=${device_mac_id}&hardware_key=${hardware_key}`;
   }

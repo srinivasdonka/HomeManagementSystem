@@ -163,14 +163,14 @@ export class DevicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showUserDetails(item) {
-    let itemId = '';
-    if (item.itemId !== undefined) {
-      itemId = item.itemId;
+    let id = '';
+    if (item.id !== undefined) {
+      id = item.id;
     }
-    if (item.itemId !== undefined) {
-      itemId = item.itemId;
+    if (item.id !== undefined) {
+      id = item.id
     }
-    this.router.navigate(['/admin/admin-root/homemanagement/info-device/' + itemId]);
+    this.router.navigate(['/admin/admin-root/homemanagement/info-expendature/' + id]);
   }
 
   statusChecked() {
@@ -304,6 +304,7 @@ export class DevicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   editSelectedUsers() {
+    alert("test1");
     if (this.selectedItemList.length === 1) {
       this.router.navigate(['/admin/admin-root/homemanagement/' + this.selectedItemList[0].id]);
     } else {

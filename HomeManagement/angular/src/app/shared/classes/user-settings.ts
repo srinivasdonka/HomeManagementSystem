@@ -15,7 +15,7 @@ export class UserSettings {
   private static _userProfile: any;
   private static _cookieEnabled: any;
   private static _deviceHardwareIdKey: any;
-  private static _deviceInfo: any;
+  private static itemInfo: any;
   
   public static get accessToken(): string {
     const storedToken = localStorage.getItem('access_token');
@@ -142,12 +142,12 @@ export class UserSettings {
     return this._userProfile;
   }
 
-  public static set setDeviceInfo(deviceInfo: any) {
-    this._deviceInfo = deviceInfo;
+  public static set setItemInfo(itemInfo: any) {
+    this.itemInfo = itemInfo;
   }
 
-  public static get getDeviceInfo() {
-    return this._deviceInfo;
+  public static get getItemInfo() {
+    return this.itemInfo;
   }
 
 }

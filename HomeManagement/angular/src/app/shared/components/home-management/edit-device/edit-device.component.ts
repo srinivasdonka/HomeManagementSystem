@@ -14,7 +14,7 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 import { matchOtherValidator } from 'src/app/shared/classes/matchOtherValidator';
 
 @Component({
-  selector: 'homemanagement-edit-device',
+  selector: 'homemanagement-edit-expendature/',
   templateUrl: './edit-device.component.html',
   styleUrls: ['./edit-device.component.scss']
 })
@@ -52,7 +52,7 @@ export class EditDeviceComponent implements OnInit {
 
   ngAfterViewInit() {
     const headerObject = {
-      title: 'Edit Device',
+      title: 'Edit Expendature',
       back: 'arrow_back',
       setactions: true,
       notification: true
@@ -85,10 +85,6 @@ export class EditDeviceComponent implements OnInit {
   getItemByItemId() {
     this.homeManagementService.getItemByItemId(this.itemId).subscribe(data => {
       this.itemInfo = data;
-      this.itemInfo.registeredDate = moment(this.itemInfo.createdDate).format("MMM DD, HH:mm, YYYY");
-      this.itemInfo.lastModifiedDate = moment(this.itemInfo.updatedDate).format("MMM DD, HH:mm, YYYY");
-      this.itemInfo.firmwareLastUpdatedDate = moment(this.itemInfo.firmwareLastUpdate).format("MMM DD, HH:mm, YYYY");
-      this.itemInfo.firmwareUpdateSettingTime = moment(this.itemInfo.firmwareUpdateSettings).format("MMM DD, HH:mm, YYYY");
       this.createFormControls();
       this.createForm();
     }, err => {
@@ -97,28 +93,17 @@ export class EditDeviceComponent implements OnInit {
 
   createFormControls() {
     this.itemName = new FormControl(this.itemInfo.itemName, Validators.required);
-    this.networkNameSSID = new FormControl(this.itemInfo.networkName, Validators.required);
-    this.networkPassword = new FormControl('', [
-      Validators.pattern(this.regularExp.passwordPattern)
-    ]);
-    this.networkConfirmPassword = new FormControl('', [
-      matchOtherValidator('networkPassword'),
-      Validators.pattern(this.regularExp.passwordPattern)
-    ]);
 
   }
 
   createForm() {
     this.editItemForm = new FormGroup({
-      deviceName: this.itemName,
-      networkNameSSID: this.networkNameSSID,
-      networkPassword: this.networkPassword,
-      networkConfirmPassword: this.networkConfirmPassword,
+      itemName: this.itemName,
     });
   }
 
   reconfigureDevice() {
-    this.router.navigate(['/admin/admin-root/devicemanagement/create-network/' + this.itemId]);
+    this.router.navigate(['/admin/admin-root/homemanagement/create-network/' + this.itemId]);
   }
 
   getStatusTest() {
@@ -133,16 +118,11 @@ export class EditDeviceComponent implements OnInit {
     this.location.back();
   }
 
-  removeDevice(childDevice) {
-    if (this.itemInfo.childDevices.find(row => row.id == childDevice.id)) {
-      this.itemInfo.childDevices.splice(this.itemInfo.childDevices.indexOf(this.itemInfo.childDevices.find(row => row.id == childDevice.id)), 1);
-    }
-  }
 
   updateDevice() {
     if (this.editItemForm.valid) {
       //service call
-      this.router.navigate(['/admin/admin-root/devicemanagement/info-device/' + this.itemInfo.itemId]);
+      this.router.navigate(['/admin/admin-root/homemanagement/info-expendature/' + this.itemInfo.itemId]);
       const modalOptions = {
         icon: 'assets/homemanage_icons/shared/circle_tick.svg',
         bodyText: 'Your changes has been saved successfully.'

@@ -2,7 +2,7 @@
 
 </div>
 
-<div class="d-none d-sm-flex p-2 pl-0" *ngIf="deviceInfo">
+<div class="d-none d-sm-flex p-2 pl-0" *ngIf="itemInfo">
   <div class="pl-0 pt-2">
     <homemanagement-page-title [title]="userInfoTitle"></homemanagement-page-title>
   </div>
@@ -12,30 +12,30 @@
   </div>
 </div>
 
-<form [formGroup]="editDeviceForm" *ngIf="deviceInfo" novalidate>
+<form [formGroup]="editDeviceForm" *ngIf="itemInfo" novalidate>
   <div class="jumbotron no-bg user-info m-0 pt-0 pb-3">
     <h4 class="">
       <input homemanageAutoWidth type="text" formControlName="deviceName" class="form-control primary-color p-2 deviceName" id="deviceName"
         name="deviceName" placeholder="{{labels.PLACEHOLDERS.NAME}}" required>
     </h4>
     <div class="pt-2 pb-2">
-      {{labels.COMMON.HARDWARE_ID}}: {{deviceInfo.hardwareId}}
-      <span class="d-block d-sm-none float-right" [ngClass]="deviceInfo.status ? 'activeColor' : 'offline'">{{deviceInfo.status
+      {{labels.COMMON.HARDWARE_ID}}: {{itemInfo.hardwareId}}
+      <span class="d-block d-sm-none float-right" [ngClass]="itemInfo.status ? 'activeColor' : 'offline'">{{itemInfo.status
         ? 'Online' : 'Offline'}}</span>
     </div>
     <div class="row m-0">
       <div class="d-none d-sm-block user-col-1 mr-5">{{labels.COMMON.STATUS}}:
-        <span [ngClass]="deviceInfo.status ? 'activeColor' : 'offline'">{{deviceInfo.status ? 'Online' : 'Offline'}}</span>
+        <span [ngClass]="itemInfo.status ? 'activeColor' : 'offline'">{{itemInfo.status ? 'Online' : 'Offline'}}</span>
       </div>
       <div class="user-col-2 mr-5">{{labels.COMMON.REGISTERED_DATE}}:
-        <span class="deactiveColor">{{deviceInfo.registeredDate}}</span>
+        <span class="deactiveColor">{{itemInfo.registeredDate}}</span>
       </div>
       <div class="user-col-2">{{labels.HOME_MANAGEMENT.LAST_MODIFIED_DATE}}:
-        <span class="deactiveColor">{{deviceInfo.lastModifiedDate}}</span>
+        <span class="deactiveColor">{{itemInfo.lastModifiedDate}}</span>
       </div>
     </div>
   </div>
-  <div class="card mb-2" *ngIf="deviceInfo">
+  <div class="card mb-2" *ngIf="itemInfo">
     <div class="card-body">
       <h5 class="">
         <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.HOME_INFO}}:</span>
@@ -45,13 +45,13 @@
         <div class="form-group col-md-6">
           <label>{{labels.COMMON.MODEL_NAME}}:</label>
           <div>
-            {{deviceInfo.deviceModelName}}
+            {{itemInfo.deviceModelName}}
           </div>
         </div>
         <div class="form-group col-md-6">
           <label>{{labels.COMMON.HOME_TYPE}}:</label>
           <div>
-            {{deviceInfo.deviceType}}
+            {{itemInfo.deviceType}}
           </div>
         </div>
       </div>
@@ -59,13 +59,13 @@
         <div class="form-group col-md-6">
           <label>{{labels.COMMON.HARDWARE_VERSION}}:</label>
           <div>
-            {{deviceInfo.hardwareVersion}}
+            {{itemInfo.hardwareVersion}}
           </div>
         </div>
         <div class="form-group col-md-6">
           <label>{{labels.COMMON.SERIAL_NUMBER}}:</label>
           <div>
-            {{deviceInfo.serialNumber}}
+            {{itemInfo.serialNumber}}
           </div>
         </div>
       </div>
@@ -73,14 +73,14 @@
     </div>
   </div>
 
-  <div class="card mb-2" *ngIf="deviceInfo">
+  <div class="card mb-2" *ngIf="itemInfo">
     <div class="card-body">
       <h5 class="">
         <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.CHILD_DEVICES}}:</span>
       </h5>
 
       <div class="form-row">
-        <div class="form-group col-md-6 child-device" *ngFor="let child of deviceInfo.childDevices">
+        <div class="form-group col-md-6 child-device" *ngFor="let child of itemInfo.childDevices">
           <input type="text" class="device-name" class="col-lg-6" [value]="child.deviceName" disabled>
           <button type="button" class="remove-device" (click)="removeDevice(child)">
               <img src="assets/homemanage_icons/shared/remove_child_device.svg" alt="showPassword On" />
@@ -91,7 +91,7 @@
 
   </div>
 
-  <div class="card mb-2 network" *ngIf="deviceInfo">
+  <div class="card mb-2 network" *ngIf="itemInfo">
     <div class="card-body">
       <h5 class="">
         <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.NETWORK}}:</span>
@@ -102,7 +102,7 @@
             formControlName="networkNameSSID" required placeholder="{{labels.PLACEHOLDERS.NETWORK_NAME_SSID}}">
         </div>
         <div class="form-group col-md-6">
-          <input type="password" id="network-password" class="col-lg-6" [value]="deviceInfo.networkPassword" disabled>
+          <input type="password" id="network-password" class="col-lg-6" [value]="itemInfo.networkPassword" disabled>
           <span class="ui-inputgroup-addon show-password">
             <img src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
           </span>
@@ -158,7 +158,7 @@
     </div>
   </div>
 
-  <div class="card mb-2" *ngIf="deviceInfo">
+  <div class="card mb-2" *ngIf="itemInfo">
     <div class="card-body">
       <h5 class="">
         <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.FOTA}}:</span>
@@ -168,13 +168,13 @@
         <div class="form-group col-md-6">
           <label>{{labels.HOME_MANAGEMENT.FIRMWARE_VERSION}}:</label>
           <div>
-            {{deviceInfo.firmwareVersion}}
+            {{itemInfo.firmwareVersion}}
           </div>
         </div>
         <div class="form-group col-md-6">
           <label>{{labels.COMMON.LAST_UPDATE}}:</label>
           <div>
-            {{deviceInfo.firmwareLastUpdatedDate}}
+            {{itemInfo.firmwareLastUpdatedDate}}
           </div>
         </div>
       </div>
@@ -182,7 +182,7 @@
         <div class="form-group col-md-6">
           <label>{{labels.COMMON.UPDATE_STATUS}}:</label>
           <div class="col-xl-6 px-0">
-            {{deviceInfo.firmwareUpdateStatus}}
+            {{itemInfo.firmwareUpdateStatus}}
             <button class="firmware-update pull-right">{{labels.HOME_MANAGEMENT.UPDATE_NOW}}</button>
           </div>
         </div>
@@ -190,7 +190,7 @@
           <label>{{labels.COMMON.UPDATE_SETTINGS}}:</label>
           <div class="col-xl-6 px-0">
             {{labels.HOME_MANAGEMENT.SCHEDULE_TIME}}
-            <div class="firmware-update-time pull-right">{{deviceInfo.firmwareUpdateSettingTime}}</div>
+            <div class="firmware-update-time pull-right">{{itemInfo.firmwareUpdateSettingTime}}</div>
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@
 
   </div>
 
-  <div class="card mb-2" *ngIf="deviceInfo">
+  <div class="card mb-2" *ngIf="itemInfo">
     <div class="card-body">
       <h5 class="">
         <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.INTERNET}}:</span>
@@ -209,14 +209,14 @@
         <div class="form-group col-md-6">
           <label>{{labels.HOME_MANAGEMENT.STATUS_OF_LINK}}:</label>
           <div>
-            {{deviceInfo.statusOfLink}}
+            {{itemInfo.statusOfLink}}
           </div>
         </div>
         <div class="form-group col-md-6">
           <label>{{labels.HOME_MANAGEMENT.BANDWIDTH_SPEED}}:</label>
           <div>
-            {{deviceInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon ml-2 mr-4" />
-            {{deviceInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon ml-2" />
+            {{itemInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon ml-2 mr-4" />
+            {{itemInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon ml-2" />
           </div>
         </div>
       </div>
@@ -224,7 +224,7 @@
         <div class="form-group col-md-6">
           <label>{{labels.HOME_MANAGEMENT.TOTAL_USAGE}}:</label>
           <div>
-            {{deviceInfo.totalUsage}}
+            {{itemInfo.totalUsage}}
           </div>
         </div>
       </div>

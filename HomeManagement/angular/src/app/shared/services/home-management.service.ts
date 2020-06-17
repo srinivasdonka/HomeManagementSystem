@@ -24,7 +24,7 @@ export class HomeManagementService extends WebService<any> {
 
   getHomeExpendature(user_id): Observable<any> {
     const options = {
-      url: AdminRoutes.ITEM_LIST(user_id)
+      url: AdminRoutes.GET_ITEMS(user_id)
     };
     return this.httpClient.get(options.url).pipe(res => res);
   }
@@ -38,7 +38,7 @@ export class HomeManagementService extends WebService<any> {
 
   getItemByItemId(id) {
     const options = {
-      url: AdminRoutes.ITEM_LIST(id)
+      url: AdminRoutes.GET_ITEM(id)
     };
     return this.httpClient.get(options.url).pipe(res => res);
   }

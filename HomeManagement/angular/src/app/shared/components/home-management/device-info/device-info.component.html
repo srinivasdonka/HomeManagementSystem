@@ -10,7 +10,7 @@
 
 <div class="d-none d-sm-flex p-2">
   <div class="pl-0 pt-2">
-    <homemanagement-page-title *ngIf="currentPage === 1" [title]="deviceInfoTitle"></homemanagement-page-title>
+    <homemanagement-page-title *ngIf="currentPage === 1" [title]="itemInfoTitle"></homemanagement-page-title>
     <h4 *ngIf="currentPage > 1">
       <span class="pb-1 title" *ngIf="itemInfoTitle">{{itemInfoTitle}}</span>
     </h4>
@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div class="card" *ngIf="deviceInfo && currentPage === 1">
+<div class="card" *ngIf="itemInfo && currentPage === 1">
   <div class="card-header">
     {{labels.COMMON.ITEM_ID}}: {{itemId}}
     <span *ngIf="isExistingDevice || restorePrevDeviceConfig" class="device-exists align-middle">{{labels.COMMON.ITEM_ALREADY_EXISTS}}</span>
