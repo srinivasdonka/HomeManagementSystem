@@ -16,9 +16,8 @@ public interface HomeExpedatureRepositoryBase {
 
 	List<HomeExpendature> getDeviceListByCompanyIdAndActiveStatus(String CompanyId,boolean activeStatus);
 
-	HomeExpendature getDeviceByDeviceIdAndActive(String deviceId,boolean activeStatus);
 
-	public HomeExpendature getItemeByItemId(String itemId);
+	public HomeExpendature getItemeByItemId(String id);
 
 	Page<HomeExpendature> getDeviceListByCompanyIdAndActiveStatusPageable(String CompanyId,boolean activeStatus,Pageable pageable);
 

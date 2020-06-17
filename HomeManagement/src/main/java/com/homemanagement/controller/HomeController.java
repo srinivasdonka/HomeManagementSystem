@@ -13,7 +13,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.binary.Base64;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -46,7 +45,6 @@ import com.homemanagement.repositories.FOTARepository;
 import com.homemanagement.repositories.HomeExpedatureRepository;
 import com.homemanagement.service.StorageServiceImpl;
 import com.homemanagement.utils.HomeManagementUtil;
-import com.homemanagement.utils.UploadRequest;
 import com.homemanagement.utils.UploadResponse;
 
 
@@ -150,72 +148,43 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@RequestMapping(value="/getDeviceByDeviceIdAndActiveStatus",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	ServiceStatus<HomeExpendature> getDeviceByDeviceIdAndActive(@RequestParam("device_id")String device_id,@RequestParam("is_active")boolean is_active){
+
+	@GetMapping("/getSingleItemById")
+	ServiceStatus<HomeExpendature> getSingleItemById(@RequestParam("id")String id){
 
 		ServiceStatus<HomeExpendature> serviceStatus=new ServiceStatus<HomeExpendature>();
 
-
-		if(device_id!=null){
-
-			try {
-				logger.info("getDeviceByDeviceIdAndActive"+device_id);
-
-				HomeExpendature device	= homeRepository.getDeviceByDeviceIdAndActive(device_id, is_active);
-				if(device!=null){
-					logger.info("Dvice Exists"+device);
+		try {
+			if(id != null){
+				logger.info("getSingleItemById"+id);
+				HomeExpendature item = homeRepository.getItemeByItemId(id);
+				if( null != item){
+					logger.info("Item EXIST : "+item);
 					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("successfully fetched");
-					serviceStatus.setResult(device);
+					serviceStatus.setMessage("Item successfully fetched");
+					serviceStatus.setResult(item);
 				}
 				else {
 					serviceStatus.setStatus("failure");
-					serviceStatus.setMessage("Device Id not Exist");
-					//serviceStatus.setResult(deviceList);
+					serviceStatus.setMessage("Item not Exist");
 				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
+			}else{
 				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-				if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-				}
+				serviceStatus.setMessage("Invalid param values ");
 			}
-		}else{
+
+		} catch (Exception e) {
+			e.printStackTrace();
 			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("Invalid param values ");
+			serviceStatus.setMessage("failure");
+			if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
+				serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
+			}
 		}
 
 		return serviceStatus;
 	}
 
-	@RequestMapping(value = "/uploads",produces = { "application/json"},method = RequestMethod.POST) 
-	public ResponseEntity<UploadResponse> upload(
-			@RequestParam("qqfile") String file,
-			@RequestParam("qquuid") String uuid,
-			@RequestParam("qqfilename") String fileName,
-			@RequestParam(value = "qqpartindex", required = false, defaultValue = "-1") int partIndex,
-			@RequestParam(value = "qqtotalparts", required = false, defaultValue = "-1") int totalParts,
-			@RequestParam(value = "qqtotalfilesize", required = false, defaultValue = "-1") long totalFileSize,@RequestParam(value = "version") String version,
-			@RequestParam(value = "type") String type,@RequestParam(value = "device_id") String device_id,@RequestParam(value = "checkSum") String checkSum,@RequestParam(value = "description") String description) {
-
-		byte[] file_path=Base64.decodeBase64(file);
-		UploadRequest request = new UploadRequest(uuid, file_path);
-		request.setFileName(fileName);
-		request.setTotalFileSize(totalFileSize);
-		request.setPartIndex(partIndex);
-		request.setTotalParts(totalParts);
-
-		storageService.save(request);
-
-		if(partIndex==totalParts) {
-			storageService.mergeChunks(uuid, fileName, totalParts,totalFileSize,version,type,device_id,checkSum,description);
-			return ResponseEntity.ok().body(new UploadResponse("Successfully Uploaded",true));
-		}else {
-			return ResponseEntity.ok().body(new UploadResponse(true));
-		}
-	}
 
 	@ExceptionHandler(StorageException.class)
 	public ResponseEntity<UploadResponse> handleException(StorageException ex) {
@@ -487,7 +456,7 @@ public class HomeController {
 			}
 			else {
 				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("Devices are not Exist");
+				serviceStatus.setMessage("Item does not Exist");
 				serviceStatus.setResult(itemList);
 			}
 

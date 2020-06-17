@@ -38,17 +38,11 @@ public class HomeExpedatureRepositoryImpl implements HomeExpedatureRepositoryBas
 		return mongoTemplate.find(query, HomeExpendature.class);
 	}
 
-	@Override
-	public HomeExpendature getDeviceByDeviceIdAndActive(String deviceId,boolean activeStatus)
-	{
-		final Query query = Query.query(Criteria.where("device_id").is(deviceId).andOperator(where("is_active").is(activeStatus)));
-		return mongoTemplate.findOne(query, HomeExpendature.class);
-	}
 
 	@Override
-	public HomeExpendature getItemeByItemId(String itemId)
+	public HomeExpendature getItemeByItemId(String id)
 	{
-		final Query query = Query.query(Criteria.where("item_id").is(itemId));
+		final Query query = Query.query(Criteria.where("id").is(id));
 		return mongoTemplate.findOne(query, HomeExpendature.class);
 	}
 
