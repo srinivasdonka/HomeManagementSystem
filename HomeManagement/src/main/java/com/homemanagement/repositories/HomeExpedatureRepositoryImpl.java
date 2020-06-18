@@ -78,14 +78,15 @@ public class HomeExpedatureRepositoryImpl implements HomeExpedatureRepositoryBas
 	}
 
 	@Override
-	public void updateDevice(HomeExpendature homeExp) {
-		final Query query = Query.query(Criteria.where("item_id").is(homeExp.getItem_id()));
-
+	public void updateItem(HomeExpendature homeExp) {
+		final Query query = Query.query(Criteria.where("id").is(homeExp.getId()));
 		Update update = new Update();
 		update.set("item_status", homeExp.getItem_status());
 		update.set("item_name", homeExp.getItem_name());
 		update.set("item_type", homeExp.getItem_type());
-
+		update.set("item_id", homeExp.getItem_id());
+		update.set("item_price", homeExp.getItem_price());
+		update.set("item_purchase_date", homeExp.getItem_purchase_date());
 		this.mongoTemplate.updateFirst(query, update, HomeExpendature.class);
 	}
 

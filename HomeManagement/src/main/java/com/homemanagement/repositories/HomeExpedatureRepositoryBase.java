@@ -12,30 +12,30 @@ import com.homemanagement.domain.DeviceNetwork;
 
 public interface HomeExpedatureRepositoryBase {
 
-	void addDevice(HomeExpendature device);
+	public void addDevice(HomeExpendature device);
 
-	List<HomeExpendature> getDeviceListByCompanyIdAndActiveStatus(String CompanyId,boolean activeStatus);
+	public List<HomeExpendature> getDeviceListByCompanyIdAndActiveStatus(String CompanyId,boolean activeStatus);
 
 
 	public HomeExpendature getItemeByItemId(String id);
 
-	Page<HomeExpendature> getDeviceListByCompanyIdAndActiveStatusPageable(String CompanyId,boolean activeStatus,Pageable pageable);
+	public Page<HomeExpendature> getDeviceListByCompanyIdAndActiveStatusPageable(String CompanyId,boolean activeStatus,Pageable pageable);
 
-	boolean changeDeviceCompany(String companyId,String destComapnyId,String deviceId,String deviceToken);
+	public boolean changeDeviceCompany(String companyId,String destComapnyId,String deviceId,String deviceToken);
 
-	void updateDevice(HomeExpendature device);
+	public void updateItem(HomeExpendature device);
 
-	void addNetwork(DeviceNetwork deviceNetwork);
+	public void addNetwork(DeviceNetwork deviceNetwork);
 
-	List<HomeExpendature> getDeviceByParentId(String device_parent_id);
+	public List<HomeExpendature> getDeviceByParentId(String device_parent_id);
 
-	List<DeviceNetwork> getDeviceNetworsByNetworkId();
+	public List<DeviceNetwork> getDeviceNetworsByNetworkId();
 	
-	 boolean checkDeviceExists(String device_mac_id, String device_key);
+	public boolean checkDeviceExists(String device_mac_id, String device_key);
 	 
-	 public List<HomeExpendature> getItemByUserId(String userId);
+	public  List<HomeExpendature> getItemByUserId(String userId);
 	 
-	 DeviceNetwork getDeviceNetworkByNetworkId(String networkId);
+	public DeviceNetwork getDeviceNetworkByNetworkId(String networkId);
 	
 	
 

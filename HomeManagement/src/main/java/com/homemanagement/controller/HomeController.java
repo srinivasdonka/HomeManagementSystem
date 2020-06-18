@@ -312,15 +312,16 @@ public class HomeController {
 		try {
 
 			if(homeExp.getItem_id()!=null&&homeExp.getItem_name()!=null&&homeExp.getItem_type()!=null) {
-				HomeExpendature existdevice= homeRepository.getItemeByItemId(homeExp.getItem_id());
-
-				existdevice.setItem_name(homeExp.getItem_name());
-				existdevice.setItem_type(homeExp.getItem_type());
-				existdevice.setItem_status(homeExp.getItem_status());
-
-				homeRepository.updateDevice(homeExp);
+				HomeExpendature existItem= homeRepository.getItemeByItemId(homeExp.getId());
+				existItem.setItem_id(homeExp.getItem_id());
+				existItem.setItem_name(homeExp.getItem_name());
+				existItem.setItem_type(homeExp.getItem_type());
+				existItem.setItem_price(homeExp.getItem_price());
+				existItem.setItem_purchase_date(homeExp.getItem_purchase_date());
+				existItem.setItem_status(homeExp.getItem_status());
+				homeRepository.updateItem(homeExp);
 				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully updated Device Details");
+				serviceStatus.setMessage("successfully updated item Details");
 			}else {
 				serviceStatus.setStatus("failure");
 				serviceStatus.setMessage("Invalid Params");
