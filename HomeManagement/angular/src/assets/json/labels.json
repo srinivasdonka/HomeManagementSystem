@@ -250,6 +250,7 @@
     "ITEM_PURCHASE_DATE": "Purchase date",
     "ITEM_STATUS": "Status",
     "TYPE_HOME_DAILY_EXP": "Add Daily Expendature",
+    "EDIT_DAILY_EXP":"Edit Daily Expendature",
     "HOME_HARDWARE": "Device Hardware",
     "HOME_KEY": "Device Key",
     "HOME_INFO": "Device Info",

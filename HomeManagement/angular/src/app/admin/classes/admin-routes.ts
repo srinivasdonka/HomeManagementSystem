@@ -97,5 +97,7 @@ export class AdminRoutes {
   public static ADD_EXPENDATURE() {
     return `${HOMEMANAGEMENT_API_URL}homeExp/addExpendature`;
   }
-  // #end Device Management
+  public static UPDATE_EXPENDATURE() {
+    return `${HOMEMANAGEMENT_API_URL}homeExp/updateHomeExpedature`;
+  }
 }

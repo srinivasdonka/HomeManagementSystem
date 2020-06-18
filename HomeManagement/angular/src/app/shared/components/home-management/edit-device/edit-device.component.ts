@@ -28,14 +28,17 @@ export class EditDeviceComponent implements OnInit {
   itemInfo: any;
   mobileFilterSection = false;
   innerWidth: any;
-  itemStatus:ItemStatus;
   showNetworkPassword = false;
   editItemForm: FormGroup;
   itemName: FormControl;
+  itemType: FormControl;
+  itemPrice: FormControl;
+  itemPurchaseDate: FormControl;
+  itemStatus: FormControl;
   networkNameSSID: FormControl;
   networkPassword: FormControl;
   networkConfirmPassword: FormControl;
-
+  showAlert = false;
   regularExp = RegularExp;
 
   constructor(
@@ -64,6 +67,7 @@ export class EditDeviceComponent implements OnInit {
     this.headerService.setTitle({});
   }
 
+  
   ngOnInit() {
     this.labels = this.appConfigService.getLabels;
     this.validations = this.appConfigService.getMessages;
@@ -92,13 +96,23 @@ export class EditDeviceComponent implements OnInit {
   }
 
   createFormControls() {
-    this.itemName = new FormControl(this.itemInfo.itemName, Validators.required);
+    this.itemName = new FormControl(this.itemInfo.result.item_name, Validators.required);
+    this.itemId = new FormControl(this.itemInfo.result.item_id, Validators.required);
+    this.itemType = new FormControl(this.itemInfo.result.item_type, Validators.required);
+    this.itemPrice = new FormControl(this.itemInfo.result.item_price, Validators.required);
+    this.itemPurchaseDate = new FormControl(this.itemInfo.result.item_purchase_date, Validators.required);
+    this.itemStatus = new FormControl(this.itemInfo.result.item_status, Validators.required);
 
   }
 
   createForm() {
     this.editItemForm = new FormGroup({
       itemName: this.itemName,
+      itemId: this.itemId,
+      itemType:this.itemType,
+      itemPrice:this.itemPrice,
+      itemPurchaseDate:this.itemPurchaseDate,
+      itemStatus:this.itemStatus
     });
   }
 
@@ -121,8 +135,19 @@ export class EditDeviceComponent implements OnInit {
 
   updateDevice() {
     if (this.editItemForm.valid) {
-      //service call
-      this.router.navigate(['/admin/admin-root/homemanagement/info-expendature/' + this.itemInfo.itemId]);
+      const expObject = {
+        id:this.itemInfo.result.id,
+        item_name: this.editItemForm.value.itemName,
+        item_id: this.editItemForm.value.itemId,
+        item_type: this.editItemForm.value.itemType,
+        item_price: this.editItemForm.value.itemPrice,
+        item_purchase_date: this.editItemForm.value.itemPurchaseDate,
+        item_status: this.editItemForm.value.itemStatus,
+      };
+      this.homeManagementService.updateItem(expObject).subscribe(res => {
+         this.showAlert = true;
+        });
+      this.router.navigate(['/admin/admin-root/homemanagement/info-expendature/' + this.itemInfo.result.id]);
       const modalOptions = {
         icon: 'assets/homemanage_icons/shared/circle_tick.svg',
         bodyText: 'Your changes has been saved successfully.'

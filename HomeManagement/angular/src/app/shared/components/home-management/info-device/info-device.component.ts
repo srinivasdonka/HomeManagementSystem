@@ -114,7 +114,7 @@ InfoDeviceComponent implements OnInit {
   }
 
   editDevice() {
-    this.router.navigate(['/admin/homemanagement/edit-expendature/' + this.id]);
+    this.router.navigate(['/admin/admin-root/homemanagement/edit-expendature/' + this.id]);
   }
 
 }

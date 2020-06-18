@@ -187,5 +187,13 @@ export class HomeManagementService extends WebService<any> {
     };
     return this.httpClient.post(options.url, options.params).pipe(res => res);
   }
+  updateItem(data) {
+    const options = {
+      url: AdminRoutes.UPDATE_EXPENDATURE(),
+      params: data,
+      isLoaderRequired: true
+    };
+    return this.httpClient.put(options.url, options.params).pipe(res => res);
+  }
 }
 

@@ -1,6 +1,3 @@
-<div class="d-flex justify-content-between d-block d-sm-none page-title page-title-m3">
-
-</div>
 
 <div class="d-none d-sm-flex p-2 pl-0" *ngIf="itemInfo">
   <div class="pl-0 pt-2">
@@ -11,235 +8,121 @@
     <button type="button" class="btn btn-secondary mr-1" (click)="updateDevice()">{{labels.BUTTONS.SAVE}}</button>
   </div>
 </div>
-
-<form [formGroup]="editDeviceForm" *ngIf="itemInfo" novalidate>
-  <div class="jumbotron no-bg user-info m-0 pt-0 pb-3">
-    <h4 class="">
-      <input homemanageAutoWidth type="text" formControlName="deviceName" class="form-control primary-color p-2 deviceName" id="deviceName"
-        name="deviceName" placeholder="{{labels.PLACEHOLDERS.NAME}}" required>
-    </h4>
-    <div class="pt-2 pb-2">
-      {{labels.COMMON.HARDWARE_ID}}: {{itemInfo.hardwareId}}
-      <span class="d-block d-sm-none float-right" [ngClass]="itemInfo.status ? 'activeColor' : 'offline'">{{itemInfo.status
-        ? 'Online' : 'Offline'}}</span>
-    </div>
-    <div class="row m-0">
-      <div class="d-none d-sm-block user-col-1 mr-5">{{labels.COMMON.STATUS}}:
-        <span [ngClass]="itemInfo.status ? 'activeColor' : 'offline'">{{itemInfo.status ? 'Online' : 'Offline'}}</span>
-      </div>
-      <div class="user-col-2 mr-5">{{labels.COMMON.REGISTERED_DATE}}:
-        <span class="deactiveColor">{{itemInfo.registeredDate}}</span>
-      </div>
-      <div class="user-col-2">{{labels.HOME_MANAGEMENT.LAST_MODIFIED_DATE}}:
-        <span class="deactiveColor">{{itemInfo.lastModifiedDate}}</span>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-2" *ngIf="itemInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.HOME_INFO}}:</span>
-      </h5>
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.MODEL_NAME}}:</label>
-          <div>
-            {{itemInfo.deviceModelName}}
+   
+  <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+  
+    <div class="jumbotron no-bg rounded-5 primary-color p-0">
+  
+      <form [formGroup]="editItemForm" *ngIf="itemInfo" novalidate>
+        <div class="d-flex justify-content-between d-block d-sm-none page-title page-title-m3">
+          <div class="p0">
+            <strong>{{userInfoTitle}}</strong>
+            <br>
+          </div>
+          <div class="p-0 ml-auto">
+        
           </div>
         </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.HOME_TYPE}}:</label>
-          <div>
-            {{itemInfo.deviceType}}
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.HARDWARE_VERSION}}:</label>
-          <div>
-            {{itemInfo.hardwareVersion}}
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.SERIAL_NUMBER}}:</label>
-          <div>
-            {{itemInfo.serialNumber}}
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="card mb-2" *ngIf="itemInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.CHILD_DEVICES}}:</span>
-      </h5>
-
-      <div class="form-row">
-        <div class="form-group col-md-6 child-device" *ngFor="let child of itemInfo.childDevices">
-          <input type="text" class="device-name" class="col-lg-6" [value]="child.deviceName" disabled>
-          <button type="button" class="remove-device" (click)="removeDevice(child)">
-              <img src="assets/homemanage_icons/shared/remove_child_device.svg" alt="showPassword On" />
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="card mb-2 network" *ngIf="itemInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.NETWORK}}:</span>
-      </h5>
-      <div class="form-row mb-3">
-        <div class="form-group col-md-6">
-          <input type="text" id="networkNameSSID" class="form-control col-md-12 networkNameSSID" name="networkNameSSID"
-            formControlName="networkNameSSID" required placeholder="{{labels.PLACEHOLDERS.NETWORK_NAME_SSID}}">
-        </div>
-        <div class="form-group col-md-6">
-          <input type="password" id="network-password" class="col-lg-6" [value]="itemInfo.networkPassword" disabled>
-          <span class="ui-inputgroup-addon show-password">
-            <img src="assets/homemanage_icons/shared/eye_on.svg" alt="showPassword On" />
-          </span>
-        </div>
-      </div>
-      <div class="form-row">
-        <h5 class="col-md-12">
-          <span class="pb-1 confirm-pswd">{{labels.HOME_MANAGEMENT.CREATE_NEW_PASSWORD}}:</span>
-        </h5>
-        <div class="form-group col-md-6">
-          <input [type]="showNetworkPassword ? 'text' : 'password'" class="form-control" id="networkPassword" name="networkPassword"
-            formControlName="networkPassword" placeholder="{{labels.PLACEHOLDERS.PASSWORD}}">
-          <span class="ui-inputgroup-addon show-password" (click)="showNetworkPassword = !showNetworkPassword">
-            <img [hidden]="!showNetworkPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showNetworkPassword On" />
-            <img [hidden]="showNetworkPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showNetworkPassword Off" />
-          </span>
-          <div *ngIf="networkPassword.errors &amp;&amp; (networkPassword.dirty || networkPassword.touched)" class="invalid-feedback has-error">
-            <div *ngIf="networkPassword.errors.required">
-              {{validations.FIELD_REQ}}
+        <div class="jumbotron white-bg rounded-5">
+  
+          <div class="row-title">{{labels.HOME_MANAGEMENT.EDIT_DAILY_EXP}}</div>
+  
+          <div class="row">
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" id="inputUserame" class="form-control col-md-12" name="itemName" formControlName="itemName"
+                    required placeholder="{{labels.PLACEHOLDERS.ITEM_NAME}}">
+  
+                  <div *ngIf="itemName.errors &amp;&amp; (itemName.dirty || itemName.touched)" class="invalid-feedback">
+                    <div *ngIf="itemName.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+  
+                </div>
+              </div>
             </div>
-            <div *ngIf="networkPassword.errors.maxlength">
-              {{validations.PWD_MAX_REQ}}
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemId" formControlName="itemId" placeholder="{{labels.PLACEHOLDERS.ITEM_ID}}">
+  
+                  <div *ngIf="itemId.errors &amp;&amp; (itemId.dirty || itemId.touched)" class="invalid-feedback">
+                    <div *ngIf="itemId.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
             </div>
-            <div [hidden]="!networkPassword.errors.pattern">
-              {{validations.PWD_PATTERN}}
+
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemType" formControlName="itemType" placeholder="{{labels.PLACEHOLDERS.ITEM_TYPE}}">
+  
+                  <div *ngIf="itemType.errors &amp;&amp; (itemType.dirty || itemType.touched)" class="invalid-feedback">
+                    <div *ngIf="itemType.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemPrice" formControlName="itemPrice" placeholder="{{labels.PLACEHOLDERS.ITEM_PRICE}}">
+  
+                  <div *ngIf="itemPrice.errors &amp;&amp; (itemPrice.dirty || itemPrice.touched)" class="invalid-feedback">
+                    <div *ngIf="itemPrice.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" id="name"  name="itemPurchaseDate" formControlName="itemPurchaseDate" placeholder="{{labels.PLACEHOLDERS.ITEM_PURCHASE_DATE}}">
+  
+                  
+                  <div *ngIf="itemPurchaseDate.errors &amp;&amp; (itemPurchaseDate.dirty || itemPurchaseDate.touched)" class="invalid-feedback">
+                    <div *ngIf="itemPurchaseDate.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group form-group-sm col-sm-4">
+              <div class="row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" name="itemStatus" formControlName="itemStatus" placeholder="{{labels.PLACEHOLDERS.ITEM_STATUS}}">
+  
+                  <div *ngIf="itemStatus.errors &amp;&amp; (itemStatus.dirty || itemStatus.touched)" class="invalid-feedback">
+                    <div *ngIf="itemStatus.errors.required">
+                      {{validations.FIELD_REQ}}
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="form-group col-md-6">
-          <input [type]="showNetworkPassword ? 'text' : 'password'" class="form-control" id="networkConfirmPassword"
-            name="networkConfirmPassword" formControlName="networkConfirmPassword" placeholder="{{labels.PLACEHOLDERS.CONFIRM_PASSWORD}}">
-          <span class="ui-inputgroup-addon show-password" (click)="showNetworkPassword = !showNetworkPassword">
-            <img [hidden]="!showNetworkPassword" src="assets/homemanage_icons/shared/eye_on.svg" alt="showNetworkPassword On" />
-            <img [hidden]="showNetworkPassword" src="assets/homemanage_icons/shared/eye_off.svg" alt="showNetworkPassword Off" />
-          </span>
-          <div *ngIf="networkConfirmPassword.errors &amp;&amp; (networkConfirmPassword.dirty || networkConfirmPassword.touched)"
-            class="invalid-feedback">
-            <div *ngIf="networkConfirmPassword.errors.required">
-              {{validations.FIELD_REQ}}
-            </div>
-            <div *ngIf="networkConfirmPassword.errors.maxlength">
-              {{validations.PWD_MAX_REQ}}
-            </div>
-            <div [hidden]="!networkConfirmPassword.errors.pattern">
-              {{validations.PWD_PATTERN}}
-            </div>
-            <div [hidden]="!editDeviceForm.controls['networkConfirmPassword'].errors?.matchOther">
-              {{validations.PWD_NOT_MATCHED}}
-            </div>
-          </div>
-        </div>
-      </div>
+      </form>
     </div>
-  </div>
+  </section>
+  
 
-  <div class="card mb-2" *ngIf="itemInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.FOTA}}:</span>
-      </h5>
 
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.FIRMWARE_VERSION}}:</label>
-          <div>
-            {{itemInfo.firmwareVersion}}
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.LAST_UPDATE}}:</label>
-          <div>
-            {{itemInfo.firmwareLastUpdatedDate}}
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.UPDATE_STATUS}}:</label>
-          <div class="col-xl-6 px-0">
-            {{itemInfo.firmwareUpdateStatus}}
-            <button class="firmware-update pull-right">{{labels.HOME_MANAGEMENT.UPDATE_NOW}}</button>
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.COMMON.UPDATE_SETTINGS}}:</label>
-          <div class="col-xl-6 px-0">
-            {{labels.HOME_MANAGEMENT.SCHEDULE_TIME}}
-            <div class="firmware-update-time pull-right">{{itemInfo.firmwareUpdateSettingTime}}</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="card mb-2" *ngIf="itemInfo">
-    <div class="card-body">
-      <h5 class="">
-        <span class="pb-1 user-name">{{labels.HOME_MANAGEMENT.INTERNET}}:</span>
-      </h5>
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.STATUS_OF_LINK}}:</label>
-          <div>
-            {{itemInfo.statusOfLink}}
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.BANDWIDTH_SPEED}}:</label>
-          <div>
-            {{itemInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon ml-2 mr-4" />
-            {{itemInfo.bankdwidthSpeed}}<img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon ml-2" />
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>{{labels.HOME_MANAGEMENT.TOTAL_USAGE}}:</label>
-          <div>
-            {{itemInfo.totalUsage}}
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-</form>
-
-<div *ngIf="mobileFilterSection" class="d-block d-sm-none mobile-actions">
-  <div class="d-flex justify-content-around p-2">
-    <div>
-      <button type="button" class="btn btn-primary mr-1" (click)="cancelEditUser()">{{labels.BUTTONS.CANCEL}}</button>
-      <button type="button" class="btn btn-primary mr-1" (click)="updateDevice()">{{labels.BUTTONS.SAVE}}</button>
-    </div>
-  </div>
-</div>
+  
