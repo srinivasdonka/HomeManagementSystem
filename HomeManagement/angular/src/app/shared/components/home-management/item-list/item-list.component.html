@@ -1,0 +1,201 @@
+<div class="d-flex justify-content-between d-block d-sm-none page-title">
+    <div class="p0">
+      <strong>{{labels.HOME_MANAGEMENT.HOME_MANAGEMENT}}</strong>
+      <br>
+      <span class="total-users">
+        <strong>{{itemList.length}}</strong> {{labels.COMMON.TOTAL_ITEMS}}
+      </span>
+    </div>
+    <div class="p-0 ml-auto">
+      <button type="button" class="btn btn-secondary btn-sm" (click)="addUser()">+ {{labels.COMMON.ADD_EXPENDATURE}}</button>
+    </div>
+  </div>
+  
+  <div class="d-flex justify-content-start page-title page-title-m3">
+    <div class="p-0 d-none d-sm-flex">
+      <div class="p-0 mr-2">
+        <button type="button" class="btn btn-secondary" (click)="addUser()">+ {{labels.BUTTONS.ADD_EXPENDATURE}}</button>
+      </div>
+    </div>
+    <div class="p-0">
+      <div class="d-flex">
+        <div class="p-0">
+          <div class="form-group has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchInput">
+          </div>
+        </div>
+        <div class="p-0 ml-2">
+          <button class="btn btn-primary dropdown-toggle" (click)="toggleFilterSearchPanel($event, actualTarget)" role="button" id="dropdownMenuLink"
+            data-toggle="dropdown">{{labels.BUTTONS.FILTER}}
+          </button>
+          <div #actualTarget></div>
+        </div>
+      </div>
+    </div>
+    <div class="ml-auto p-0 d-none d-md-flex">
+      <button type="button" *ngIf="showDeactivateBtn" (click)="deactivateSelectedItems()" class="btn btn-primary ml-1 mr-1">{{labels.BUTTONS.OFFLINE}}</button>
+      <button type="button" *ngIf="showActivateBtn" (click)="activateSelectedItems()" class="btn btn-primary ml-1 mr-1">{{labels.BUTTONS.ONLINE}}</button>
+      <button type="button" *ngIf="showEditBtn" (click)="showUserDetails(selectedActiveItemList[0])" class="btn btn-secondary ml-1 mr-1">{{labels.BUTTONS.EDIT}}</button>
+    </div>
+  </div>
+  
+  <div class="table">
+    <div class="tr th d-none d-sm-flex">
+      <div class="td customer-details">
+        <div class="checkbox ml-3">
+          <label>
+            <input type="checkbox" [(ngModel)]="isAllChecked" name="all" (ngModelChange)="checkAll($event)" />
+            <span class="box"></span>
+          </label>
+        </div>
+        <span class="item-details" (click)="sort('item_name')">{{labels.HOME_MANAGEMENT.ITEM_NAME}}
+          <img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon" *ngIf="key === 'item_name' && reverse" />
+          <img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon" *ngIf="(key !== 'item_name') || !reverse"
+          />
+        </span>
+      </div>
+      <div class="td" (click)="sort('item_id')">{{labels.HOME_MANAGEMENT.ITEM_ID}}
+        <img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon" *ngIf="key === 'item_id' && reverse" />
+        <img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon" *ngIf="(key !== 'item_id') || !reverse"
+        />
+      </div>
+      <div class="td" (click)="sort('item_type')">{{labels.HOME_MANAGEMENT.ITEM_TYPE}}
+        <img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon" *ngIf="key === 'item_type' && reverse" />
+        <img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon" *ngIf="(key !== 'item_type') || !reverse"
+        />
+      </div>
+      <div class="td" (click)="sort('item_price')">{{labels.HOME_MANAGEMENT.ITEM_PRICE}}
+        <img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon" *ngIf="key === 'item_price' && reverse" />
+        <img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon" *ngIf="(key !== 'item_price') || !reverse"
+        />
+      </div>
+      <div class="td" (click)="sort('item_purchase_date')">{{labels.HOME_MANAGEMENT.ITEM_PURCHASE_DATE}}
+        <img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon" *ngIf="key === 'item_purchase_date' && reverse" />
+        <img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon" *ngIf="(key !== 'item_purchase_date') || !reverse"
+        />
+      </div>
+      <div class="td" (click)="sort('item_status')">{{labels.HOME_MANAGEMENT.ITEM_STATUS}}
+        <img src="assets/homemanage_icons/shared/sort_up.svg" class="sort-icon" *ngIf="key === 'item_status' && reverse" />
+        <img src="assets/homemanage_icons/shared/sort_down.svg" class="sort-icon" *ngIf="(key !== 'item_status') || !reverse"
+        />
+      </div>
+  
+    </div>
+  
+    <div class="tr" *ngIf="!noRecords && (itemList | searchText: searchInput).length === 0">
+      <div class="td">{{labels.COMMON.NO_MATCHING_ELEMENTS}}</div>
+    </div>
+    <div *ngIf="noRecords" class="no-records px-4">{{labels.HOME_MANAGEMENT.NO_DEVICES_ADDED}}</div>
+  
+    <section id="scroll-container" [perfectScrollbar]="config" class="ps">
+  
+      <div class="tr" *ngFor="let item of itemList |
+        orderBy: key : reverse |
+        searchText: {'item_name': searchInput} |
+        searchRoleFilter: { designation: ''} : roleChecked() : false |
+        searchStatusFilter: { status: ''} : statusChecked() : false |
+        paginate: { itemsPerPage: showitemsPerPage, currentPage: pageNumber }; let i = index" [ngClass]=" !item.item_status ? 'disableTR' : '' ">
+        <div class="td">
+          <span *ngIf="item.isNewDevice" class="new-device">New</span>
+          <div class="checkbox ml-3">
+            <label>
+              <input type="checkbox" [name]="item.checked" [value]="item.checked" [(ngModel)]="item.checked" (ngModelChange)="handleEnable($event, item)"
+              />
+              <span class="box"></span>
+            </label>
+          </div>
+          <div class="ellipsis item-details" (click)="showUserDetails(item)">
+            <div class="d-flex justify-content-between">
+              <div class="ellipsis">{{item.item_name}}</div>
+              <div class="d-block d-sm-none">
+                <span>{{item.item_type}}</span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="d-block d-sm-none">
+                <span>{{item.item_id}}</span>
+              </div>
+              <div class="ellipsis d-block d-sm-none" >{{item.item_status}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="td d-none d-sm-flex" (click)="showUserDetails(item)">{{item.item_id}}</div>
+        <div class="td d-none d-sm-flex" (click)="showUserDetails(item)">{{item.item_type}}</div>
+        <div class="td d-none d-sm-flex" (click)="showUserDetails(item)">{{item.item_price}}</div>
+        <div class="td d-none d-sm-flex" (click)="showUserDetails(item)">{{item.item_purchase_date}}</div>
+        <div class="td d-none d-sm-flex" (click)="showUserDetails(item)">{{item.item_status}}</div>
+      </div>
+  
+    </section>
+  
+  </div>
+  <div *ngIf="!noRecords" class="d-none d-sm-flex">
+    <div class="mr-auto p-2">
+      {{labels.COMMON.TOTAL}}:
+      <span class="total-users">
+        <strong>{{itemList.length}}</strong>
+      </span>
+    </div>
+    <div class="p-2">
+      <span class="mr-2">
+        <strong>{{labels.COMMON.SHOWING}}:</strong>
+      </span>
+      <select id="ItemsPerPage" [(ngModel)]="selectedItemstoShow" (change)="selectedItemsPerPageChanged(selectedItemstoShow)">
+        <option *ngFor="let itemPage of itemsinPage" [value]="itemPage.id">{{ itemPage.value }}</option>
+      </select>
+      <pagination-controls class="pagination" previousLabel="" nextLabel="" class="d-inline-block" (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+  </div>
+  <div class="d-block d-sm-none">
+    <div class="p-2 text-center">
+      <pagination-controls class="pagination" previousLabel="" nextLabel="" class="d-inline-block" (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+  </div>
+  
+  <p-overlayPanel #filterSearchOP appendTo="body">
+    <ul class="list-group filter-search">
+      <li class="list-group-item">{{labels.COMMON.ITEM}}</li>
+      <li class="list-group-item" *ngFor="let itemPage of itemFilters">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" [name]="itemPage.value" [value]="itemPage.value" [(ngModel)]="itemPage.checked" (click)="filterChanged($event, itemPage.value)"
+            />
+            <span class="box"></span>
+            <span class="label">{{itemPage.value}}</span>
+          </label>
+        </div>
+      </li>
+      <li class="list-group-item">{{labels.COMMON.STATUS}}</li>
+      <li class="list-group-item" *ngFor="let status of statusFilters">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" [name]="status.value" [value]="status.value" [(ngModel)]="status.checked" (click)="filterChanged($event, status.value)"
+            />
+            <span class="box"></span>
+            <span class="label">{{status.value}}</span>
+          </label>
+        </div>
+      </li>
+    </ul>
+  </p-overlayPanel>
+  
+  <div *ngIf="mobileFilterSection" class="d-block d-sm-none mobile-actions">
+    <div class="d-flex justify-content-between align-items-center mobile-actions-section">
+      <div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" [(ngModel)]="isAllChecked" name="all" (ngModelChange)="checkAll($event)" />
+            <span class="box"></span>
+          </label>
+        </div>
+      </div>
+      <div>
+        <button type="button" *ngIf="showDeactivateBtn" (click)="deactivateSelectedItems()" class="btn btn-primary ml-1 mr-1">{{labels.BUTTONS.OFFLINE}}</button>
+        <button type="button" *ngIf="showActivateBtn" (click)="activateSelectedItems()" class="btn btn-primary ml-1 mr-1">{{labels.BUTTONS.ONLINE}}</button>
+        <button type="button" *ngIf="showEditBtn" (click)="showUserDetails(selectedActiveItemList[0])" class="btn btn-secondary ml-1 mr-1">{{labels.BUTTONS.EDIT}}</button>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddExpendatureComponent } from './add-expendature.component';
+import { EditExpendatureComponent } from './edit-expendature.component';
 
-describe('AddExpendatureComponent', () => {
-  let component: AddExpendatureComponent;
-  let fixture: ComponentFixture<AddExpendatureComponent>;
+describe('EditExpendatureComponent', () => {
+  let component: EditExpendatureComponent;
+  let fixture: ComponentFixture<EditExpendatureComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddExpendatureComponent ]
+      declarations: [ EditExpendatureComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddExpendatureComponent);
+    fixture = TestBed.createComponent(EditExpendatureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -75,17 +75,16 @@ import { UsersListComponent } from './components/user-management/users-list/user
 import { UserInfoComponent } from './components/user-management/user-info/user-info.component';
 import { AddUserComponent } from './components/user-management/add-user/add-user.component';
 import { EditUserComponent } from './components/user-management/edit-user/edit-user.component';
-import { DevicesListComponent } from './components/home-management/devices-list/devices-list.component';
-import { DeviceInfoComponent } from './components/home-management/device-info/device-info.component';
-import { CreateNetworkComponent } from './components/home-management/create-network/create-network.component';
+import { ItemListComponent } from './components/home-management/item-list/item-list.component';
+import { ItemInfoComponent } from './components/home-management/item-info/item-info.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderModule } from 'ngx-order-pipe';
 import { UsersListService } from './services/users-list.service';
 import { EditUsersComponent } from './components/user-management/edit-users/edit-users.component';
 import { AddExpendatureComponent } from './components/home-management/add-expendature/add-expendature.component';
-import { EditDeviceComponent } from './components/home-management/edit-device/edit-device.component';
-import { InfoDeviceComponent } from './components/home-management/info-device/info-device.component';
+import { EditExpendatureComponent } from './components/home-management/edit-expendature/edit-expendature.component';
+import { InfoItemComponent } from './components/home-management/info-item/info-item.component';
 import { LeftBannerImageComponent } from './components/left-banner-image/left-banner-image.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -154,13 +153,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AddUserComponent,
     EditUserComponent,
     EditUsersComponent,
-    DevicesListComponent,
+    ItemListComponent,
     AddExpendatureComponent,
-    DeviceInfoComponent,
-    CreateNetworkComponent,
+    ItemInfoComponent,
     MyProfileComponent,
-    EditDeviceComponent,
-    InfoDeviceComponent,
+    EditExpendatureComponent,
+    InfoItemComponent,
     LeftBannerImageComponent
   ],
   providers: [

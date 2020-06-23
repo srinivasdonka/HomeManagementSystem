@@ -10,7 +10,7 @@ import { fromEvent } from 'rxjs';
 import { merge } from 'rxjs';
 
 import { AppConfigService } from 'src/app/app-config.service';
-import { DeviceSettings } from 'src/app/shared/classes/device-settings';
+import { HomeSettings } from 'src/app/shared/classes/home-settings';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -50,7 +50,7 @@ export class AdminRootComponent implements OnInit, OnDestroy {
     });
 
     this.labels = this.appConfigService.getLabels;
-    if ( DeviceSettings.getCookieEnabled == "false") {
+    if ( HomeSettings.getCookieEnabled == "false") {
       this.acceptCookie = false;
     } else {
       this.acceptCookie = true;
@@ -78,6 +78,6 @@ export class AdminRootComponent implements OnInit, OnDestroy {
 
   acceptCookieChecked() {
     this.acceptCookie = false;
-    DeviceSettings.setCookieEnabled = '' + this.acceptCookie;
+    HomeSettings.setCookieEnabled = '' + this.acceptCookie;
   }
 }

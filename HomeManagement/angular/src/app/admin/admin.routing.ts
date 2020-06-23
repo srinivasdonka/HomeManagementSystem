@@ -10,13 +10,12 @@ import { UsersListComponent } from '../shared/components/user-management/users-l
 import { UserInfoComponent } from '../shared/components/user-management/user-info/user-info.component';
 import { AddUserComponent } from '../shared/components/user-management/add-user/add-user.component';
 import { EditUserComponent } from '../shared/components/user-management/edit-user/edit-user.component';
-import { DevicesListComponent } from '../shared/components/home-management/devices-list/devices-list.component';
+import { ItemListComponent } from '../shared/components/home-management/item-list/item-list.component';
 import { AddExpendatureComponent } from '../shared/components/home-management/add-expendature/add-expendature.component';
-import { DeviceInfoComponent } from '../shared/components/home-management/device-info/device-info.component';
-import { CreateNetworkComponent } from '../shared/components/home-management/create-network/create-network.component';
+import { ItemInfoComponent } from '../shared/components/home-management/item-info/item-info.component';
 import { MyProfileComponent } from '../shared/components/my-profile/my-profile.component';
-import { EditDeviceComponent } from 'src/app/shared/components/home-management/edit-device/edit-device.component';
-import { InfoDeviceComponent } from 'src/app/shared/components/home-management/info-device/info-device.component';
+import { EditExpendatureComponent } from 'src/app/shared/components/home-management/edit-expendature/edit-expendature.component';
+import { InfoItemComponent } from 'src/app/shared/components/home-management/info-item/info-item.component';
 
 export const adminRoutes: Routes = [
   { path: '', redirectTo: 'admin-root', pathMatch: 'full' },
@@ -50,15 +49,15 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'homemanagement',
-        component: DevicesListComponent
+        component: ItemListComponent
       },
       {
         path: 'homemanagement/edit-expendature/:itemId',
-        component: EditDeviceComponent
+        component: EditExpendatureComponent
       },
       {
         path: 'homemanagement/info-expendature/:itemId',
-        component: InfoDeviceComponent
+        component: InfoItemComponent
       },
       {
         path: 'homemanagement/add-expendature',
@@ -66,13 +65,8 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'homemanagement/item-expendature/:itemId',
-        component: DeviceInfoComponent
+        component: ItemInfoComponent
       },
-      {
-        path: 'homemanagement/create-network/:hardwareId',
-        component: CreateNetworkComponent
-      },      
-     
       {
         path: 'propertymanagement',
         component: CommingSoonComponent

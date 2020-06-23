@@ -1,0 +1,146 @@
+@import 'src/sass/variables';
+
+.page-title {
+  padding: 15px;
+  
+  &.bottom-shadow {
+    box-shadow: 0;
+  }
+  
+  &.page-title-m3 {
+    margin: 0;
+  }
+}
+
+.user-name {
+  color: $primaryBlueColor;
+  font-weight: bold;
+}
+
+.status-parent {
+    margin-left: 10px;
+    font-size: 12px;
+    background: #ddd;
+    border-radius: 5px;
+    padding: 2px 5px;
+    vertical-align: middle;
+}
+
+.activeColor {
+  color: $lightgreen;
+}
+
+.deactiveColor {
+  color: $grey;
+}
+
+.card {
+	border: 0;
+
+	.card-header {
+    border-bottom: 0;
+	}
+}
+
+.form-row {
+	label {
+		color: $homemanage-Text-light-Grey-Color;
+  }
+}
+
+.accept-cookie {
+	height: 70px;
+	
+	p {
+    text-align: center;
+    margin: 0 auto;
+    width: 90%;
+	}
+
+	.btn {
+		margin: 0 3px;
+	}
+}
+
+input {
+  padding: 12px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.25;
+  text-align: left;
+  color: $primaryColor;
+  border: none;
+  border-radius: 4px;
+  background-color: $homemanage-checkbox-background;
+}
+
+.child-device .device-status{
+  position: absolute;
+  top: 9px;
+  left: calc(50% - 60px);
+}
+
+.show-password {
+  cursor: pointer;
+  z-index: 2;
+  position: absolute;
+  right: calc(50% + 25px);
+  top: 6px;
+  
+  img {
+    width: 20px;
+  }
+}
+
+.sort-icon {
+  width: 12px;
+}
+
+.firmware-update, .firmware-update-time {
+  border-radius: 4px;
+  color: $white;
+  background-color: $primaryBlueColor;
+  border: none;
+  font-size: 14px;
+  line-height: 1.29;
+  padding: 8px 10px;
+  margin-top: -5px;
+  font-weight: 500;
+}
+
+.firmware-update-time {
+  background-color: $primaryColor;
+}
+
+.mobile-actions {
+  background: $white;
+  // position: fixed;
+  // bottom: 0;
+  width: 100%;
+  z-index: 9;
+}
+
+@media (min-width: 768px) {
+  .user-info {
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 991px) {
+  .show-password {
+    right: 25px;
+  }
+  .child-device .device-status{
+    left: calc(100% - 60px);
+  }
+}
+
+@media (max-width: 767px) {
+  .card {
+    background-color: transparent;
+    padding: 0 8px;
+    .card-body {
+      background-color: $white;
+    }
+  }
+}
