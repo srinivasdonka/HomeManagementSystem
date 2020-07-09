@@ -44,7 +44,7 @@ export class UsersListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   searchInput = '';
   filterInput = [];
-  roleFilters = [{ value: 'Enduser', checked: false }, { value: 'Administrator', checked: false }];
+  roleFilters = [{ value: 'Owner', checked: false }, { value: 'Administrator', checked: false }];
   statusFilters = [{ value: 'Active', checked: false }, { value: 'Deactive', checked: false }, { value: 'Activation Pending', checked: false }];
 
   //sorting
@@ -337,30 +337,6 @@ export class UsersListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   pageChanged(event) {
-    if (this.currentPage < event) {
-      const ssgames = [
-        {
-          "firstName": "test",
-          "designation": "aDOTA 2",
-          "username": "aStrategy",
-          "updatedTimestamp": "11",
-          "status": "aDOTA 2",
-          "enable": true
-        },
-        {
-          "firstName": "test",
-          "designation": "aDOTA 2",
-          "username": "aStrategy",
-          "updatedTimestamp": "11",
-          "status": "aDOTA 2",
-          "enable": true
-        }
-      ];
-      ssgames.forEach((item, index) => {
-        item.firstName = 'test' + index;
-        // this.usersList.push(item);
-      });
-    }
     setTimeout(() => {
       this.pageNumber = event;
     }, 500);

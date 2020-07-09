@@ -97,7 +97,7 @@
         searchStatusFilter: { status: ''} : statusChecked() : false |
         paginate: { itemsPerPage: showitemsPerPage, currentPage: pageNumber }; let i = index" [ngClass]=" !item.item_status ? 'disableTR' : '' ">
         <div class="td">
-          <span *ngIf="item.isNewDevice" class="new-device">New</span>
+          <span *ngIf="item.item_name" class="new-device">New</span>
           <div class="checkbox ml-3">
             <label>
               <input type="checkbox" [name]="item.checked" [value]="item.checked" [(ngModel)]="item.checked" (ngModelChange)="handleEnable($event, item)"
@@ -141,28 +141,31 @@
       <span class="mr-2">
         <strong>{{labels.COMMON.SHOWING}}:</strong>
       </span>
-      <select id="ItemsPerPage" [(ngModel)]="selectedItemstoShow" (change)="selectedItemsPerPageChanged(selectedItemstoShow)">
-        <option *ngFor="let itemPage of itemsinPage" [value]="itemPage.id">{{ itemPage.value }}</option>
+      <select id="ItemsPerPage" [(ngModel)]="selectedItemstoShow"
+        (change)="selectedItemsPerPageChanged(selectedItemstoShow)">
+        <option *ngFor="let item of itemsinPage" [value]="item.id">{{ item.value }}</option>
       </select>
-      <pagination-controls class="pagination" previousLabel="" nextLabel="" class="d-inline-block" (pageChange)="pageChanged($event)"></pagination-controls>
+      <pagination-controls class="pagination" previousLabel="" nextLabel="" class="d-inline-block"
+        (pageChange)="pageChanged($event)"></pagination-controls>
     </div>
   </div>
-  <div class="d-block d-sm-none">
+  <div *ngIf="!noRecords" class="d-block d-sm-none">
     <div class="p-2 text-center">
-      <pagination-controls class="pagination" previousLabel="" nextLabel="" class="d-inline-block" (pageChange)="pageChanged($event)"></pagination-controls>
+      <pagination-controls class="pagination" previousLabel="" nextLabel="" class="d-inline-block"
+        (pageChange)="pageChanged($event)"></pagination-controls>
     </div>
   </div>
   
   <p-overlayPanel #filterSearchOP appendTo="body">
     <ul class="list-group filter-search">
       <li class="list-group-item">{{labels.COMMON.ITEM}}</li>
-      <li class="list-group-item" *ngFor="let itemPage of itemFilters">
+      <li class="list-group-item" *ngFor="let item of itemFilters">
         <div class="checkbox">
           <label>
-            <input type="checkbox" [name]="itemPage.value" [value]="itemPage.value" [(ngModel)]="itemPage.checked" (click)="filterChanged($event, itemPage.value)"
+            <input type="checkbox" [name]="item.value" [value]="item.value" [(ngModel)]="item.checked" (click)="filterChanged($event, item.value)"
             />
             <span class="box"></span>
-            <span class="label">{{itemPage.value}}</span>
+            <span class="label">{{item.value}}</span>
           </label>
         </div>
       </li>

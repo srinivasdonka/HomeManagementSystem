@@ -44,7 +44,7 @@ export class ItemListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   searchInput = '';
   filterInput = [];
-  itemFilters = [{ value: 'Mesh Router', checked: false }, { value: 'HomeManagement Router', checked: false }];
+  itemFilters = [{ value: 'Item Name', checked: false }, { value: 'Purchase Date', checked: false }];
   statusFilters = [{ value: 'paid', checked: false }, { value: 'not Paid', checked: false }];
 
   //sorting
@@ -148,7 +148,6 @@ export class ItemListComponent implements OnInit, AfterViewInit, OnDestroy {
               item.isNewDevice = false;
             }
           });
-          // this.devicesList = this.devicesList.concat(DeviceSettings.getDeviceHardwareIdandKey);
           this.pager = data.result;
         } else if (this.itemList && this.itemList.length == 0) {
           this.noRecords = true;
@@ -250,11 +249,6 @@ export class ItemListComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.showActivateBtn = false;
     }
-    // if (this.selectedDeactiveDevicesList.length > 0 && this.selectedActiveDevicesList.length > 0) {
-    //   this.mobileFilterSection = true;
-    // } else {
-    //   this.mobileFilterSection = false;
-    // }
   }
 
   deactivateSelectedItems() {
@@ -330,6 +324,11 @@ export class ItemListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectedItemsPerPageChanged(event): void {
     this.showitemsPerPage = event;
+  }
+  pageChanged(event) {
+    setTimeout(() => {
+      this.pageNumber = event;
+    }, 500);
   }
 }
 

@@ -1,7 +1,8 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
+const url = window.location.href;
+const hostName = url.split('#')[0];
 export const environment = {
   production: false,
   grant_type: 'password',
@@ -10,7 +11,7 @@ export const environment = {
   clientName: 'HomeManagement',
   client_secret: 'HomeManagement',
   siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
-  apiUrl: 'http://localhost:9090/'
+  apiUrl: hostName
 };
 
 
