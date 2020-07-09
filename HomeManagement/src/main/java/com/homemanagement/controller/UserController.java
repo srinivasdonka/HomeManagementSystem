@@ -119,13 +119,13 @@ public class UserController {
 
 					companyMaster.setName(userDTO.getCompanyName());
 					companyMaster.setAddress(userDTO.getCompanyAddress());
-					companyMaster.setIs_active(Integer.valueOf(userDTO.getIsActive()));
+					companyMaster.setNo_of_active_users(Integer.valueOf(userDTO.getIsActive()));
 					companyMaster.setIs_SI(Integer.valueOf(userDTO.getIsSI()));
 
 					LocalDateTime localDateTime = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
-					companyMaster.setCreated_date(localDateTime);
+					companyMaster.setCreated_date(localDateTime.toString());
 
-					companyMaster.setLast_updated(localDateTime);
+					companyMaster.setLast_updated(localDateTime.toString());
 					companyMaster.setNo_of_users(userDTO.getNoOfUsers());
 					String companyId = UUID.randomUUID().toString();
 
@@ -703,13 +703,13 @@ public class UserController {
 
 						companyMaster.setName(userDTO.getCompanyName());
 						companyMaster.setAddress(userDTO.getCompanyAddress());
-						companyMaster.setIs_active(Integer.valueOf(userDTO.getIsActive()));
+						companyMaster.setNo_of_active_users(Integer.valueOf(userDTO.getIsActive()));
 						companyMaster.setIs_SI(Integer.valueOf(userDTO.getIsSI()));
 
 						LocalDateTime localDateTime = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
-						companyMaster.setCreated_date(localDateTime);
+						companyMaster.setCreated_date(localDateTime.toString());
 
-						companyMaster.setLast_updated(localDateTime);
+						companyMaster.setLast_updated(localDateTime.toString());
 						companyMaster.setNo_of_users(userDTO.getNoOfUsers());
 						String companyId = UUID.randomUUID().toString();
 

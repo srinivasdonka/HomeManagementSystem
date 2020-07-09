@@ -1,43 +1,53 @@
 package com.homemanagement.domain;
 
-import java.time.LocalDateTime;
-
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="Company_Master")
 public class CompanyMaster {
 
-    private String id;
+	private String id;
 	private String name;
 	private String address;
-	private Integer is_active;
+	private String status;
 	private Integer is_SI;
 	private Integer no_of_users;
-	private LocalDateTime created_date;
-	private LocalDateTime last_updated;
-	
-    public CompanyMaster() {
-    }
+	private Integer no_of_active_users;
+	private Integer no_of_devices;
+	private String email;
+	private String created_date;
+	private String last_updated;
+	private String membership;
 
-    @PersistenceConstructor
-    public CompanyMaster(final String id,
-                final String name,
-                final String address,
-                final Integer is_active,
-                final Integer is_SI,
-                final Integer no_of_users,
-                final LocalDateTime created_date,
-                final LocalDateTime last_updated) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.is_active = is_active;
-        this.is_SI = is_SI;
-        this.no_of_users = no_of_users;
-        this.created_date = created_date;
-        this.last_updated = last_updated;
-    }
+	public CompanyMaster() {
+	}
+
+	@PersistenceConstructor
+	public CompanyMaster(final String id,
+			final String name,
+			final String address,
+			final String status,
+			final Integer is_SI,
+			final Integer no_of_users,
+			final Integer no_of_active_users,
+			final Integer no_of_devices,
+			final String email,
+			final String created_date,
+			final String last_updated,
+			final String membership) {
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.status = status;
+		this.is_SI = is_SI;
+		this.no_of_users = no_of_users;
+		this.no_of_active_users = no_of_active_users;
+		this.no_of_devices = no_of_devices;
+		this.email = email;
+		this.created_date = created_date;
+		this.last_updated = last_updated;
+		this.membership = membership;
+	}
 
 	public String getId() {
 		return id;
@@ -62,15 +72,6 @@ public class CompanyMaster {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	public Integer getIs_active() {
-		return is_active;
-	}
-
-	public void setIs_active(Integer is_active) {
-		this.is_active = is_active;
-	}
-
 	public Integer getIs_SI() {
 		return is_SI;
 	}
@@ -87,20 +88,60 @@ public class CompanyMaster {
 		this.no_of_users = no_of_users;
 	}
 
-	public LocalDateTime getCreated_date() {
+	public Integer getNo_of_devices() {
+		return no_of_devices;
+	}
+
+	public void setNo_of_devices(Integer no_of_devices) {
+		this.no_of_devices = no_of_devices;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCreated_date() {
 		return created_date;
 	}
 
-	public void setCreated_date(LocalDateTime created_date) {
+	public void setCreated_date(String created_date) {
 		this.created_date = created_date;
 	}
 
-	public LocalDateTime getLast_updated() {
+	public String getLast_updated() {
 		return last_updated;
 	}
 
-	public void setLast_updated(LocalDateTime last_updated) {
+	public void setLast_updated(String last_updated) {
 		this.last_updated = last_updated;
+	}
+
+	public String getMembership() {
+		return membership;
+	}
+
+	public void setMembership(String membership) {
+		this.membership = membership;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Integer getNo_of_active_users() {
+		return no_of_active_users;
+	}
+
+	public void setNo_of_active_users(Integer no_of_active_users) {
+		this.no_of_active_users = no_of_active_users;
 	}
 
   

@@ -52,7 +52,7 @@ public class MongoUserDetailsManager implements UserDetailsManager {
 	private User getUser(UserDetails userDetails) {
 		final User user = (User) userDetails;
 		return new User(user.getId(),user.getPassword(), user.getUsername(),
-				user.getFirstName(), user.getLastName(),user.getDesignation(),
+				user.getFirstName(), user.getLastName(),user.getDesignation(),user.getCompany_id(),
 				user.getCompanyName(),user.getPhone(),"",
 				user.getCreateTimestamp(), user.getUpdatedTimestamp(),user.getStatus(),user.getEmail_Token(),user.getLastLogin());
 	}

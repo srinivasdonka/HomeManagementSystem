@@ -1,68 +1,33 @@
 package com.homemanagement.repositories;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collectors;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.homemanagement.domain.User;
 
+public class UserDetailsDecorator extends org.springframework.security.core.userdetails.User {
 
-public class UserDetailsDecorator implements UserDetails {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8476320779208122721L;
-
-	public static final String ROLES_PREFIX = "ROLE_";
-
+	private static final long serialVersionUID = -2033337903887924902L;
 	private User user;
 
 	public UserDetailsDecorator(User user) {
+		super(user.getUsername(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getDesignation()));
 		this.user = user;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public User getUser() {
+		return user;
+	}
 
-		String roles[] ={ "read,write"};
+	public String getId() {
+		return user.getId();
+	}
 
-		return Arrays.stream(roles).map(
-				role -> (GrantedAuthority) () -> ROLES_PREFIX + role
-				).collect(Collectors.toList());
+	public String getRole() {
+		return user.getDesignation();
 	}
 
 	@Override
-	public String getPassword() {
-		return user.getPassword();
+	public String toString() {
+		return "CurrentUser{" + "user=" + user + "} " + super.toString();
 	}
-
-	@Override
-	public String getUsername() {
-		return user.getUsername();
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-
 }

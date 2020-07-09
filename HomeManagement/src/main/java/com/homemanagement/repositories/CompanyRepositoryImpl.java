@@ -37,7 +37,7 @@ public class CompanyRepositoryImpl implements CompanyRepositoryBase {
 		
         Update update = new Update();
  			update.set("name", companyMaster.getName());
- 			update.set("is_active", companyMaster.getIs_active());
+ 			update.set("no_of_active_users", companyMaster.getNo_of_active_users());
  			update.set("is_SI", companyMaster.getIs_SI());
  			update.set("address", companyMaster.getAddress());
  			update.set("no_of_users", companyMaster.getNo_of_users());

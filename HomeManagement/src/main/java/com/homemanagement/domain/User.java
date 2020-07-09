@@ -37,6 +37,7 @@ public class User implements UserDetails, CredentialsContainer {
 	private String first_name;
 	private String last_name;
 	private String designation;
+	private String company_id;
 	private String company_name;
 	private String role_id;
 	private String phone;
@@ -58,6 +59,7 @@ public class User implements UserDetails, CredentialsContainer {
                 final String first_name,
                 final String last_name,
                 final String designation,
+                final String company_id,
                 final String company_name,
                 final String phone,
                 final String role_id,
@@ -68,6 +70,7 @@ public class User implements UserDetails, CredentialsContainer {
         this.first_name = first_name;
         this.last_name = last_name;
         this.designation = designation;
+        this.company_id=company_id;
         this.company_name = company_name;
         this.phone = phone;
         this.role_id = role_id;
@@ -222,6 +225,14 @@ public class User implements UserDetails, CredentialsContainer {
 
 	public void setLastLogin(String lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+
+	public String getCompany_id() {
+		return company_id;
+	}
+
+	public void setCompany_id(String company_id) {
+		this.company_id = company_id;
 	}
   
 
