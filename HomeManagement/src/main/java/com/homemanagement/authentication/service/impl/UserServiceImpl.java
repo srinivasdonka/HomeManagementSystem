@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(email);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Collection<User> getAllUsers() {
 		LOGGER.debug("Getting all users");
