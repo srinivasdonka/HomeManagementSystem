@@ -21,39 +21,38 @@ import com.mongodb.ServerAddress;
 @ComponentScan(basePackages = {"com.homemanagement.security"})
 @EnableMongoRepositories(basePackages = {"com.homemanagement.repositories"})
 public class HomeManagementConfiguration {
-	private static final String RESOURCE_ID = "restservice";
-    @Bean
-    public MongoTemplate mongoTemplate(final MongoClient mongoClient,
-                                       final MongoDBSettings mongoSettings) {
-        return new MongoTemplate(mongoClient, mongoSettings.getDatabase());
-    }
+	@Bean
+	public MongoTemplate mongoTemplate(final MongoClient mongoClient,
+			final MongoDBSettings mongoSettings) {
+		return new MongoTemplate(mongoClient, mongoSettings.getDatabase());
+	}
 
-    @Configuration
-    @EnableConfigurationProperties(MongoDBSettings.class)
-    @ConditionalOnProperty({
-    	 "mongo.uri",
-            "mongo.host",
-            "mongo.port",
-            "mongo.database",
-            "mongo.username",
-            "mongo.password"})
-    @Profile("!test")
-    static class MongoClientConfiguration {
+	@Configuration
+	@EnableConfigurationProperties(MongoDBSettings.class)
+	@ConditionalOnProperty({
+		"mongo.uri",
+		"mongo.host",
+		"mongo.port",
+		"mongo.database",
+		"mongo.username",
+	"mongo.password"})
+	@Profile("!test")
+	static class MongoClientConfiguration {
 
-        @Bean
-        public MongoClient mongoClient(final MongoDBSettings mongoSettings) {
-            ServerAddress serverAddress = new ServerAddress(
-                    mongoSettings.getHost(), mongoSettings.getPort());
+		@Bean
+		public MongoClient mongoClient(final MongoDBSettings mongoSettings) {
+			new ServerAddress(
+					mongoSettings.getHost(), mongoSettings.getPort());
 
-            MongoCredential credential = MongoCredential.createScramSha1Credential(
-                    mongoSettings.getUsername(),
-                    mongoSettings.getDatabase(),
-                    mongoSettings.getPassword().toCharArray());
-            MongoClientURI uri = new MongoClientURI(mongoSettings.getUri());
-            return new MongoClient(uri);
-        }
-    }
+			MongoCredential.createScramSha1Credential(
+					mongoSettings.getUsername(),
+					mongoSettings.getDatabase(),
+					mongoSettings.getPassword().toCharArray());
+			MongoClientURI uri = new MongoClientURI(mongoSettings.getUri());
+			return new MongoClient(uri);
+		}
+	}
 
-    
+
 
 }

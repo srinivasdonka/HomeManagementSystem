@@ -25,6 +25,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -1021,7 +1022,7 @@ public class UserController {
 	}
 
 
-	@RequestMapping(value = "/statusForRegistrationUser",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping("/statusForRegistrationUser")
 	ServiceStatus<User> updateStatusForRegistrationUser(@RequestParam("id") String userId) {
 
 		ServiceStatus<User> serviceStatus = new ServiceStatus<User>();
@@ -1072,7 +1073,7 @@ public class UserController {
 
 
 	@RequestMapping(value = "/veryfyRegistrationlink", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) 
-	ServiceStatus<Object> createUser(@RequestBody User registrationUser) {
+	ServiceStatus<Object> veryfyRegistrationlink(@RequestBody User registrationUser) {
 
 		ServiceStatus<Object> serviceStatus = new ServiceStatus<Object>();
 

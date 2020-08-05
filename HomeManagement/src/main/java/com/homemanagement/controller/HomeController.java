@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -450,15 +451,15 @@ public class HomeController {
 
 			List<HomeExpendature> itemList	= homeRepository.getItemByUserId(userId);
 			if(itemList!=null&& itemList.size()>0){
-				logger.info("isDeviceSeqNoExists"+itemList);
+				List<HomeExpendature> listWithoutDuplicates = itemList.stream().distinct().collect(Collectors.toList());
+				logger.info("listWithoutDuplicates"+listWithoutDuplicates);
 				serviceStatus.setStatus("success");
 				serviceStatus.setMessage("successfully fetched");
-				serviceStatus.setResult(itemList);
+				serviceStatus.setResult(listWithoutDuplicates);
 			}
 			else {
 				serviceStatus.setStatus("failure");
 				serviceStatus.setMessage("Item does not Exist");
-				serviceStatus.setResult(itemList);
 			}
 
 		} catch (Exception e) {

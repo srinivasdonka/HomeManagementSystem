@@ -43,7 +43,6 @@ public class UserRepositoryImpl implements UserRepositoryBase {
 		update.set("first_name", user.getFirstName());
 		update.set("last_name", user.getLastName());
 		update.set("designation", user.getDesignation());
-		update.set("role_id", user.getRole_id());
 		update.set("phone", user.getPhone());
 		update.set("status",user.getStatus());
 		update.set("upated_timestamp", user.getUpdatedTimestamp());
@@ -71,7 +70,6 @@ public class UserRepositoryImpl implements UserRepositoryBase {
 			update.set("first_name", user.getFirstName());
 			update.set("last_name", user.getLastName());
 			update.set("designation", user.getDesignation());
-			update.set("role_id", user.getRole_id());
 			update.set("phone", user.getPhone());
 			update.set("status",user.getStatus());
 			update.set("upated_timestamp", user.getUpdatedTimestamp());

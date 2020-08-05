@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
@@ -23,8 +22,7 @@ import com.homemanagement.security.MongoClientDetailsService;
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private ApplicationConfigurationProperties configuration;
+
 
 	private TokenStore tokenStore = new InMemoryTokenStore();
 
@@ -54,14 +52,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		ClientDetailsService clientService = clients.withClientDetails(clientDetailsService).build();
-		/*
-		 * clients.inMemory() .withClient(configuration.getClientId())
-		 * .authorizedGrantTypes("password", "refresh_token") .authorities("USER")
-		 * .scopes("read", "write")
-		 * .resourceIds(RestApiResourceServerConfiguration.RESOURCE_ID)
-		 * .secret(configuration.getClientSecret());
-		 */
+		clients.withClientDetails(clientDetailsService).build();
 	}
 
 	@Bean
