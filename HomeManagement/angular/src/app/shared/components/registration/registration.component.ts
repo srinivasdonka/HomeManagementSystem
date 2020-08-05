@@ -100,7 +100,7 @@ export class RegistrationComponent implements OnInit {
         email: this.registerForm.value.email,
         username: this.registerForm.value.email,
         password: this.registerForm.value.password,
-        designation: 'Administrator',
+        designation: 'Owner',
         phone: '',
         companyName: this.registerForm.value.companyName,
         companyId: '',
