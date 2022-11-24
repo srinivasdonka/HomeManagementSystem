@@ -29,7 +29,6 @@ import com.homemanagement.utils.HomeManagementUtil;
 @RestController
 @RequestMapping("/phoneHome")
 public class HomeMasterController {
-
 	@Autowired
 	DeviceMasterRepository deviceMasterRepository;
 
@@ -41,8 +40,6 @@ public class HomeMasterController {
 
 	/**
 	 * This method is use to Creates the Device.
-	 * 
-	 * @param HomeExpendature * specify the Device Info
 	 * @return the service status class object with response status and payload .
 	 */
 	@RequestMapping(value = "/createPhoneHomedevice", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -94,7 +91,6 @@ public class HomeMasterController {
 					byDeviceSeqNum = deviceMasterRepository.getByDeviceMacId(deviceMaster.getDevice_mac_id(), null); 
 					adminUrl = FileSystems.getDefault().getPath(".").toAbsolutePath().normalize().toString() ; 
 					String fileName = HomeManagementUtil.fileName(adminUrl);
-					serviceStatus.setAdminUrl(adminUrl+"resources/"+fileName);
 					serviceStatus.setResult(byDeviceSeqNum); 
 				}else {
 					logger.info("createMasterDevice"+deviceMaster.getDevice_mac_id());
@@ -109,7 +105,6 @@ public class HomeMasterController {
 						byDeviceSeqNum =  deviceMasterRepository.getByDeviceMacId(deviceMaster.getDevice_mac_id(), null); 
 						adminUrl = FileSystems.getDefault().getPath(".").toAbsolutePath().normalize().toString(); 
 						String fileName = HomeManagementUtil.fileName(adminUrl);
-						serviceStatus.setAdminUrl(adminUrl+"resources/"+fileName);
 						serviceStatus.setResult(byDeviceSeqNum); 
 					} else { 
 						String deviceMasterId = UUID.randomUUID().toString(); deviceMaster.setId(deviceMasterId);
@@ -121,8 +116,7 @@ public class HomeMasterController {
 						byDeviceSeqNum  = deviceMasterRepository.getByDeviceMacId(deviceMaster.getDevice_mac_id(), null); 
 						adminUrl = FileSystems.getDefault().getPath(".").toAbsolutePath().normalize().toString();
 						String fileName = HomeManagementUtil.fileName(adminUrl);
-						serviceStatus.setAdminUrl(adminUrl+"resources/"+fileName);
-						serviceStatus.setResult(byDeviceSeqNum); 
+						serviceStatus.setResult(byDeviceSeqNum);
 					} 
 					return serviceStatus;
 				} 
@@ -167,7 +161,6 @@ public class HomeMasterController {
 					if (phoneHomeData != null) {
 						List<HomeExpendature> deviceList = deviceRepository.getDeviceByParentId(null);
 						logger.info("Fetch phoneHomeData" + phoneHomeData);
-						serviceStatus.setDeviceList(deviceList);
 					}
 
 				} else {

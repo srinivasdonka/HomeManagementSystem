@@ -38,9 +38,6 @@ import com.homemanagement.utils.UploadResponse;
 @RestController
 @RequestMapping("/deviceconfiguration")
 public class HomeConfigurationController {
-
-
-
 	@Autowired
 	DeviceConfigurationRepository deviceConfigurationRepository;
 
@@ -55,8 +52,6 @@ public class HomeConfigurationController {
 
 	/**
 	 * This method is use to add the device configuration.
-	 *
-	 * @param DeviceConfiguration	 *            specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */
@@ -112,8 +107,6 @@ public class HomeConfigurationController {
 
 	/**
 	 * This method is use to update the device configuration.
-	 *
-	 * @param DeviceConfiguration	 *            specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */
@@ -211,9 +204,6 @@ public class HomeConfigurationController {
 	}
 	/**
 	 * This method is used to add the network .
-	 *
-	 * @param List
-		             of DeviceConfiguration  specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */
@@ -283,9 +273,6 @@ public class HomeConfigurationController {
 
 	/**
 	 * This method is use to update the device configuration.
-	 *
-	 * @param DeviceConfiguration
-		              specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */
@@ -391,9 +378,6 @@ public class HomeConfigurationController {
 	}
 	/**
 	 * This method is used to create the access point .
-	 *
-	 * @param List
-		             of DeviceConfiguration  specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */
@@ -463,9 +447,6 @@ public class HomeConfigurationController {
 
 	/**
 	 * This method is used to update the Access Point configuration.
-	 *
-	 * @param DeviceConfiguration
-		              specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */
@@ -535,9 +516,6 @@ public class HomeConfigurationController {
 
 	/**
 	 * This method is used to add the network .
-	 *
-	 * @param List
-		             of DeviceConfiguration  specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */
@@ -645,9 +623,6 @@ public class HomeConfigurationController {
 	}
 	/**
 	 * This method is use to update the device SSID configuration.
-	 *
-	 * @param DeviceConfiguration
-		              specify the DeviceConfiguration Info
 	 * @return the service status class object with response status and payload
 	 *         .
 	 */

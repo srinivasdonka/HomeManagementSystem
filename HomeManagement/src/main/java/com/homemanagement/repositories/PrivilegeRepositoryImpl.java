@@ -4,6 +4,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import java.util.List;
 
+import com.homemanagement.dto.PrivilegesMappingDTO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -32,19 +33,19 @@ public class PrivilegeRepositoryImpl implements PrivilegeRepositoryBase {
 	}
 
 	@Override
-	public void updatePrivilege(PrivilegesMapping privilage) {
-		final Query query = Query.query(Criteria.where("id").is(privilage.getId()));
+	public void updatePrivilege(PrivilegesMapping privilageMap) {
+		final Query query = Query.query(Criteria.where("id").is(privilageMap.getId()));
 
 		Update update = new Update();
-		update.set("name", privilage.getName());
-		update.set("role_id", privilage.getRole_id());
-		update.set("value", privilage.getValue());
+		update.set("name", privilageMap.getName());
+		update.set("role_id", privilageMap.getRole_id());
+		update.set("value", privilageMap.getValue());
 		this.mongoTemplate.updateFirst(query, update, PrivilegesMapping.class);		
 	}
 
 	@Override
-	public List<Privileges> getAllPrivilegeList() {
-		return mongoTemplate.findAll(Privileges.class);
+	public List<PrivilegesMapping> getAllPrivilegeList() {
+		return mongoTemplate.findAll(PrivilegesMapping.class);
 	}
 
 	@Override
@@ -52,24 +53,22 @@ public class PrivilegeRepositoryImpl implements PrivilegeRepositoryBase {
 		final Query query = Query.query(Criteria.where("id").is(privilegeId));
 		return mongoTemplate.find(query, Privileges.class);
 	}
-
 	@Override
-	public List<PrivilegesMapping> getByPrivilegeByRoleAndUserId(String user_id) {
-		final Query query = Query.query(Criteria.where("user_id").is(user_id));
+	public List<PrivilegesMapping> getByPrivilegeByRoleAndUserId(String userId) {
+		final Query query = Query.query(Criteria.where("user_id").is(userId));
 		return mongoTemplate.find(query, PrivilegesMapping.class);
 
 	}
-
 	@Override
-	public PrivilegesMapping getIndividualRoleAndUser(String privilegeId, String user_id) {
-		final Query query = Query.query(Criteria.where("privilegeId").is(privilegeId).andOperator(where("user_id").is(user_id)));
+	public PrivilegesMapping getIndividualRoleAndUser(String privilegeId, String userId) {
+		final Query query = Query.query(Criteria.where("privilegeId").is(privilegeId).andOperator(where("user_id").is(userId)));
 		return mongoTemplate.findOne(query, PrivilegesMapping.class);
 	}
 
 
 	@Override
-	public void deletePrivilegesByUserId(String user_id) {
-		final Query query = Query.query(Criteria.where("user_id").is(user_id));
+	public void deletePrivilegesByUserId(String userId) {
+		final Query query = Query.query(Criteria.where("user_id").is(userId));
 		this.mongoTemplate.remove(query, PrivilegesMapping.class);
 	}
 }

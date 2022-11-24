@@ -1,11 +1,6 @@
 package com.homemanagement.constant;
 
 public class HomeManagementKeyConstant {
-
-
-	private HomeManagementKeyConstant() {
-
-	}
 	public static final String  USERNAME="username";
 	public static final String  USER_NAME="user_name";
 	public static final String  PASS_KEY="password";
@@ -31,20 +26,16 @@ public class HomeManagementKeyConstant {
 	public static final String COMPANYNAME="company_name";
 	public static final String LASTUPDATE="last_updated";
 	public static final String  NOTIFICATION_MSG="notification_msg";
-	public static final String  XADA_Administrator="XADA Administrator";
-	public static final String  Administrator="Administrator";
+	public static final String  HOME_Administrator="HOME Administrator";
+	public static final String  ADMINISTRATOR="Administrator";
 	public static final String  Enduser="Enduser";
-	
 	//Custom Messages
 	public static final String SUCCESS="success";
-	public static final String MESSAGE="success";
 	public static final String FAILURE="failure";
-	public static final String  IN_ACTIVE="Inactive";
+	public static final String IN_ACTIVE="Inactive";
 	public static final String ACTIVATE_PENDING="Activation Pending";
 	public static final String UPDATED_SUCCESSFULLY="successfully updated Device Details";
 	public static final String REGISTERED_SUCCESSFULLY="successfully registered";
-
-
 	//error msgs
 	public static final String INVALID_PAYLOAD="Invalid payload";
 	public static final String DATAINTGRTY_VIOLATION="DATAINTGRTY_VIOLATION";
@@ -56,9 +47,8 @@ public class HomeManagementKeyConstant {
 	public static final String DOT_REG_EXP = "(.*?)" + ":" + "(.*)";
 	public static final String EMPTY_MSG="Message is empty";
 	public static final String UPLOAD_PKG="Package uploaded successfully";
-	
 	public static final String  ANONYMOUS_USER="anonymousUser";
-	
-
-
+	public static final String  USER_ALREADY_EXIST="User Already Exist";
+	public static final String  USER_EXCEPTION= "Exception occured while Creating User";
+	public static final String  INVALID_PAGINATION= "Invalid pagination values";
 }

@@ -11,20 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.homemanagement.authentication.service.UserService;
+import com.homemanagement.authentication.service.UserAuthService;
 import com.homemanagement.domain.User;
 import com.homemanagement.repositories.UserRepository;
 
 
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserAuthServiceImpl implements UserAuthService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthServiceImpl.class);
 	private final UserRepository userRepository;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserAuthServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 

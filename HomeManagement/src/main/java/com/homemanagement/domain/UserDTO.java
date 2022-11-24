@@ -1,5 +1,7 @@
 package com.homemanagement.domain;
 
+import com.homemanagement.dto.PrivilegesMappingDTO;
+
 import java.io.Serializable;
 import java.util.List;
 

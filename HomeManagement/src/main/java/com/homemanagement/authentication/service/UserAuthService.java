@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import com.homemanagement.domain.User;
 
-public interface UserService {
+public interface UserAuthService {
 
 	public Optional<User> getUserById(String id);
 

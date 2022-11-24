@@ -15,10 +15,10 @@ import com.homemanagement.repositories.UserDetailsDecorator;
 public class UserAuthenticationDetailsService implements UserDetailsService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthenticationDetailsService.class);
-	private final UserService userService;
+	private final UserAuthService userService;
 
 	@Autowired
-	public UserAuthenticationDetailsService(UserService userService) {
+	public UserAuthenticationDetailsService(UserAuthService userService) {
 		this.userService = userService;
 	}
 

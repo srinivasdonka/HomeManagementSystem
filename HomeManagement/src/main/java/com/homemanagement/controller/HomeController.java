@@ -50,31 +50,22 @@ import com.homemanagement.utils.UploadResponse;
 
 
 @RestController
-@RequestMapping("/homeExp")
 public class HomeController {
-
-
 	@Autowired
-	HomeExpedatureRepository homeRepository;
-
+	private HomeExpedatureRepository homeRepository;
 	@Autowired
 	FOTARepository fotaRepository;
-
 	@Autowired
 	private Environment environment;
-
 	@Autowired
 	DeviceMasterRepository deviceMasterRepository;
-
-
 	@Autowired 
 	StorageServiceImpl storageService;
-
 	/** The Constant logger is used to specify the . */
 	static final Logger logger = Logger.getLogger(HomeController .class);
 
 
-	@PostMapping("/addExpendature")
+	@PostMapping("/homeExp/addExpendature")
 	ServiceStatus<Object> createRole(@RequestBody HomeExpendature homeExp){
 
 		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
@@ -109,7 +100,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@RequestMapping(value="/getDeviceListByCompanyIdAndActiveStatus",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/getDeviceListByCompanyIdAndActiveStatus",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<List<HomeExpendature>> checkDeviceMaster(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active){
 
 		ServiceStatus<List<HomeExpendature>> serviceStatus=new ServiceStatus<List<HomeExpendature>>();
@@ -150,7 +141,7 @@ public class HomeController {
 	}
 
 
-	@GetMapping("/getSingleItemById")
+	@GetMapping("/homeExp/getSingleItemById")
 	ServiceStatus<HomeExpendature> getSingleItemById(@RequestParam("id")String id){
 
 		ServiceStatus<HomeExpendature> serviceStatus=new ServiceStatus<HomeExpendature>();
@@ -193,7 +184,7 @@ public class HomeController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 	}
 
-	@RequestMapping(value="/getFotaPath",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/getFotaPath",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<FOTA> getFotaPath(@RequestParam("device_id")String device_id,@RequestParam("version")String version){
 
 		ServiceStatus<FOTA> serviceStatus=new ServiceStatus<FOTA>();
@@ -233,7 +224,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 	@SuppressWarnings("deprecation")
-	@RequestMapping(value="/getDeviceListByCompanyIdAndActiveStatusPageable",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/getDeviceListByCompanyIdAndActiveStatusPageable",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<Page<HomeExpendature>> getDeviceListByCompanyIdAndActiveStatusPageable(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active,@RequestParam("page")Integer page,
 			@RequestParam("size") Integer size,@RequestParam("sort") String sort){
 
@@ -284,7 +275,7 @@ public class HomeController {
 
 		return serviceStatus;
 	}
-	@RequestMapping(value = "/changeDeviceCompany",produces = { "application/json"},method = RequestMethod.POST) 
+	@RequestMapping(value = "/homeExp/changeDeviceCompany",produces = { "application/json"},method = RequestMethod.POST)
 	public ServiceStatus<Object> changeDeviceCompany(
 			@RequestParam("currentCompanyId") String currentCompanyId,
 			@RequestParam("destCompanyId") String destCompanyId,@RequestParam(value = "device_id") String device_id) {
@@ -307,7 +298,7 @@ public class HomeController {
 		}
 		return serviceStatus;
 	}
-	@PutMapping("/updateHomeExpedature")
+	@PutMapping("/homeExp/updateHomeExpedature")
 	public ServiceStatus<Object> updateHomeExpedature(@RequestBody HomeExpendature homeExp) {
 		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
 		try {
@@ -336,7 +327,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/getFile", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE}, method = RequestMethod.GET)
+	@RequestMapping(value = "/homeExp/getFile", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE}, method = RequestMethod.GET)
 	public void getFile(@RequestParam(value="fileName", required=false) String fileName, 
 			HttpServletRequest request,HttpServletResponse response) throws IOException, Exception
 	{
@@ -378,7 +369,7 @@ public class HomeController {
 		}
 	}
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/serverAResponse",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/serverAResponse",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<Object> serverAResponse(@RequestParam("info")String info){
 
 		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
@@ -411,7 +402,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/serverBResponse",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/serverBResponse",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<Object> serverBResponse(@RequestParam("info")String info){
 
 		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
@@ -441,7 +432,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@GetMapping("/getHomeExpendature")
+	@GetMapping("/homeExp/getHomeExpendature")
 	ServiceStatus<List<HomeExpendature>> getHomeExpendature(@RequestParam("userId") String userId){
 
 		ServiceStatus<List<HomeExpendature>> serviceStatus=new ServiceStatus<List<HomeExpendature>>();
@@ -473,7 +464,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@RequestMapping(value="/addDeviceNetwork",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/addDeviceNetwork",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<Object> AddNetwork(@RequestBody DeviceNetwork deviceNetwork){
 
 		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
@@ -507,7 +498,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@RequestMapping(value="/getdeviceNetworks",method=RequestMethod.GET,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/getdeviceNetworks",method=RequestMethod.GET,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<Object> getDeviceNetwork(){
 
 		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
@@ -528,7 +519,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@RequestMapping(value="/checkDeviceExists",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/checkDeviceExists",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<?> getDeviceMaster(@RequestParam("device_id")String device_mac_id, @RequestParam("hardware_key")String device_key){
 
 
@@ -549,7 +540,6 @@ public class HomeController {
 					if(diviceData != null) {
 						List<HomeExpendature> deviceList	= homeRepository.getDeviceByParentId(null);
 						logger.info("Fetch device data"+diviceData);
-						serviceStatus.setDeviceList(deviceList);
 					}
 
 				}else {
@@ -571,7 +561,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@RequestMapping(value="/deviceByDeviceId",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/deviceByDeviceId",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<?> getDeviceByDeviceId(@RequestParam("device_id")String device_mac_id){
 
 
@@ -610,7 +600,7 @@ public class HomeController {
 		return serviceStatus;
 	}
 
-	@RequestMapping(value="/deviceNetworkByNetworkId",method=RequestMethod.GET,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/homeExp/deviceNetworkByNetworkId",method=RequestMethod.GET,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	ServiceStatus<Object> getDeviceNetworkByNetworkId(@RequestParam("network_id")String network_id){
 
 		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
