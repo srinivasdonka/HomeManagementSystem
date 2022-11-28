@@ -1,6 +1,9 @@
 package com.homemanagement.constant;
 
 public class HomeManagementKeyConstant {
+	private HomeManagementKeyConstant() {
+
+	}
 	public static final String  USERNAME="username";
 	public static final String  USER_NAME="user_name";
 	public static final String  PASS_KEY="password";

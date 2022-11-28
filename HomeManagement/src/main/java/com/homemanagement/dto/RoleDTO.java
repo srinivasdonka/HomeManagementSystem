@@ -6,11 +6,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class PrivilegesMappingDTO {
+public class RoleDTO {
     String id;
     String name;
-    String value;
-    String role_id;
-    String user_id;
-    String privilegeId;
+    String description;
 }

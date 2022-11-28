@@ -1,7 +1,7 @@
 package com.homemanagement.service;
 
 import com.homemanagement.domain.CompanyMaster;
-import com.homemanagement.domain.UserDTO;
+import com.homemanagement.dto.UserDTO;
 import com.homemanagement.dto.EmailVo;
 import com.homemanagement.dto.ServiceStatus;
 import java.util.List;

@@ -15,32 +15,24 @@ import com.homemanagement.authentication.service.UserAuthService;
 import com.homemanagement.domain.User;
 import com.homemanagement.repositories.UserRepository;
 
-
-
 @Service
 public class UserAuthServiceImpl implements UserAuthService {
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthServiceImpl.class);
 	private final UserRepository userRepository;
-
 	@Autowired
 	public UserAuthServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-
 	@Override
 	public Optional<User> getUserById(String id) {
 		LOGGER.debug("Getting user={}", id);
 		return userRepository.findById(id);
 	}
-
 	@Override
 	public Optional<User> getUserByEmail(String email) {
 		LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
 		return userRepository.findByUsername(email);
 	}
-
-	@SuppressWarnings("deprecation")
 	@Override
 	public Collection<User> getAllUsers() {
 		LOGGER.debug("Getting all users");

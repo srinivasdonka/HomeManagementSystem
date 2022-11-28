@@ -63,8 +63,6 @@ public class HomeController {
 	StorageServiceImpl storageService;
 	/** The Constant logger is used to specify the . */
 	static final Logger logger = Logger.getLogger(HomeController .class);
-
-
 	@PostMapping("/homeExp/addExpendature")
 	ServiceStatus<Object> createRole(@RequestBody HomeExpendature homeExp){
 
@@ -533,13 +531,13 @@ public class HomeController {
 
 				boolean isDeviceSeqNoExists = homeRepository.checkDeviceExists(device_mac_id,device_key);
 				if(isDeviceSeqNoExists) {
-					HomeExpendature diviceData = homeRepository.getItemeByItemId(device_mac_id);
+					HomeExpendature expData = homeRepository.getItemeByItemId(device_mac_id);
 					serviceStatus.setStatus("success");
 					serviceStatus.setMessage("Device already has existed");
-					serviceStatus.setResult(diviceData);
-					if(diviceData != null) {
-						List<HomeExpendature> deviceList	= homeRepository.getDeviceByParentId(null);
-						logger.info("Fetch device data"+diviceData);
+					serviceStatus.setResult(expData);
+					if(expData != null) {
+						List<HomeExpendature> expList	= homeRepository.getDeviceByParentId(null);
+						logger.info("Fetch device data"+expList);
 					}
 
 				}else {

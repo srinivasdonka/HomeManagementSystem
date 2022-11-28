@@ -1,10 +1,6 @@
 package com.homemanagement.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,7 +36,6 @@ import com.homemanagement.utils.UploadResponse;
 public class HomeConfigurationController {
 	@Autowired
 	DeviceConfigurationRepository deviceConfigurationRepository;
-
 	@Autowired 
 	StorageServiceImpl storageService;
 
@@ -69,21 +64,16 @@ public class HomeConfigurationController {
 				{
 					serviceStatus.setStatus("failure");
 					serviceStatus.setMessage("Device Configuration  Already Exist");
-
 				}
 				else {
 					String deviceMasterId = UUID.randomUUID().toString();
 					deviceconfiguration.setId(deviceMasterId);
-
 					LocalDateTime localDateTime = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
 					deviceconfiguration.setCreated_date(localDateTime);
 					deviceconfiguration.setLast_updated(localDateTime);
-
 					deviceConfigurationRepository.addDeviceConfiguration(deviceconfiguration);
-
 					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("Successfully added Device Configuration ");	
-
+					serviceStatus.setMessage("Successfully added Device Configuration ");
 				}
 				return serviceStatus;
 			}catch (Exception e) {
@@ -94,14 +84,11 @@ public class HomeConfigurationController {
 					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
 				}
 			}
-
-
 		}else {
 			logger.debug("Invalid DeviceConfiguration payload");
 			serviceStatus.setStatus("failure");
 			serviceStatus.setMessage("Invalid DeviceConfiguration payload");
 		}
-
 		return serviceStatus;
 	}
 
@@ -227,8 +214,6 @@ public class HomeConfigurationController {
 					if (isDeviceConfigExists != null) {
 						serviceStatus.setStatus("failure");
 						serviceStatus.setMessage("Device Configuration  Already Exist");
-
-						deviceConfigExist = true;
 						return serviceStatus;
 
 					}
@@ -296,8 +281,6 @@ public class HomeConfigurationController {
 					} else {
 						serviceStatus.setStatus("failure");
 						serviceStatus.setMessage("Device Configuration  Not Exist");
-
-						deviceconfigExist = false;
 						return serviceStatus;
 
 					}
@@ -351,7 +334,6 @@ public class HomeConfigurationController {
 
 				List<DeviceConfiguration> deviceConfigList = deviceConfigurationRepository.getDeviceConfigurationByDeviceIdAndConfigPropType(device_id, config_property_type);
 				if (deviceConfigList != null && deviceConfigList.size() > 0) {
-					logger.info("deviceConfigList" + deviceConfigList);
 					serviceStatus.setStatus("success");
 					serviceStatus.setMessage("successfully fetched");
 					serviceStatus.setResult(deviceConfigList);
@@ -401,8 +383,6 @@ public class HomeConfigurationController {
 					if (isDeviceConfigExists != null) {
 						serviceStatus.setStatus("failure");
 						serviceStatus.setMessage("Device Configuration  Already Exist");
-
-						deviceConfigExist = true;
 						return serviceStatus;
 
 					}
@@ -470,10 +450,7 @@ public class HomeConfigurationController {
 					} else {
 						serviceStatus.setStatus("failure");
 						serviceStatus.setMessage("Device Configuration  Not Exist");
-
-						deviceconfigExist = false;
 						return serviceStatus;
-
 					}
 				}
 				if (deviceconfigExist) {
@@ -538,8 +515,6 @@ public class HomeConfigurationController {
 					if (isDeviceConfigExists != null) {
 						serviceStatus.setStatus("failure");
 						serviceStatus.setMessage("Device Configuration  Already Exist");
-
-						deviceConfigExist = true;
 						return serviceStatus;
 
 					}
@@ -550,7 +525,6 @@ public class HomeConfigurationController {
 					for (DeviceConfiguration deviceConfig : deviceconfiguration) {
 						String deviceMasterId = UUID.randomUUID().toString();
 						deviceConfig.setId(deviceMasterId);
-
 						LocalDateTime localDateTime = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
 						deviceConfig.setConfig_property_type("SSID");
 						deviceConfig.setIs_sync(is_Sync);
@@ -645,8 +619,6 @@ public class HomeConfigurationController {
 					} else {
 						serviceStatus.setStatus("failure");
 						serviceStatus.setMessage("Device Configuration  Not Exist");
-
-						deviceconfigExist = false;
 						return serviceStatus;
 
 					}
@@ -709,8 +681,7 @@ public class HomeConfigurationController {
 	}
 	@RequestMapping(value = "/getConfiguration", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE}, method = RequestMethod.GET)
 	public void getFile(@RequestParam(value="fileName", required=true) String fileName, 
-			HttpServletRequest request,HttpServletResponse response) throws IOException, Exception
-	{
+			HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException {
 
 		String path=environment.getProperty("config.file.path");
 		byte[] reportBytes = null;
@@ -719,26 +690,26 @@ public class HomeConfigurationController {
 		Enumeration<?> headerNames = request.getHeaderNames();
 		while(headerNames.hasMoreElements()) {
 			String headerName = (String)headerNames.nextElement();
-			 System.out.println("name" + headerName+"value" +request.getHeader(headerName));
 		}
 
 		if(result.exists()){
-			InputStream inputStream = new FileInputStream(path+"/"+fileName); 
+			try(InputStream inputStream = new FileInputStream(path+"/"+fileName)) {
+				String type = Files.probeContentType(result.toPath());
+				response.setHeader("Content-Disposition", "attachment; filename=" + result.getName());
+				response.setHeader("Content-Type", type);
 
-			String type = Files.probeContentType(result.toPath());
-			response.setHeader("Content-Disposition", "attachment; filename=" + result.getName());
-			response.setHeader("Content-Type",type);
+				reportBytes = new byte[100];//New change
+				OutputStream os = response.getOutputStream();//New change
+				int read = 0;
+				while ((read = inputStream.read(reportBytes)) != -1) {
+					os.write(reportBytes, 0, read);
+				}
 
-			reportBytes=new byte[100];//New change
-			OutputStream os=response.getOutputStream();//New change
-			int read=0;
-			while((read=inputStream.read(reportBytes))!=-1){
-				os.write(reportBytes,0,read);
+				os.flush();
+				os.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 			}
-
-			os.flush();
-			os.close();
-			inputStream.close();
 		}
 	}
 	@RequestMapping(value="/getDeviceConfifg",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
@@ -754,7 +725,6 @@ public class HomeConfigurationController {
 
 				List<DeviceConfiguration> deviceConfigList	= deviceConfigurationRepository.getDeviceConfigurationListByDeviceId(device_id);
 				if(deviceConfigList!=null&& deviceConfigList.size()>0){
-					logger.info("deviceConfigList"+deviceConfigList);
 					serviceStatus.setStatus("success");
 					serviceStatus.setMessage("successfully fetched");
 					serviceStatus.setResult(deviceConfigList);

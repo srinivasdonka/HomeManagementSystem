@@ -2,23 +2,22 @@ package com.homemanagement.service.impl;
 
 import com.homemanagement.constant.HomeManagementConstant;
 import com.homemanagement.constant.HomeManagementKeyConstant;
-import com.homemanagement.domain.UserDTO;
+import com.homemanagement.dto.UserDTO;
 import com.homemanagement.domain.CompanyMaster;
 import com.homemanagement.domain.User;
 import com.homemanagement.domain.Roles;
 import com.homemanagement.domain.PrivilegesMapping;
 import com.homemanagement.dto.EmailVo;
-import com.homemanagement.dto.PrivilegesMappingDTO;
 import com.homemanagement.dto.ServiceStatus;
 import com.homemanagement.repositories.CompanyRepository;
 import com.homemanagement.repositories.PrivilegeRepository;
 import com.homemanagement.repositories.RoleRepository;
 import com.homemanagement.repositories.UserRepository;
 import com.homemanagement.security.MongoUserDetailsManager;
-import com.homemanagement.service.AuthService;
 import com.homemanagement.service.UserService;
 import com.homemanagement.utils.HomeManagementUtil;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -60,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ServiceStatus<Object> getCreateUserService(UserDTO userDTO) {
 
-        if (userDTO != null && !HomeManagementUtil.isEmptyString(userDTO.getUsername()) && !HomeManagementUtil.isEmptyString(userDTO.getPassword())) {
+        if (!StringUtils.isEmpty(userDTO.getUsername()) && !StringUtils.isEmpty(userDTO.getPassword())) {
             try {
                 Optional<User> findByUsername = userRepository.findByUsername(userDTO.getUsername());
                 if (findByUsername.isPresent()) {
@@ -68,7 +67,7 @@ public class UserServiceImpl implements UserService {
                     serviceStatus.setStatus(HomeManagementKeyConstant.FAILURE);
                     serviceStatus.setMessage(HomeManagementKeyConstant.USER_ALREADY_EXIST);
                     return serviceStatus;
-                } else if (HomeManagementUtil.isEmptyString(userDTO.getCompanyId())) {
+                } else if (StringUtils.isEmpty(userDTO.getCompanyId())) {
                     CompanyMaster companyMaster = new CompanyMaster();
                     companyMaster.setName(userDTO.getCompanyName());
                     companyMaster.setAddress(userDTO.getCompanyAddress());
@@ -81,31 +80,30 @@ public class UserServiceImpl implements UserService {
                     String companyId = UUID.randomUUID().toString();
                     companyMaster.setId(companyId);
                     CompanyMaster companyMasterResult = companyRepository.save(companyMaster);
-                    if (companyMasterResult != null) {
-                        User user = new User();
-                        user.setCompanyName(companyMasterResult.getId());
-                        user.setUserName(userDTO.getUsername());
-                        user.setFirstName(userDTO.getFirstName());
-                        user.setLastName(userDTO.getLastName());
-                        user.setDesignation(userDTO.getDesignation());
-                        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-                        LocalDateTime localDateTimes = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
-                        user.setCreaterTimestamp(localDateTimes);
-                        if (userDTO.getRoleId() == null || HomeManagementUtil.isEmptyString(userDTO.getRoleId())) {
-                            Roles byRoleId = roleRepository.checkRoleExsists(user.getDesignation());
-                            userDTO.setRoleId(byRoleId.getId());
-                        }
-                        user.setRole_id(userDTO.getRoleId());
-                        user.setPhone(userDTO.getPhone());
-                        user.setStatus(HomeManagementKeyConstant.ACTIVATE_PENDING);
-                        userRepository.save(user);
-                        Optional<User> singalUser = userRepository.findByUsername(userDTO.getUsername());
-                        serviceStatus.setResult(singalUser);
+
+                    User user = new User();
+                    user.setCompanyName(companyMasterResult.getId());
+                    user.setUserName(userDTO.getUsername());
+                    user.setFirstName(userDTO.getFirstName());
+                    user.setLastName(userDTO.getLastName());
+                    user.setDesignation(userDTO.getDesignation());
+                    user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                    LocalDateTime localDateTimes = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
+                    user.setCreaterTimestamp(localDateTimes);
+                    if (userDTO.getRoleId() == null || HomeManagementUtil.isEmptyString(userDTO.getRoleId())) {
+                        Roles byRoleId = roleRepository.checkRoleExsists(user.getDesignation());
+                        userDTO.setRoleId(byRoleId.getId());
                     }
+                    user.setRole_id(userDTO.getRoleId());
+                    user.setPhone(userDTO.getPhone());
+                    user.setStatus(HomeManagementKeyConstant.ACTIVATE_PENDING);
+                    userRepository.save(user);
+                    Optional<User> singalUser = userRepository.findByUsername(userDTO.getUsername());
+                    serviceStatus.setResult(singalUser);
                     serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
                     serviceStatus.setMessage(HomeManagementKeyConstant.REGISTERED_SUCCESSFULLY);
                     return serviceStatus;
-                } else if (!HomeManagementUtil.isEmptyString(userDTO.getCompanyId())) {
+                } else if (!StringUtils.isEmpty(userDTO.getCompanyId())) {
                     User user = new User();
                     user.setCompanyName(userDTO.getCompanyId());
                     user.setUserName(userDTO.getUsername());
@@ -121,7 +119,7 @@ public class UserServiceImpl implements UserService {
                     user.setCreaterTimestamp(localDateTime);
                     userRepository.save(user);
                     User fetchUser = (User) mongoUserDetailsManager.loadUserByUsername(userDTO.getUsername());
-                    if (userDTO.getPrivileges() != null && userDTO.getPrivileges().size() > 0) {
+                    if (!userDTO.getPrivileges().isEmpty()) {
                         for (int i = 0; i < userDTO.getPrivileges().size(); i++) {
                             userDTO.getPrivileges().get(i).setUser_id(fetchUser.getId());
                             privilegeRepository.addPrivilege(userDTO.getPrivilegesMapping().get(i));
@@ -196,7 +194,7 @@ public class UserServiceImpl implements UserService {
     public ServiceStatus<Object> getCompanies() {
         try {
             List<CompanyMaster> companyList = companyRepository.findAll();
-            if ((companyList != null) && (companyList.size() > 0)) {
+            if (!companyList.isEmpty()) {
                 serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
                 serviceStatus.setMessage("successfully feched Company List");
                 serviceStatus.setResult(companyList);
@@ -231,7 +229,6 @@ public class UserServiceImpl implements UserService {
                 if (e instanceof org.springframework.dao.DataIntegrityViolationException) {
                     serviceStatus.setMessage(HomeManagementKeyConstant.DATAINTGRTY_VIOLATION);
                 }
-
             }
         } else {
             serviceStatus.setStatus(HomeManagementKeyConstant.FAILURE);
@@ -273,7 +270,7 @@ public class UserServiceImpl implements UserService {
                     logger.info("getCompanyByUserName" + username);
                     logger.info("userInfo.getCompanyName()" + userInfo.getCompanyName());
                     List<CompanyMaster> company = companyRepository.getByCompanyId(userInfo.getCompanyName());
-                    if (company != null && company.size() > 0) {
+                    if (!company.isEmpty()) {
                         serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
                         serviceStatus.setMessage("successfully fetched");
                         serviceStatus.setResult(company);
@@ -322,7 +319,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getMail(String email) {
-        if (!HomeManagementUtil.isEmptyString(email)) {
+        if (!StringUtils.isEmpty(email)) {
             try {
                 boolean isUserExists = mongoUserDetailsManager.userExists(email);
                 logger.info("isUserExists " + isUserExists);
@@ -351,9 +348,9 @@ public class UserServiceImpl implements UserService {
 
     public ServiceStatus<Object> getCompanyStatus(String status, String si, Integer page, Integer size, String sort) {
         try {
-            if (!HomeManagementUtil.isEmptyString(status) || !HomeManagementUtil.isEmptyString(si)) {
+            if (!StringUtils.isEmpty(status) || !StringUtils.isEmpty(si)) {
                 Sort sortCriteria = null;
-                if (!HomeManagementUtil.isEmptyString(sort)) {
+                if (!StringUtils.isEmpty(sort)) {
                     logger.info("sort" + sort);
                     sortCriteria = new Sort(Sort.Direction.ASC, sort);
                 } else {
@@ -406,8 +403,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getUpdateUser(UserDTO userDTO) {
-        if (userDTO != null && !HomeManagementUtil.isEmptyString(userDTO.getFirstName())
-                && !HomeManagementUtil.isEmptyString(userDTO.getUsername()) && !HomeManagementUtil.isEmptyString(userDTO.getPassword())) {
+        if (!StringUtils.isEmpty(userDTO.getFirstName())
+                && !StringUtils.isEmpty(userDTO.getUsername()) && !StringUtils.isEmpty(userDTO.getPassword())) {
             try {
                 boolean userExists = userRepository.findByUsername(userDTO.getUsername()).isPresent();
                 if (userExists) {
@@ -422,7 +419,9 @@ public class UserServiceImpl implements UserService {
                     user.setStatus(userDTO.getStatus());
                     if (userDTO.getRoleId() == null && !HomeManagementUtil.isEmptyString(userDTO.getUserId())) {
                         Optional<User> rollId = userRepository.findById(user.getId());
-                        userDTO.setRoleId(rollId.get().getRole_id());
+                        if (rollId.isPresent()) {
+                            userDTO.setRoleId(rollId.get().getRole_id());
+                        }
                     }
                     user.setRole_id(userDTO.getRoleId());
                     LocalDateTime localDateTime = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
@@ -458,7 +457,7 @@ public class UserServiceImpl implements UserService {
                     boolean userExists = userRepository.findByUsername(userDTO.getUsername()).isPresent();
                     if (userExists) {
                         logger.info(HomeManagementKeyConstant.USER_ALREADY_EXIST + userDTO.getUsername());
-                    } else if (HomeManagementUtil.isEmptyString(userDTO.getCompanyId())) {
+                    } else if (StringUtils.isEmpty(userDTO.getCompanyId())) {
                         CompanyMaster companyMaster = new CompanyMaster();
                         companyMaster.setName(userDTO.getCompanyName());
                         companyMaster.setAddress(userDTO.getCompanyAddress());
@@ -487,7 +486,7 @@ public class UserServiceImpl implements UserService {
                         serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
                         serviceStatus.setMessage(HomeManagementKeyConstant.REGISTERED_SUCCESSFULLY);
                         return serviceStatus;
-                    } else if (!HomeManagementUtil.isEmptyString(userDTO.getCompanyId())) {
+                    } else if (!StringUtils.isEmpty(userDTO.getCompanyId())) {
                         User user = new User();
                         user.setCompanyName(userDTO.getCompanyId());
                         user.setUserName(userDTO.getUsername());
@@ -505,7 +504,7 @@ public class UserServiceImpl implements UserService {
                         user.setCreaterTimestamp(localDateTime);
                         User userResult = userRepository.save(user);
                         User fetchUser = (User) mongoUserDetailsManager.loadUserByUsername(userDTO.getUsername());
-                        if (userDTO.getPrivilegesMapping() != null && userDTO.getPrivilegesMapping().size() > 0) {
+                        if (!userDTO.getPrivilegesMapping().isEmpty()) {
                             for (int i = 0; i < userDTO.getPrivilegesMapping().size(); i++) {
                                 userDTO.getPrivilegesMapping().get(i).setUser_id(fetchUser.getId());
                                 privilegeRepository.addPrivilege(userDTO.getPrivilegesMapping().get(i));
@@ -550,14 +549,16 @@ public class UserServiceImpl implements UserService {
                         user.setStatus(userDTO.getStatus());
                         if (userDTO.getRoleId() == null && !HomeManagementUtil.isEmptyString(userDTO.getUserId())) {
                             Optional<User> rollId = userRepository.findById(user.getId());
-                            userDTO.setRoleId(rollId.get().getRole_id());
+                            if (rollId.isPresent()) {
+                                userDTO.setRoleId(rollId.get().getRole_id());
+                            }
                         }
                         user.setRole_id(userDTO.getRoleId());
                         LocalDateTime localDateTime = HomeManagementUtil.convertTolocalDateTimeFrom(new Date());
                         user.setUpdatedTimestamp(localDateTime);
                         userRepository.updateUser(user);
                         List<PrivilegesMapping> privileges = userDTO.getPrivilegesMapping();
-                        if (privileges != null && privileges.size() > 0) {
+                        if (!privileges.isEmpty()) {
                             privilegeRepository.deletePrivilegesByUserId(privileges.get(0).getUser_id());
                             for (PrivilegesMapping privilege : privileges) {
                                 privilegeRepository.addPrivilege(privilege);
@@ -701,7 +702,8 @@ public class UserServiceImpl implements UserService {
                 List<PrivilegesMapping> privilegeList = AuthServiceImpl.getPrivileges(privilegeRepository);
                 for (int i = 0; i < privilegeList.size(); i++) {
                     privilegeList.get(i).setUser_id(userId);
-                    PrivilegesMapping pList = new PrivilegesMapping(null, privilegeList.get(i).getName(), privilegeList.get(i).getValue(), null, userId, privilegeList.get(i).getId());
+                    PrivilegesMapping pList = new PrivilegesMapping(null, privilegeList.get(i).getName(),
+                            privilegeList.get(i).getValue(), null, userId, privilegeList.get(i).getId());
                     privilegeRepository.addPrivilege(pList);
                 }
                 serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
@@ -726,26 +728,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServiceStatus<Object> verifyRegLink(UserDTO registrationUser) {
-        if(!HomeManagementUtil.isEmptyString(registrationUser.getUsername())) {
+        if (!StringUtils.isEmpty(registrationUser.getUsername())) {
             try {
                 Optional<User> findByUsername = userRepository.findByUsername(registrationUser.getUsername());
-                String status = findByUsername.get().getStatus();
-                if (HomeManagementConstant.ACTIVE.getKey().equals(status)) {
-                    logger.info("User is Active" + registrationUser.getUsername());
-                    serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
-                    serviceStatus.setMessage("User is Active");
-                    return serviceStatus;
-                } else {
-                    if (HomeManagementConstant.ACTIVE_PENDING.getKey().equals(status) && ObjectUtils.anyNotNull(registrationUser.getUsername())) {
-                        for (int i = 0; i <= 1000; i++) {
-                            Thread.sleep(2000);
-                            if (i == 60) {
-                                userRepository.deleteUserByStatus(registrationUser.getUsername(), status);
-                                Thread.currentThread().interrupt();
+                if (findByUsername.isPresent()) {
+                    String status = findByUsername.get().getStatus();
+                    if (HomeManagementConstant.ACTIVE.getKey().equals(status)) {
+                        logger.info("User is Active" + registrationUser.getUsername());
+                        serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
+                        serviceStatus.setMessage("User is Active");
+                        return serviceStatus;
+                    } else {
+                        if (HomeManagementConstant.ACTIVE_PENDING.getKey().equals(status) && ObjectUtils.anyNotNull(registrationUser.getUsername())) {
+                            for (int i = 0; i <= 1000; i++) {
+                                Thread.sleep(2000);
+                                if (i == 60) {
+                                    userRepository.deleteUserByStatus(registrationUser.getUsername(), status);
+                                    Thread.currentThread().interrupt();
+                                }
                             }
+                            serviceStatus.setStatus(HomeManagementKeyConstant.FAILURE);
+                            serviceStatus.setMessage("Link expaired");
                         }
-                        serviceStatus.setStatus(HomeManagementKeyConstant.FAILURE);
-                        serviceStatus.setMessage("Link expaired");
                     }
                 }
             } catch (InterruptedException e) {

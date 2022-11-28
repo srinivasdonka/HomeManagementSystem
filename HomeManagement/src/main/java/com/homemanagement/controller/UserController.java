@@ -3,12 +3,15 @@ package com.homemanagement.controller;
 
 import java.util.List;
 
+import com.homemanagement.domain.Roles;
+import com.homemanagement.dto.CompanyMasterDTO;
 import com.homemanagement.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.homemanagement.domain.CompanyMaster;
-import com.homemanagement.domain.UserDTO;
+import com.homemanagement.dto.UserDTO;
 import com.homemanagement.dto.EmailVo;
 import com.homemanagement.dto.ServiceStatus;
 
@@ -24,6 +27,8 @@ import com.homemanagement.dto.ServiceStatus;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ModelMapper modelMapper;
 	/**
 	 * This method is use to Creates the user.
 	 * @return the service status class object with response status and payload .
@@ -59,7 +64,8 @@ public class UserController {
 		return userService.getCompanyByUser(username);
 	}
 	@PutMapping("/user/updateCompany")
-	ServiceStatus<Object> updateCompany(@RequestBody CompanyMaster companyMaster) {
+	ServiceStatus<Object> updateCompany(@RequestBody CompanyMasterDTO companyMasterDTO) {
+		CompanyMaster companyMaster = this.modelMapper.map(companyMasterDTO, CompanyMaster.class);
 		return userService.updateCompany(companyMaster);
 	}
 	@GetMapping("/user/checkEmail")
@@ -73,7 +79,8 @@ public class UserController {
 		return userService.getCompanyStatus(status, si, page, size, sort);
 	}
 	@PutMapping("/user/updateCompanyToSI")
-	ServiceStatus<Object> updateCompanyToSI(@RequestBody CompanyMaster companyMaster) {
+	ServiceStatus<Object> updateCompanyToSI(@RequestBody CompanyMasterDTO companyMasterDTO) {
+		CompanyMaster companyMaster = this.modelMapper.map(companyMasterDTO, CompanyMaster.class);
 		return userService.updateCompanyToOwner(companyMaster);
 	}
 	@PutMapping("/user/updateUser")
@@ -98,7 +105,7 @@ public class UserController {
 		return userService.updateMultipleUsersForHome(userDTOs);
 	}
 	@PostMapping("/user/sentMail")
-	public ServiceStatus<Object> sendEmail(@RequestBody EmailVo emailVo) throws Exception {
+	public ServiceStatus<Object> sendEmail(@RequestBody EmailVo emailVo) {
 		return userService.sendMailToCustomer(emailVo);
 	}
 	@GetMapping("/user/getEmailToken")

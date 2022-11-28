@@ -18,9 +18,8 @@ public class WebSiteEmailController{
 	WebSiteEmailService webSiteEmailService;
 	/** The Constant logger is used to specify the . */
 	private static final Logger logger = Logger.getLogger(WebSiteEmailController.class);
-
 	@PostMapping("/website/sentMailToUser")
-	public ServiceStatus<Object> sendEmailToUser(@RequestBody EmailVo emailVo) throws Exception {
+	public ServiceStatus<Object> sendEmailToUser(@RequestBody EmailVo emailVo) {
 		logger.info("sendEmail");
 		return webSiteEmailService.sendEmailToUser(emailVo);
 	}

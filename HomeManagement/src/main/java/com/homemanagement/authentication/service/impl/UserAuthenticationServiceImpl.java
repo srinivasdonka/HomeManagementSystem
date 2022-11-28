@@ -18,7 +18,7 @@
   com.homemanagement.domain.CompanyMaster; import
   com.homemanagement.domain.PrivilegesMapping; import
   com.homemanagement.domain.Roles; import com.homemanagement.domain.User;
-  import com.homemanagement.domain.UserDTO; import
+  import com.homemanagement.dto.UserDTO; import
   com.homemanagement.dto.EmailVo; import
   com.homemanagement.repositories.HomeExpedatureRepository; import
   com.homemanagement.repositories.RoleRepository; import
