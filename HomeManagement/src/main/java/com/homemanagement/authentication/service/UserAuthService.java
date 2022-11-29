@@ -8,10 +8,7 @@ import java.util.Optional;
 import com.homemanagement.domain.User;
 
 public interface UserAuthService {
-
 	public Optional<User> getUserById(String id);
-
 	public Optional<User> getUserByEmail(String email);
-
 	public Collection<User> getAllUsers();
 }

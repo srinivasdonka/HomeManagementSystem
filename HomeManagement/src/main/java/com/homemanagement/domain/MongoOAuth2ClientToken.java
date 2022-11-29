@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="Auth_Client_Token")
 public class MongoOAuth2ClientToken {
-
     @Id
     private String id;
     private String tokenId;
@@ -17,10 +16,8 @@ public class MongoOAuth2ClientToken {
     private String authenticationId;
     private String username;
     private String clientId;
-
     public MongoOAuth2ClientToken() {
     }
-
     @PersistenceConstructor
     public MongoOAuth2ClientToken(final String id,
                                   final String tokenId,

@@ -11,7 +11,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class HomeManagementApplication {
 	public static void main(String[] args) throws Throwable {

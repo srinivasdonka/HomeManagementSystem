@@ -1,29 +1,15 @@
 package com.homemanagement.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.logging.Logger;
+import com.homemanagement.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,591 +17,95 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.homemanagement.domain.DeviceNetwork;
-import com.homemanagement.domain.FOTA;
 import com.homemanagement.domain.HomeExpendature;
 import com.homemanagement.dto.ServiceStatus;
 import com.homemanagement.exception.StorageException;
-import com.homemanagement.repositories.DeviceMasterRepository;
-import com.homemanagement.repositories.FOTARepository;
-import com.homemanagement.repositories.HomeExpedatureRepository;
-import com.homemanagement.service.StorageServiceImpl;
-import com.homemanagement.utils.HomeManagementUtil;
 import com.homemanagement.utils.UploadResponse;
-
-
 @RestController
 public class HomeController {
 	@Autowired
-	private HomeExpedatureRepository homeRepository;
-	@Autowired
-	FOTARepository fotaRepository;
-	@Autowired
-	private Environment environment;
-	@Autowired
-	DeviceMasterRepository deviceMasterRepository;
-	@Autowired 
-	StorageServiceImpl storageService;
-	/** The Constant logger is used to specify the . */
-	static final Logger logger = Logger.getLogger(HomeController .class);
+	HomeService homeService;
 	@PostMapping("/homeExp/addExpendature")
 	ServiceStatus<Object> createRole(@RequestBody HomeExpendature homeExp){
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-		if(homeExp!=null && homeExp.getItem_id()!=null && homeExp.getItem_id()!=null)
-		{
-			try {
-				logger.info("addExpendature"+homeExp.getItem_id());
-
-				String itemId = UUID.randomUUID().toString();
-				homeExp.setId(itemId);
-				homeRepository.addDevice(homeExp);
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully added home expedature ");	
-
-				return serviceStatus;
-			}catch (Exception e) {
-				e.printStackTrace();
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-				if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-				}
-			}
-
-
-		}else {
-			logger.debug("Invalid Device payload");
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("Invalid Device payload");
-		}
-
-		return serviceStatus;
+		return homeService.createRole(homeExp);
 	}
-
-	@RequestMapping(value="/homeExp/getDeviceListByCompanyIdAndActiveStatus",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	ServiceStatus<List<HomeExpendature>> checkDeviceMaster(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active){
-
-		ServiceStatus<List<HomeExpendature>> serviceStatus=new ServiceStatus<List<HomeExpendature>>();
-
-
-		if(company_id!=null){
-
-			try {
-				logger.info("getDeviceListByCompanyIdAndActiveStatus"+company_id);
-
-				List<HomeExpendature> deviceList	= homeRepository.getDeviceListByCompanyIdAndActiveStatus(company_id, is_active);
-				if(deviceList!=null&& deviceList.size()>0){
-					logger.info("isDeviceSeqNoExists"+deviceList);
-					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("successfully fetched");
-					serviceStatus.setResult(deviceList);
-				}
-				else {
-					serviceStatus.setStatus("failure");
-					serviceStatus.setMessage("Devices not Exist");
-					serviceStatus.setResult(deviceList);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-				if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-				}
-			}
-		}else{
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("Invalid param values ");
-		}
-
-		return serviceStatus;
+	@GetMapping("/homeExp/getDeviceListByCompanyIdAndActiveStatus")
+	ServiceStatus<Object> checkDeviceMaster(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active){
+		return homeService.checkHomeExp(company_id, is_active);
 	}
-
-
 	@GetMapping("/homeExp/getSingleItemById")
-	ServiceStatus<HomeExpendature> getSingleItemById(@RequestParam("id")String id){
-
-		ServiceStatus<HomeExpendature> serviceStatus=new ServiceStatus<HomeExpendature>();
-
-		try {
-			if(id != null){
-				logger.info("getSingleItemById"+id);
-				HomeExpendature item = homeRepository.getItemeByItemId(id);
-				if( null != item){
-					logger.info("Item EXIST : "+item);
-					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("Item successfully fetched");
-					serviceStatus.setResult(item);
-				}
-				else {
-					serviceStatus.setStatus("failure");
-					serviceStatus.setMessage("Item not Exist");
-				}
-			}else{
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("Invalid param values ");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-			if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-				serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-			}
-		}
-
-		return serviceStatus;
+	ServiceStatus<Object> getSingleItemById(@RequestParam("id")String id){
+		return homeService.getSingleItem(id);
 	}
-
-
 	@ExceptionHandler(StorageException.class)
 	public ResponseEntity<UploadResponse> handleException(StorageException ex) {
 		UploadResponse response = new UploadResponse(false, ex.getMessage());
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 	}
-
-	@RequestMapping(value="/homeExp/getFotaPath",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	ServiceStatus<FOTA> getFotaPath(@RequestParam("device_id")String device_id,@RequestParam("version")String version){
-
-		ServiceStatus<FOTA> serviceStatus=new ServiceStatus<FOTA>();
-
-
-		if(device_id!=null&&version!=null){
-
-			try {
-				logger.info("getFotaPath"+device_id);
-
-				FOTA fota	= fotaRepository.getFOTAPath(device_id, version);
-				if(fota!=null){
-
-					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("successfully fetched");
-					serviceStatus.setResult(fota);
-				}
-				else {
-					serviceStatus.setStatus("failure");
-					serviceStatus.setMessage("Device Id not Exist");
-					//serviceStatus.setResult(deviceList);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-				if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-				}
-			}
-		}else{
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("Invalid param values ");
-		}
-
-		return serviceStatus;
+	@GetMapping("/homeExp/getFotaPath")
+	ServiceStatus<Object> getFotaPath(@RequestParam("device_id")String device_id,@RequestParam("version")String version){
+		return homeService.getHomeExp(device_id, version);
 	}
-	@SuppressWarnings("deprecation")
-	@RequestMapping(value="/homeExp/getDeviceListByCompanyIdAndActiveStatusPageable",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	ServiceStatus<Page<HomeExpendature>> getDeviceListByCompanyIdAndActiveStatusPageable(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active,@RequestParam("page")Integer page,
+
+	@GetMapping("/homeExp/getDeviceListByCompanyIdAndActiveStatusPageable")
+	ServiceStatus<Object> getDeviceListByCompanyIdAndActiveStatusPageable(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active,@RequestParam("page")Integer page,
 			@RequestParam("size") Integer size,@RequestParam("sort") String sort){
-
-		ServiceStatus<Page<HomeExpendature>> serviceStatus=new ServiceStatus<Page<HomeExpendature>>();
-
-
-		if(company_id!=null){
-
-			try {
-
-
-				Sort sortCriteria=null;	
-				if(!HomeManagementUtil.isEmptyString(sort))
-				{
-					logger.info("sort"+sort);
-					sortCriteria = new Sort(new Sort.Order(Direction.ASC, sort));
-				}
-				else {
-					sortCriteria = new Sort(new Sort.Order(Direction.ASC, "device_name"));
-
-				}
-				Pageable pageable = PageRequest.of(page, size,sortCriteria);
-				logger.info("getDeviceListByCompanyIdAndActiveStatus"+company_id);
-
-				Page<HomeExpendature> deviceList	= homeRepository.getDeviceListByCompanyIdAndActiveStatusPageable(company_id, is_active, pageable);
-				if(deviceList!=null){
-					logger.info("deviceList"+deviceList);
-					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("successfully fetched");
-					serviceStatus.setResult(deviceList);
-				}
-				else {
-					serviceStatus.setStatus("failure");
-					serviceStatus.setMessage("Devices not Exist");
-					serviceStatus.setResult(deviceList);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-
-			}
-		}else{
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("Invalid param values ");
-		}
-
-		return serviceStatus;
+		return homeService.getHomeExpById(company_id, is_active, page, size, sort);
 	}
-	@RequestMapping(value = "/homeExp/changeDeviceCompany",produces = { "application/json"},method = RequestMethod.POST)
+	@PostMapping("/homeExp/changeDeviceCompany")
 	public ServiceStatus<Object> changeDeviceCompany(
 			@RequestParam("currentCompanyId") String currentCompanyId,
 			@RequestParam("destCompanyId") String destCompanyId,@RequestParam(value = "device_id") String device_id) {
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-		try {
-			if(currentCompanyId!=null&&destCompanyId!=null&&device_id!=null) {
-				String deviceToken = HomeManagementUtil.generateDeviceToken(destCompanyId.trim(),device_id.trim());
-				homeRepository.changeDeviceCompany(currentCompanyId, destCompanyId, device_id,deviceToken);
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully updated company name");
-			}else {
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("Invalid Params");
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-		}
-		return serviceStatus;
+		return homeService.changeCompany(currentCompanyId, destCompanyId, device_id);
 	}
 	@PutMapping("/homeExp/updateHomeExpedature")
 	public ServiceStatus<Object> updateHomeExpedature(@RequestBody HomeExpendature homeExp) {
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-		try {
-
-			if(homeExp.getItem_id()!=null&&homeExp.getItem_name()!=null&&homeExp.getItem_type()!=null) {
-				HomeExpendature existItem= homeRepository.getItemeByItemId(homeExp.getId());
-				existItem.setItem_id(homeExp.getItem_id());
-				existItem.setItem_name(homeExp.getItem_name());
-				existItem.setItem_type(homeExp.getItem_type());
-				existItem.setItem_price(homeExp.getItem_price());
-				existItem.setItem_purchase_date(homeExp.getItem_purchase_date());
-				existItem.setItem_status(homeExp.getItem_status());
-				homeRepository.updateItem(homeExp);
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully updated item Details");
-			}else {
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("Invalid Params");
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-		}
-		return serviceStatus;
+		return homeService.updateHomeExp(homeExp);
 	}
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/homeExp/getFile", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE}, method = RequestMethod.GET)
+	@GetMapping("/homeExp/getFile")
 	public void getFile(@RequestParam(value="fileName", required=false) String fileName, 
 			HttpServletRequest request,HttpServletResponse response) throws IOException, Exception
 	{
-
-		String path=environment.getProperty("configPath");
-		byte[] reportBytes = null;
-		File result=new File(path+"/"+fileName);
-		System.out.println("remote Address" +   request.getRemoteAddr());
-		System.out.println("remote host" +   request.getRemoteHost());
-		System.out.println("remote port" +   request.getRemotePort());
-		System.out.println("remote getLocalAddr" +   request.getLocalAddr());
-		System.out.println("remote getLocalPort" +   request.getLocalPort());
-		//System.out.println("remote port" +   request.get());
-
-
-		Enumeration<?> headerNames = request.getHeaderNames();
-		while(headerNames.hasMoreElements()) {
-			String headerName = (String)headerNames.nextElement();
-			System.out.println("name" + headerName+"value" +request.getHeader(headerName));
-		}
-
-		if(result.exists()){
-			InputStream inputStream = new FileInputStream(path+"/"+fileName); 
-
-			String type = Files.probeContentType(result.toPath());
-			response.setHeader("Content-Disposition", "attachment; filename=" + result.getName());
-			response.setHeader("Content-Type",type);
-
-			reportBytes=new byte[100];//New change
-			OutputStream os=response.getOutputStream();//New change
-			int read=0;
-			while((read=inputStream.read(reportBytes))!=-1){
-				os.write(reportBytes,0,read);
-			}
-
-			os.flush();
-			os.close();
-			inputStream.close();
-		}
+		homeService.getHomeExpReport(fileName, request, response);
 	}
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/homeExp/serverAResponse",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/homeExp/serverAResponse")
 	ServiceStatus<Object> serverAResponse(@RequestParam("info")String info){
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-		try {
-			logger.info("serverAResponse");
-			System.out.println("serverAResponse"+info);
-			String url_path=environment.getProperty("gateway");
-			if(info!=null){
-
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully fetched");
-				Thread.sleep(5000);
-				HomeManagementUtil.loadDeviceToken("serverB",url_path);
-			}
-			else {
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("Exist");
-				//serviceStatus.setResult(deviceList);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-			if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-				serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-			}
-		}
-
-		return serviceStatus;
+		return homeService.getHomeWeeklyReport(info);
 	}
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/homeExp/serverBResponse",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	ServiceStatus<Object> serverBResponse(@RequestParam("info")String info){
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-		try {
-
-			System.out.println("serverBResponse"+info);
-
-			if(info!=null){
-
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully fetched");
-			}
-			else {
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("Exist");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-			if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-				serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-			}
-		}
-
-		return serviceStatus;
+	@GetMapping("/homeExp/serverBResponse")
+	ServiceStatus<Object> serverBResponse(@RequestParam("info")String info) {
+		return homeService.getProperty(info);
 	}
-
 	@GetMapping("/homeExp/getHomeExpendature")
-	ServiceStatus<List<HomeExpendature>> getHomeExpendature(@RequestParam("userId") String userId){
-
-		ServiceStatus<List<HomeExpendature>> serviceStatus=new ServiceStatus<List<HomeExpendature>>();
-
-		try {
-			logger.info("getHomeExpendature method");
-
-			List<HomeExpendature> itemList	= homeRepository.getItemByUserId(userId);
-			if(itemList!=null&& itemList.size()>0){
-				List<HomeExpendature> listWithoutDuplicates = itemList.stream().distinct().collect(Collectors.toList());
-				logger.info("listWithoutDuplicates"+listWithoutDuplicates);
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully fetched");
-				serviceStatus.setResult(listWithoutDuplicates);
-			}
-			else {
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("Item does not Exist");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-			if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-				serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-			}
-		}
-		return serviceStatus;
+	ServiceStatus<Object> getHomeExpendature(@RequestParam("userId") String userId){
+		return homeService.getExp(userId);
 	}
-
-	@RequestMapping(value="/homeExp/addDeviceNetwork",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping("/homeExp/addDeviceNetwork")
 	ServiceStatus<Object> AddNetwork(@RequestBody DeviceNetwork deviceNetwork){
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-
-		if(deviceNetwork!=null)
-		{
-			try {
-				String networkId = UUID.randomUUID().toString();
-				deviceNetwork.setId(networkId);
-
-				homeRepository.addNetwork(deviceNetwork);
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("successfully registered Device ");
-				serviceStatus.setResult(networkId);
-
-
-			}catch (Exception e) {
-				e.printStackTrace();
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-				if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-				}
-			}
-
-		}else {
-			logger.debug("Invalid Device payload");
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("Invalid Device payload");
-		}
-		return serviceStatus;
+		return homeService.addExp(deviceNetwork);
 	}
-
-	@RequestMapping(value="/homeExp/getdeviceNetworks",method=RequestMethod.GET,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/homeExp/getdeviceNetworks")
 	ServiceStatus<Object> getDeviceNetwork(){
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-		try {
-			List<DeviceNetwork> deviceNetworsByNetworkId = homeRepository.getDeviceNetworsByNetworkId();
-			serviceStatus.setStatus("success");
-			serviceStatus.setMessage("successfully fetched");	
-			serviceStatus.setResult(deviceNetworsByNetworkId);
-		}catch (Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-			if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-				serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-			}
-		}
-
-		return serviceStatus;
+		return homeService.getPropertyExp();
 	}
-
-	@RequestMapping(value="/homeExp/checkDeviceExists",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/homeExp/checkDeviceExists")
 	ServiceStatus<?> getDeviceMaster(@RequestParam("device_id")String device_mac_id, @RequestParam("hardware_key")String device_key){
-
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-
-
-		if(device_mac_id!=null){
-
-			try {
-				logger.info("Fetch device data"+device_mac_id);
-
-				boolean isDeviceSeqNoExists = homeRepository.checkDeviceExists(device_mac_id,device_key);
-				if(isDeviceSeqNoExists) {
-					HomeExpendature expData = homeRepository.getItemeByItemId(device_mac_id);
-					serviceStatus.setStatus("success");
-					serviceStatus.setMessage("Device already has existed");
-					serviceStatus.setResult(expData);
-					if(expData != null) {
-						List<HomeExpendature> expList	= homeRepository.getDeviceByParentId(null);
-						logger.info("Fetch device data"+expList);
-					}
-
-				}else {
-					serviceStatus.setMessage("Device does not exist");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-				if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-				}
-			}
-		}else{
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("invalid param values ");
-		}
-
-		return serviceStatus;
+		return homeService.getPropertyReport(device_mac_id, device_key);
 	}
-
-	@RequestMapping(value="/homeExp/deviceByDeviceId",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/homeExp/deviceByDeviceId")
 	ServiceStatus<?> getDeviceByDeviceId(@RequestParam("device_id")String device_mac_id){
 
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-
-
-		if(device_mac_id!=null){
-
-			try {
-				logger.info("Fetch device data"+device_mac_id);
-
-				HomeExpendature diviceData = homeRepository.getItemeByItemId(device_mac_id);
-				serviceStatus.setStatus("success");
-				serviceStatus.setMessage("Device already has existed");
-				serviceStatus.setResult(diviceData);
-				/*if(diviceData != null) {
-						List<Device> deviceList	= deviceRepository.getDeviceByParentId(null);
-						logger.info("Fetch device data"+diviceData);
-						serviceStatus.setDeviceList(deviceList);
-					}*/
-
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				serviceStatus.setStatus("failure");
-				serviceStatus.setMessage("failure");
-				if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-					serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-				}
-			}
-		}else{
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("invalid param values ");
-		}
-
-		return serviceStatus;
+		return homeService.getPropertyExpById(device_mac_id);
 	}
-
-	@RequestMapping(value="/homeExp/deviceNetworkByNetworkId",method=RequestMethod.GET,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/homeExp/deviceNetworkByNetworkId")
 	ServiceStatus<Object> getDeviceNetworkByNetworkId(@RequestParam("network_id")String network_id){
-
-		ServiceStatus<Object> serviceStatus=new ServiceStatus<Object>();
-		try {
-			DeviceNetwork deviceNetworsByNetworkId = homeRepository.getDeviceNetworkByNetworkId(network_id);
-			serviceStatus.setStatus("success");
-			serviceStatus.setMessage("successfully fetched");	
-			serviceStatus.setResult(deviceNetworsByNetworkId);
-		}catch (Exception e) {
-			e.printStackTrace();
-			serviceStatus.setStatus("failure");
-			serviceStatus.setMessage("failure");
-			if(e instanceof org.springframework.dao.DataIntegrityViolationException) {
-				serviceStatus.setMessage("DATAINTGRTY_VIOLATION");
-			}
-		}
-
-		return serviceStatus;
+		return homeService.getAllHomeExps(network_id);
 	}
 }

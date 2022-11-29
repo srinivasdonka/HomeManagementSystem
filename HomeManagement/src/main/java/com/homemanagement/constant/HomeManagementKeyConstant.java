@@ -29,9 +29,9 @@ public class HomeManagementKeyConstant {
 	public static final String COMPANYNAME="company_name";
 	public static final String LASTUPDATE="last_updated";
 	public static final String  NOTIFICATION_MSG="notification_msg";
-	public static final String  HOME_Administrator="HOME Administrator";
+	public static final String  HOME_ADMIN="Administrator";
 	public static final String  ADMINISTRATOR="Administrator";
-	public static final String  Enduser="Enduser";
+	public static final String  END_USER="Enduser";
 	//Custom Messages
 	public static final String SUCCESS="success";
 	public static final String FAILURE="failure";

@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="Auth_Refresh_Token")
 public class MongoOAuth2RefreshToken {
-
     @Id
     private String tokenId;
     private byte[] token;
