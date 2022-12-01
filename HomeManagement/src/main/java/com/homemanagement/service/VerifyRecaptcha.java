@@ -28,23 +28,17 @@ public class VerifyRecaptcha {
 	    body.put("secret", recaptchaSecret);
 	    body.put("response", recaptchaResponse);
 	    body.put("remoteip", ip);
-	    
-	   // log.debug("Request body for recaptcha: {}", body);
-	    
 	    ResponseEntity<Map> recaptchaResponseEntity = 
 	      restTemplateBuilder.build()
 	        .postForEntity(GOOGLE_RECAPTCHA_VERIFY_URL+
 	          "?secret={secret}&response={response}&remoteip={remoteip}", 
 	          body, Map.class, body);
 
-	    Map<String, Object> responseBody = 
-	      recaptchaResponseEntity.getBody();
-	       
+	    Map<String, Object> responseBody = recaptchaResponseEntity.getBody();
 	    boolean recaptchaSucess = (Boolean)responseBody.get("success");
 	    if ( !recaptchaSucess) {
 	      List<String> errorCodes = 
 	        (List<String>)responseBody.get("error-codes");
-	       
 	      String errorMessage = errorCodes.stream()
 	              .map(s -> HomeManagementUtil.RECAPTCHA_ERROR_CODE.get(s))
 	              .collect(Collectors.joining(", "));

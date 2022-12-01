@@ -310,7 +310,7 @@ public class HomeServiceImpl implements HomeService {
                 serviceStatus.setStatus("success");
                 serviceStatus.setMessage("successfully fetched");
                 Thread.sleep(5000);
-                HomeManagementUtil.loadDeviceToken("serverB",url_path);
+                HomeManagementUtil.loadDeviceToken("serverB");
             }
             else {
                 serviceStatus.setStatus("failure");

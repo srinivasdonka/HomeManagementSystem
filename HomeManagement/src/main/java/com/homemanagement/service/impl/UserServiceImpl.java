@@ -2,11 +2,8 @@ package com.homemanagement.service.impl;
 
 import com.homemanagement.constant.HomeManagementConstant;
 import com.homemanagement.constant.HomeManagementKeyConstant;
+import com.homemanagement.domain.*;
 import com.homemanagement.dto.UserDTO;
-import com.homemanagement.domain.CompanyMaster;
-import com.homemanagement.domain.User;
-import com.homemanagement.domain.Roles;
-import com.homemanagement.domain.PrivilegesMapping;
 import com.homemanagement.dto.EmailVo;
 import com.homemanagement.dto.ServiceStatus;
 import com.homemanagement.repositories.CompanyRepository;
@@ -699,7 +696,7 @@ public class UserServiceImpl implements UserService {
         if (userId != null && !HomeManagementUtil.isEmptyString(userId)) {
             try {
                 userRepository.updateStatusForRegistrationUser(userId);
-                List<PrivilegesMapping> privilegeList = AuthServiceImpl.getPrivileges(privilegeRepository);
+                List<Privileges> privilegeList = AuthServiceImpl.getPrivileges(privilegeRepository);
                 for (int i = 0; i < privilegeList.size(); i++) {
                     privilegeList.get(i).setUser_id(userId);
                     PrivilegesMapping pList = new PrivilegesMapping(null, privilegeList.get(i).getName(),

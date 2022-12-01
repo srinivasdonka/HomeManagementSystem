@@ -29,6 +29,11 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.homemanagement.authentication.service.UserAuthenticationDetailsService;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.logging.log4j.util.StringBuilders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -44,10 +49,10 @@ import com.homemanagement.dto.EmailVo;
 public class HomeManagementUtil {
 
 	private final static Gson gson = new GsonBuilder().create();
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomeManagementUtil.class);
 	private static TokenStore tokenStore;
-	public static final String key = "3b3c714572df4c6b91473d6f425a2d87"; 
-	public static final String initVector = "714572df4c6b9147"; 
+	public static final String KEY = "3b3c714572df4c6b91473d6f425a2d87";
+	public static final String INITVECTOR = "714572df4c6b9147";
 	/**
 	 * This method is used to validate the empty or null string
 	 * 
@@ -142,7 +147,6 @@ public class HomeManagementUtil {
 		if(webTokens != null && webTokens.size() > 0) {
 			for(OAuth2AccessToken webToken :webTokens){
 				oaAuth2AccessToken = webToken;
-				break;
 			}
 		} 
 
@@ -201,83 +205,45 @@ public class HomeManagementUtil {
 		if((companyId!=null)&&(deviceId!=null))
 		{
 			String devicetokenvalue=companyId.trim()+deviceId.trim();
-			deviceTokenEncrypt = encrypt(key, initVector,devicetokenvalue);
+			deviceTokenEncrypt = encrypt(KEY, INITVECTOR,devicetokenvalue);
 		}
 		return deviceTokenEncrypt;
 
 	}
-
-
-	/*
-	 * void sentDeviceTransferTemplate(String toEmail){
-	 * 
-	 * emailService.sendEmail(toEmail.split(","),": Device Transfer Request",
-	 * "Hey &nbsp;"+toEmail+",<br><br>" + "Device Transfer Request "+".<br>" +
-	 * "Please click on  following URL for trasnfering device.\r\n" + "<br><br>" +
-	 * "URL:&nbsp;"+"<a href=\""+environment.getProperty("url.path") +
-	 * "\">Click to Transfer</a>" +
-	 * 
-	 * "<br><br>Thanks,\r\n"+"<br>" +"&nbsp;Support&nbsp;Team");
-	 * 
-	 * }
-	 */
-	public static void loadDeviceToken(String info,String url_path) {
-
-		String uri;
-
-
-
-
-		uri = " http://183.82.101.5:10020/device/serverBResponse?info=" + info;
-
-		HttpURLConnection httpConnection = null;
-
+	public static void loadDeviceToken(String info) {
+		String uri = " http://localhost:10020/device/serverBResponse?info=" + info;
 		try {
-			httpConnection = getHttpUrlConnection(uri);
+			HttpURLConnection httpConnection = getHttpUrlConnection(uri);
 			httpConnection.setRequestMethod("GET");
-
-
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(httpConnection.getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
 			String inputLine;
-			StringBuffer response = new StringBuffer();
-
+			StringBuilder response = new StringBuilder();
 			while ((inputLine = in.readLine()) != null) {
 				response.append(inputLine);
 			}
 			in.close();
-			System.out.println(" Response Code::"+ httpConnection.getResponseCode());
-			System.out.println(" Response::"+response.toString());
-
 			if(httpConnection.getResponseCode() == 200) {
+				LOGGER.info("Success code" +httpConnection.getResponseCode());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
-
 	}
 	private static HttpURLConnection getHttpUrlConnection(String url) {
-
 		HttpURLConnection httpConnection = null;
-
 		try {
-
 			URL obj = new URL(url);
 			httpConnection = (HttpURLConnection) obj.openConnection();
 			httpConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return httpConnection;
 	}
 	public static void main(String[] args) {
-		loadDeviceToken("","test");
+		loadDeviceToken("");
 	}
-	public static final Map<String, String> 
-	RECAPTCHA_ERROR_CODE = new HashMap<>();
+	public static final Map<String, String> RECAPTCHA_ERROR_CODE = new HashMap<>();
 
 	static {
 		RECAPTCHA_ERROR_CODE.put("missing-input-secret", 
@@ -294,7 +260,7 @@ public class HomeManagementUtil {
 
 	public static List<String[]>  parseFile(String delimiter,String filePaht) {
 
-		List<String[]> result = new ArrayList<String[]>();
+		List<String[]> result = new ArrayList<>();
 		try {
 			File f = new File(filePaht);
 			@SuppressWarnings("resource")
@@ -315,8 +281,7 @@ public class HomeManagementUtil {
 	public static String decrypt(String fileName, byte[] keyBytes) {
 		String content="";
 
-		try  {
-			FileInputStream fileIn = new FileInputStream(fileName);
+		try (FileInputStream fileIn = new FileInputStream(fileName)) {
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
 			byte[] fileIv = new byte[16];
@@ -342,21 +307,17 @@ public class HomeManagementUtil {
 		return content;
 	}
 	public static void encrypt(String content, String fileName, byte[] keyBytes) {
-		try {
+		try(FileOutputStream fileOut = new FileOutputStream(fileName)) {
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			byte[] iv = cipher.getIV();
-			FileOutputStream fileOut = new FileOutputStream(fileName);
-
-			@SuppressWarnings("resource")
 			CipherOutputStream cipherOut = new CipherOutputStream(fileOut, cipher);
-
 			fileOut.write(iv);
 			cipherOut.write(content.getBytes());
 
 		}catch (Exception e) {
-
+			LOGGER.error(e.getMessage());
 		}
 	}
 	public static String generateURI(String companyId,String deviceId,String filename){
@@ -370,9 +331,11 @@ public class HomeManagementUtil {
 	}
 
 	public static  String parseHtmlTemplate(EmailVo emailVo) {
-		String htmlTemp = null, firstHtmlTemp=null, secHtmlTemp=null;
+		String htmlTemp = null;
+		String	firstHtmlTemp=null;
+		String secHtmlTemp=null;
 		try {
-			if(emailVo != null && emailVo.getTemplateReplaceItems().size()>0) {
+			if(ObjectUtils.anyNotNull(emailVo)) {
 				for(HomeManagementConstant templateItems : emailVo.getTemplateReplaceItems()) {
 					switch(templateItems) {
 					case TO_USER_NAME:
@@ -382,16 +345,13 @@ public class HomeManagementUtil {
 						firstHtmlTemp =  htmlTemp.replace(templateItems.getKey(), emailVo.getFromUser());
 						break;
 					case ACCEPT_INVITATION_LINK:
-						secHtmlTemp =  firstHtmlTemp.replace(templateItems.getKey(), emailVo.getEmail_url());
+						case RESET_MY_PASSWORD:
+							secHtmlTemp =  firstHtmlTemp.replace(templateItems.getKey(), emailVo.getEmail_url());
 						break;
 					case CONFIRM_REGISTRATION_LINK:
 						secHtmlTemp =  htmlTemp.replace(templateItems.getKey(),emailVo.getEmail_url());
 						break;
-					case RESET_MY_PASSWORD:
-						secHtmlTemp =  firstHtmlTemp.replace(templateItems.getKey(),emailVo.getEmail_url());
-						break;
-					default:
-						System.out.println("template key is not recognized");
+						default:
 					}
 				}
 			}

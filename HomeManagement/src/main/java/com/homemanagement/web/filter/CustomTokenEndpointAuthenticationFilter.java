@@ -23,14 +23,17 @@ public class CustomTokenEndpointAuthenticationFilter extends TokenEndpointAuthen
 	@Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         super.doFilter(req, res, chain);
+		throw new IOException();
     }
 	@Override
 	protected void onSuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			Authentication authResult) throws IOException {
+		throw new IOException();
 	}
 	@Override
 	protected void onUnsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException {
+		throw new IOException();
 	}
 
 }

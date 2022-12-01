@@ -1,8 +1,6 @@
 package com.homemanagement.controller;
-
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import com.homemanagement.domain.PrivilegesMapping;
 import com.homemanagement.domain.User;
 import com.homemanagement.dto.PrivilegesMappingDTO;
@@ -29,14 +27,15 @@ public class AuthController {
     /**
      * This method is used to Add the privileges to the Role.
      *
-     * @param privileges specify the privilege info
+     * @param privilegeDto specify the privilege info
      * @return the service status class object with response status and payload         .
      */
     @ApiOperation(value = "Add a privileges")
     @PostMapping("/auth/addPrivileges")
-    ServiceStatus<Object> createPrivileges(@RequestBody PrivilegesMapping privileges) {
+    ServiceStatus<Object> createPrivileges(@RequestBody PrivilegesMappingDTO privilegeDto) {
         logger.info("createPrivileges");
-        return authService.createPrivilegesToUser(privileges);
+        PrivilegesMapping privilegesMapping = this.modelMapper.map(privilegeDto, PrivilegesMapping.class);
+        return authService.createPrivilegesToUser(privilegesMapping);
     }
     /**
      * This method is used to update the privileges to the Role.
@@ -65,8 +64,7 @@ public class AuthController {
     }
     @ApiOperation(value = "Search a product with an ID", response = User.class)
     @GetMapping("/auth/getPrivilegesByRole")
-    ServiceStatus<Object> getPrivilegesByRole(@RequestParam("roleId") String roleId,
-											  @RequestParam("userId") String userId) {
+    ServiceStatus<Object> getPrivilegesByRole(@RequestParam("roleId") String roleId,@RequestParam("userId") String userId) {
         return authService.getPrivilegesByUser(userId);
     }
     /**
@@ -113,7 +111,13 @@ public class AuthController {
     @ApiOperation(value = "Update a privileges")
     @PutMapping("/auth/updatePrivileges")
     ServiceStatus<Object> updatePrivileges(@RequestBody List<PrivilegesMappingDTO> privilegesDto) {
-        List<PrivilegesMapping> privileges = this.modelMapper.map(privilegesDto, ArrayList.class);
-        return authService.updateListOfPrivileges(privileges);
+        List<PrivilegesMapping> privilegeList =  mapList(privilegesDto,PrivilegesMapping.class);
+        return authService.updateListOfPrivileges(privilegeList);
+    }
+    <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
+        return source
+                .stream()
+                .map(element -> modelMapper.map(element, targetClass))
+                .collect(Collectors.toList());
     }
 }

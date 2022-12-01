@@ -8,7 +8,7 @@ import com.homemanagement.dto.ServiceStatus;
 import com.homemanagement.repositories.PrivilegeRepository;
 import com.homemanagement.repositories.RoleRepository;
 import com.homemanagement.service.AuthService;
-import com.homemanagement.utils.HomeManagementUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -125,9 +125,9 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
 
-    static List<PrivilegesMapping> getPrivileges(PrivilegeRepository privilegeRepository) {
-        List<PrivilegesMapping> privileges = privilegeRepository.getAllPrivilegeList();
-        Map<String, PrivilegesMapping> cleanMap = new LinkedHashMap<>();
+    public static List<Privileges> getPrivileges(PrivilegeRepository privilegeRepository) {
+        List<Privileges> privileges = privilegeRepository.getAllPrivilegeList();
+        Map<String, Privileges> cleanMap = new LinkedHashMap<>();
         for (int i = 0; i < privileges.size(); i++) {
             cleanMap.put(privileges.get(i).getName(), privileges.get(i));
         }
@@ -245,9 +245,9 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
     public ServiceStatus<Object> updateListOfPrivileges(List<PrivilegesMapping> privileges) {
-        if (privileges != null) {
+        if (!privileges.isEmpty()) {
             try {
-                if(privileges.get(0).getUser_id() != null || !HomeManagementUtil.isEmptyString(privileges.get(0).getUser_id())) {
+                if(null != privileges.get(0).getUser_id()) {
                     privilegeRepository.deletePrivilegesByUserId(privileges.get(0).getUser_id()) ;
                     for (PrivilegesMapping privilege : privileges) {
                         privilegeRepository.addPrivilege(privilege);

@@ -13,7 +13,7 @@ public interface PrivilegeRepositoryBase {
 
 	void updatePrivilege(PrivilegesMapping privilege);
 
-	List<PrivilegesMapping> getAllPrivilegeList();
+	List<Privileges> getAllPrivilegeList();
 
 	List<Privileges> getByPrivilegeId(String privilegeId);
 
