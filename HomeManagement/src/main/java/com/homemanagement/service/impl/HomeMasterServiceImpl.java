@@ -23,8 +23,9 @@ public class HomeMasterServiceImpl implements HomeMasterService {
     HomeExpedatureRepository deviceRepository;
     /** The Constant logger is used to specify the . */
     static final Logger logger = Logger.getLogger(HomeMasterServiceImpl.class);
-    ServiceStatus<Object> serviceStatus = new ServiceStatus<>();
+    private ServiceStatus<Object> serviceStatus;
     public ServiceStatus<Object> createMonthlyReport(String device) {
+    	serviceStatus = new ServiceStatus<Object>();
         DeviceMaster byDeviceSeqNum;
         String firstSubString;
         String secondSubString;
@@ -106,6 +107,7 @@ public class HomeMasterServiceImpl implements HomeMasterService {
         return serviceStatus;
     }
     public  ServiceStatus<?> downloadMonthlyReport(String device_mac_id, String device_key) {
+    	serviceStatus = new ServiceStatus<Object>();
         if (device_mac_id != null) {
 
             try {

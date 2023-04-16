@@ -15,8 +15,9 @@ import javax.mail.internet.MimeMessage;
 public class WebSiteEmailServiceImpl implements WebSiteEmailService {
     @Autowired
     private JavaMailSender sender;
-    private ServiceStatus<Object> serviceStatus = new ServiceStatus<>();
+    private ServiceStatus<Object> serviceStatus;
     public ServiceStatus<Object> sendEmailToUser(EmailVo emailVo) {
+    	serviceStatus = new ServiceStatus<Object>();
         if (emailVo != null) {
             try {
 

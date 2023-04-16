@@ -22,8 +22,9 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private RoleRepository roleRepository;
     private static final Logger logger = Logger.getLogger(AuthServiceImpl.class);
-    ServiceStatus<Object> serviceStatus=new ServiceStatus<>();
+    private static ServiceStatus<Object> serviceStatus;
     public ServiceStatus<Object> createPrivilegesToUser(PrivilegesMapping privileges) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(privileges !=null && privileges.getName()!=null && privileges.getRole_id()!=null)
         {
             try {
@@ -59,6 +60,7 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
     public ServiceStatus<Object> updatePrivilegesToUser(PrivilegesMapping privilegesMapping) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(privilegesMapping.getName()!=null && privilegesMapping.getRole_id()!=null)
         {
             try {
@@ -104,6 +106,7 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
     public ServiceStatus<Object> getPrivilegesToUser(Integer page, Integer size) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(page !=null && size !=null && size >0){
             try {
                 serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
@@ -134,6 +137,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public ServiceStatus<Object> getPrivilegesByUser(String userId) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(userId !=null){
             try {
                 List<PrivilegesMapping> privileges = privilegeRepository.getByPrivilegeByRoleAndUserId(userId);
@@ -154,6 +158,7 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
     public ServiceStatus<Object> createRoleForUser(Roles role) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(role !=null && role.getName()!=null && role.getDescription()!=null)
         {
             try {
@@ -189,6 +194,7 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
     public ServiceStatus<Object> updateRole(Roles role) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(role !=null && role.getName()!=null && role.getDescription()!=null)
         {
             try {
@@ -223,6 +229,7 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
     public ServiceStatus<Object> getRoleForUser(Integer page, Integer size) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(page !=null && size !=null&& size >0){
             try {
                 List<Roles> roles 	=roleRepository.getAllRoleList();
@@ -244,6 +251,7 @@ public class AuthServiceImpl implements AuthService {
         return serviceStatus;
     }
     public ServiceStatus<Object> updateListOfPrivileges(List<PrivilegesMapping> privileges) {
+    	serviceStatus = new ServiceStatus<Object>();
         if (!privileges.isEmpty()) {
             try {
                 if(null != privileges.get(0).getUser_id()) {

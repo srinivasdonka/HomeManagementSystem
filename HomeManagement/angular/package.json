@@ -37,7 +37,7 @@
     "ngx-order-pipe": "^2.0.2",
     "ngx-pagination": "^3.2.1",
     "ngx-perfect-scrollbar": "^6.3.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "primeng": "^6.1.5",
     "rxjs": "^6.0.0",
     "web-animations-js": "^2.3.1",

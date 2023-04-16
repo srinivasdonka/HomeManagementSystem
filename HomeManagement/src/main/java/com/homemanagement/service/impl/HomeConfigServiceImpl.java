@@ -31,8 +31,9 @@ public class HomeConfigServiceImpl implements HomeConfigService {
     private Environment environment;
 
     static final Logger logger = Logger.getLogger(HomeConfigServiceImpl.class);
-    ServiceStatus<Object> serviceStatus=new ServiceStatus<>();
+    private ServiceStatus<Object> serviceStatus;
     public  ServiceStatus<Object> addHomeProperty(DeviceConfiguration deviceconfiguration) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(deviceconfiguration !=null && deviceconfiguration.getDevice_id()!=null && deviceconfiguration.getConfig_property_name()!=null && deviceconfiguration.getConfig_property_value()!=null)
         {
             try {
@@ -70,6 +71,7 @@ public class HomeConfigServiceImpl implements HomeConfigService {
         return serviceStatus;
     }
     public ServiceStatus<Object> updateHomeProperty(DeviceConfiguration deviceconfiguration) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(deviceconfiguration !=null && deviceconfiguration.getDevice_id()!=null && deviceconfiguration.getConfig_property_name()!=null && deviceconfiguration.getConfig_property_value()!=null)
         {
             try {
@@ -115,6 +117,7 @@ public class HomeConfigServiceImpl implements HomeConfigService {
         return serviceStatus;
     }
     public ServiceStatus<Object> getHomeProperty(String device_id) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(device_id !=null){
 
             try {
@@ -149,6 +152,7 @@ public class HomeConfigServiceImpl implements HomeConfigService {
         return serviceStatus;
     }
     public ServiceStatus<Object> uploadProperties(List<DeviceConfiguration> deviceconfiguration) {
+    	serviceStatus = new ServiceStatus<Object>();
         boolean deviceConfigExist = false;
         String config_prop_type="SSID";
         Integer is_Sync=0;
@@ -166,7 +170,6 @@ public class HomeConfigServiceImpl implements HomeConfigService {
                         serviceStatus.setStatus("failure");
                         serviceStatus.setMessage("Device Configuration  Already Exist");
                         return serviceStatus;
-
                     }
                 }
                 if (!deviceConfigExist) {
@@ -208,6 +211,7 @@ public class HomeConfigServiceImpl implements HomeConfigService {
     }
     public ResponseEntity<UploadResponse> uploadProperties(String file, String uuid,
                                                            String fileName) {
+    	serviceStatus = new ServiceStatus<Object>();
         byte[] file_path= file.getBytes();
         ConfigurationUploadRequest request = new ConfigurationUploadRequest(uuid, file_path);
         request.setFileName(fileName);
@@ -218,7 +222,8 @@ public class HomeConfigServiceImpl implements HomeConfigService {
         return ResponseEntity.ok().body(new UploadResponse(true));
     }
     public void getPropertiesByCustomer(String fileName, HttpServletRequest request, HttpServletResponse response) {
-        String path=environment.getProperty("config.file.path");
+    	serviceStatus = new ServiceStatus<Object>();
+    	String path=environment.getProperty("config.file.path");
         byte[] reportBytes = null;
         File result=new File(path+"/"+ fileName);
 
@@ -243,8 +248,8 @@ public class HomeConfigServiceImpl implements HomeConfigService {
         }
     }
     public ServiceStatus<Object> getPropertyByOwner(String device_id) {
+    	serviceStatus = new ServiceStatus<Object>();
         if(device_id !=null){
-
             try {
                 logger.info("getDeviceConfigurationListByDeviceId"+ device_id);
 

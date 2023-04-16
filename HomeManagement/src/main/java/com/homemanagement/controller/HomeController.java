@@ -27,15 +27,15 @@ public class HomeController {
 	@Autowired
 	HomeService homeService;
 	@PostMapping("/homeExp/addExpendature")
-	ServiceStatus<Object> createRole(@RequestBody HomeExpendature homeExp){
+	ServiceStatus<?> createRole(@RequestBody HomeExpendature homeExp){
 		return homeService.createRole(homeExp);
 	}
 	@GetMapping("/homeExp/getDeviceListByCompanyIdAndActiveStatus")
-	ServiceStatus<Object> checkDeviceMaster(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active){
+	ServiceStatus<?> checkDeviceMaster(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active){
 		return homeService.checkHomeExp(company_id, is_active);
 	}
 	@GetMapping("/homeExp/getSingleItemById")
-	ServiceStatus<Object> getSingleItemById(@RequestParam("id")String id){
+	ServiceStatus<?> getSingleItemById(@RequestParam("id")String id){
 		return homeService.getSingleItem(id);
 	}
 	@ExceptionHandler(StorageException.class)
@@ -44,23 +44,23 @@ public class HomeController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 	}
 	@GetMapping("/homeExp/getFotaPath")
-	ServiceStatus<Object> getFotaPath(@RequestParam("device_id")String device_id,@RequestParam("version")String version){
+	ServiceStatus<?> getFotaPath(@RequestParam("device_id")String device_id,@RequestParam("version")String version){
 		return homeService.getHomeExp(device_id, version);
 	}
 
 	@GetMapping("/homeExp/getDeviceListByCompanyIdAndActiveStatusPageable")
-	ServiceStatus<Object> getDeviceListByCompanyIdAndActiveStatusPageable(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active,@RequestParam("page")Integer page,
+	ServiceStatus<?> getDeviceListByCompanyIdAndActiveStatusPageable(@RequestParam("company_id")String company_id,@RequestParam("is_active")boolean is_active,@RequestParam("page")Integer page,
 			@RequestParam("size") Integer size,@RequestParam("sort") String sort){
 		return homeService.getHomeExpById(company_id, is_active, page, size, sort);
 	}
 	@PostMapping("/homeExp/changeDeviceCompany")
-	public ServiceStatus<Object> changeDeviceCompany(
+	public ServiceStatus<?> changeDeviceCompany(
 			@RequestParam("currentCompanyId") String currentCompanyId,
 			@RequestParam("destCompanyId") String destCompanyId,@RequestParam(value = "device_id") String device_id) {
 		return homeService.changeCompany(currentCompanyId, destCompanyId, device_id);
 	}
 	@PutMapping("/homeExp/updateHomeExpedature")
-	public ServiceStatus<Object> updateHomeExpedature(@RequestBody HomeExpendature homeExp) {
+	public ServiceStatus<?> updateHomeExpedature(@RequestBody HomeExpendature homeExp) {
 		return homeService.updateHomeExp(homeExp);
 	}
 	@CrossOrigin(origins = "*")
@@ -72,24 +72,24 @@ public class HomeController {
 	}
 	@CrossOrigin(origins = "*")
 	@GetMapping("/homeExp/serverAResponse")
-	ServiceStatus<Object> serverAResponse(@RequestParam("info")String info){
+	ServiceStatus<?> serverAResponse(@RequestParam("info")String info){
 		return homeService.getHomeWeeklyReport(info);
 	}
 	@CrossOrigin(origins = "*")
 	@GetMapping("/homeExp/serverBResponse")
-	ServiceStatus<Object> serverBResponse(@RequestParam("info")String info) {
+	ServiceStatus<?> serverBResponse(@RequestParam("info")String info) {
 		return homeService.getProperty(info);
 	}
 	@GetMapping("/homeExp/getHomeExpendature")
-	ServiceStatus<Object> getHomeExpendature(@RequestParam("userId") String userId){
+	ServiceStatus<?> getHomeExpendature(@RequestParam("userId") String userId){
 		return homeService.getExp(userId);
 	}
 	@PostMapping("/homeExp/addDeviceNetwork")
-	ServiceStatus<Object> AddNetwork(@RequestBody DeviceNetwork deviceNetwork){
+	ServiceStatus<?> AddNetwork(@RequestBody DeviceNetwork deviceNetwork){
 		return homeService.addExp(deviceNetwork);
 	}
 	@GetMapping("/homeExp/getdeviceNetworks")
-	ServiceStatus<Object> getDeviceNetwork(){
+	ServiceStatus<?> getDeviceNetwork(){
 		return homeService.getPropertyExp();
 	}
 	@GetMapping("/homeExp/checkDeviceExists")
@@ -102,7 +102,7 @@ public class HomeController {
 		return homeService.getPropertyExpById(device_mac_id);
 	}
 	@GetMapping("/homeExp/deviceNetworkByNetworkId")
-	ServiceStatus<Object> getDeviceNetworkByNetworkId(@RequestParam("network_id")String network_id){
+	ServiceStatus<?> getDeviceNetworkByNetworkId(@RequestParam("network_id")String network_id){
 		return homeService.getAllHomeExps(network_id);
 	}
 }

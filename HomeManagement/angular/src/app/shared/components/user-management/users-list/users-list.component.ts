@@ -44,7 +44,7 @@ export class UsersListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   searchInput = '';
   filterInput = [];
-  roleFilters = [{ value: 'Owner', checked: false }, { value: 'Administrator', checked: false }];
+  roleFilters = [{ value: 'Owner', checked: false },{ value: 'Customer', checked: false },{ value: 'Administrator', checked: false }];
   statusFilters = [{ value: 'Active', checked: false }, { value: 'Deactive', checked: false }, { value: 'Activation Pending', checked: false }];
 
   //sorting

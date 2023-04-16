@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JavaMailSender sender;
     private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
-    private ServiceStatus<Object> serviceStatus = new ServiceStatus<>();
+    private ServiceStatus<Object> serviceStatus;
 
     @Override
     public ServiceStatus<Object> getCreateUserService(UserDTO userDTO) {
-
+    	serviceStatus = new ServiceStatus<Object>();
         if (!StringUtils.isEmpty(userDTO.getUsername()) && !StringUtils.isEmpty(userDTO.getPassword())) {
             try {
                 Optional<User> findByUsername = userRepository.findByUsername(userDTO.getUsername());
@@ -141,6 +141,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getSingleUser(String userName) {
+    	serviceStatus = new ServiceStatus<Object>();
         if (userName != null) {
             try {
                 User user = (User) mongoUserDetailsManager.loadUserByUsername(userName);
@@ -163,6 +164,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getUserDetailsInPage(Integer page, Integer size) {
+    	serviceStatus = new ServiceStatus<Object>();
         if (page != null && size != null && size > 0) {
             try {
                 Pageable pageable = PageRequest.of(page, size);
@@ -187,6 +189,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getCompanies() {
+    	serviceStatus = new ServiceStatus<Object>();
         try {
             List<CompanyMaster> companyList = companyRepository.findAll();
             if (!companyList.isEmpty()) {
@@ -210,6 +213,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getCompanyById(String id) {
+    	serviceStatus = new ServiceStatus<Object>();
         if (id != null) {
             try {
                 logger.info("getCompanyUsersById" + id);
@@ -233,7 +237,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getPageForCompanyById(String id, String status, Integer page, Integer size) {
-        if (id != null) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (id != null) {
             try {
                 logger.info("getCompanyUsersById" + id);
                 Pageable pageable = PageRequest.of(page, size);
@@ -257,6 +262,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getCompanyByUser(String username) {
+    	serviceStatus = new ServiceStatus<Object>();
         if (username != null) {
             try {
                 Optional<User> user = userRepository.findByUsername(username);
@@ -293,7 +299,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> updateCompany(CompanyMaster companyMaster) {
-        if (companyMaster != null && companyMaster.getName() != null && companyMaster.getAddress() != null) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (companyMaster != null && companyMaster.getName() != null && companyMaster.getAddress() != null) {
             try {
                 companyRepository.editCompany(companyMaster);
                 serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
@@ -314,7 +321,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getMail(String email) {
-        if (!StringUtils.isEmpty(email)) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (!StringUtils.isEmpty(email)) {
             try {
                 boolean isUserExists = mongoUserDetailsManager.userExists(email);
                 logger.info("isUserExists " + isUserExists);
@@ -342,7 +350,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getCompanyStatus(String status, String si, Integer page, Integer size, String sort) {
-        try {
+    	serviceStatus = new ServiceStatus<Object>();
+    	try {
             if (!StringUtils.isEmpty(status) || !StringUtils.isEmpty(si)) {
                 Sort sortCriteria = null;
                 if (!StringUtils.isEmpty(sort)) {
@@ -377,7 +386,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> updateCompanyToOwner(CompanyMaster companyMaster) {
-        if (companyMaster != null && companyMaster.getId() != null) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (companyMaster != null && companyMaster.getId() != null) {
             try {
                 companyRepository.updateCompanyRoleToSI(companyMaster.getId());
                 serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
@@ -398,7 +408,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getUpdateUser(UserDTO userDTO) {
-        if (!StringUtils.isEmpty(userDTO.getFirstName())
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (!StringUtils.isEmpty(userDTO.getFirstName())
                 && !StringUtils.isEmpty(userDTO.getUsername()) && !StringUtils.isEmpty(userDTO.getPassword())) {
             try {
                 boolean userExists = userRepository.findByUsername(userDTO.getUsername()).isPresent();
@@ -446,7 +457,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> createMultipleUsersForHome(List<UserDTO> userDTOs) {
-        if (userDTOs != null) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (userDTOs != null) {
             try {
                 for (UserDTO userDTO : userDTOs) {
                     boolean userExists = userRepository.findByUsername(userDTO.getUsername()).isPresent();
@@ -527,7 +539,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> updateMultipleUsersForHome(List<UserDTO> userDTOs) {
-        if (userDTOs != null) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (userDTOs != null) {
             try {
                 for (UserDTO userDTO : userDTOs) {
                     boolean userExists = userRepository.findByUsername(userDTO.getUsername()).isPresent();
@@ -585,7 +598,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getUserByUserId(String id) {
-        if (id != null && id.length() > 0) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (id != null && id.length() > 0) {
             try {
                 Optional<User> user = userRepository.findById(id);
                 if (user.isPresent()) {
@@ -613,7 +627,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> sendMailToCustomer(EmailVo emailVo) {
-        if (emailVo != null) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (emailVo != null) {
             try {
                 MimeMessage message = sender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -640,7 +655,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> getMailToken(String emailId) {
-        if (emailId != null && emailId.length() > 0) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (emailId != null && emailId.length() > 0) {
             try {
                 Optional<User> mailingUser = userRepository.findById(emailId);
                 if (mailingUser.isPresent()) {
@@ -667,7 +683,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> updateLastUserLogin(String userName, String lastLogin) {
-        if (userName != null && lastLogin != null) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (userName != null && lastLogin != null) {
             try {
                 userRepository.updateLastLogin(userName, lastLogin);
                 serviceStatus.setStatus(HomeManagementKeyConstant.SUCCESS);
@@ -691,7 +708,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public ServiceStatus<Object> updateStatusForRegUser(String userId) {
-        if (userId != null && !HomeManagementUtil.isEmptyString(userId)) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (userId != null && !HomeManagementUtil.isEmptyString(userId)) {
             try {
                 userRepository.updateStatusForRegistrationUser(userId);
                 List<Privileges> privilegeList = AuthServiceImpl.getPrivileges(privilegeRepository);
@@ -723,7 +741,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServiceStatus<Object> verifyRegLink(UserDTO registrationUser) {
-        if (!StringUtils.isEmpty(registrationUser.getUsername())) {
+    	serviceStatus = new ServiceStatus<Object>();
+    	if (!StringUtils.isEmpty(registrationUser.getUsername())) {
             try {
                 Optional<User> findByUsername = userRepository.findByUsername(registrationUser.getUsername());
                 if (findByUsername.isPresent()) {
