@@ -33,6 +33,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 		LOGGER.debug("Getting user by email={}", email.replaceFirst("@.*", "@***"));
 		return userRepository.findByUsername(email);
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public Collection<User> getAllUsers() {
 		LOGGER.debug("Getting all users");

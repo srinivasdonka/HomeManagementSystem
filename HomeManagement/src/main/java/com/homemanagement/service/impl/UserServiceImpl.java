@@ -17,7 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,8 +36,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MongoUserDetailsManager mongoUserDetailsManager;
-    @Autowired
-    private Environment environment;
     @Autowired
     private PrivilegeRepository privilegeRepository;
     @Autowired

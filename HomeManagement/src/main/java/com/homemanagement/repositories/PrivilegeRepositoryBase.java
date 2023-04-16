@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.homemanagement.domain.Privileges;
 import com.homemanagement.domain.PrivilegesMapping;
-import com.homemanagement.dto.PrivilegesMappingDTO;
 
 
 public interface PrivilegeRepositoryBase {

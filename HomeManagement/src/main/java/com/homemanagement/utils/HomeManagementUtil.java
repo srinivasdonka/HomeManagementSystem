@@ -29,9 +29,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.homemanagement.authentication.service.UserAuthenticationDetailsService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.logging.log4j.util.StringBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -312,6 +310,7 @@ public class HomeManagementUtil {
 			SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			byte[] iv = cipher.getIV();
+			@SuppressWarnings("resource")
 			CipherOutputStream cipherOut = new CipherOutputStream(fileOut, cipher);
 			fileOut.write(iv);
 			cipherOut.write(content.getBytes());

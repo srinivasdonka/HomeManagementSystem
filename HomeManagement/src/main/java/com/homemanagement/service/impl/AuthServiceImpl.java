@@ -8,7 +8,6 @@ import com.homemanagement.dto.ServiceStatus;
 import com.homemanagement.repositories.PrivilegeRepository;
 import com.homemanagement.repositories.RoleRepository;
 import com.homemanagement.service.AuthService;
-import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

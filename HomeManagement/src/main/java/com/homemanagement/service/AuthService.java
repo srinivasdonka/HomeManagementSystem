@@ -2,7 +2,6 @@ package com.homemanagement.service;
 
 import com.homemanagement.domain.PrivilegesMapping;
 import com.homemanagement.domain.Roles;
-import com.homemanagement.dto.PrivilegesMappingDTO;
 import com.homemanagement.dto.ServiceStatus;
 
 import java.util.List;

@@ -222,11 +222,6 @@ public class HomeConfigServiceImpl implements HomeConfigService {
         byte[] reportBytes = null;
         File result=new File(path+"/"+ fileName);
 
-        Enumeration<?> headerNames = request.getHeaderNames();
-        while(headerNames.hasMoreElements()) {
-            String headerName = (String)headerNames.nextElement();
-        }
-
         if(result.exists()){
             try(InputStream inputStream = new FileInputStream(path+"/"+ fileName)) {
                 String type = Files.probeContentType(result.toPath());

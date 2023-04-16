@@ -1,9 +1,7 @@
 package com.homemanagement.service.impl;
 
 import com.google.gson.Gson;
-import com.homemanagement.controller.HomeMasterController;
 import com.homemanagement.domain.DeviceMaster;
-import com.homemanagement.domain.HomeExpendature;
 import com.homemanagement.dto.ServiceStatus;
 import com.homemanagement.repositories.DeviceMasterRepository;
 import com.homemanagement.repositories.HomeExpedatureRepository;
@@ -13,7 +11,6 @@ import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.FileSystems;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -29,7 +26,6 @@ public class HomeMasterServiceImpl implements HomeMasterService {
     ServiceStatus<Object> serviceStatus = new ServiceStatus<>();
     public ServiceStatus<Object> createMonthlyReport(String device) {
         DeviceMaster byDeviceSeqNum;
-        String adminUrl;
         String firstSubString;
         String secondSubString;
         Map<String,String> hashMap = new HashMap<String,String>();
@@ -70,8 +66,6 @@ public class HomeMasterServiceImpl implements HomeMasterService {
                     serviceStatus.setStatus("success");
                     serviceStatus.setMessage("Device already has existed");
                     byDeviceSeqNum = deviceMasterRepository.getByDeviceMacId(deviceMaster.getDevice_mac_id(), null);
-                    adminUrl = FileSystems.getDefault().getPath(".").toAbsolutePath().normalize().toString() ;
-                    String fileName = HomeManagementUtil.fileName(adminUrl);
                     serviceStatus.setResult(byDeviceSeqNum);
                 }else {
                     logger.info("createMasterDevice"+deviceMaster.getDevice_mac_id());
@@ -84,8 +78,6 @@ public class HomeMasterServiceImpl implements HomeMasterService {
                         serviceStatus.setStatus("success");
                         serviceStatus.setMessage("Device has been updated succssfully");
                         byDeviceSeqNum =  deviceMasterRepository.getByDeviceMacId(deviceMaster.getDevice_mac_id(), null);
-                        adminUrl = FileSystems.getDefault().getPath(".").toAbsolutePath().normalize().toString();
-                        String fileName = HomeManagementUtil.fileName(adminUrl);
                         serviceStatus.setResult(byDeviceSeqNum);
                     } else {
                         String deviceMasterId = UUID.randomUUID().toString(); deviceMaster.setId(deviceMasterId);
@@ -95,8 +87,6 @@ public class HomeMasterServiceImpl implements HomeMasterService {
                         serviceStatus.setStatus("success");
                         serviceStatus.setMessage("Device has been added succssfully");
                         byDeviceSeqNum  = deviceMasterRepository.getByDeviceMacId(deviceMaster.getDevice_mac_id(), null);
-                        adminUrl = FileSystems.getDefault().getPath(".").toAbsolutePath().normalize().toString();
-                        String fileName = HomeManagementUtil.fileName(adminUrl);
                         serviceStatus.setResult(byDeviceSeqNum);
                     }
                     return serviceStatus;
@@ -128,7 +118,6 @@ public class HomeMasterServiceImpl implements HomeMasterService {
                     serviceStatus.setMessage("Device already has existed");
                     serviceStatus.setResult(phoneHomeData);
                     if (phoneHomeData != null) {
-                        List<HomeExpendature> deviceList = deviceRepository.getDeviceByParentId(null);
                         logger.info("Fetch phoneHomeData" + phoneHomeData);
                     }
 

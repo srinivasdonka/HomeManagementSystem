@@ -173,7 +173,8 @@ public class HomeServiceImpl implements HomeService {
 
         return serviceStatus;
     }
-    public ServiceStatus<Object> getHomeExpById(String company_id, boolean is_active, Integer page, Integer size, String sort) {
+    @SuppressWarnings("deprecation")
+	public ServiceStatus<Object> getHomeExpById(String company_id, boolean is_active, Integer page, Integer size, String sort) {
         if(company_id !=null){
 
             try {
@@ -303,8 +304,6 @@ public class HomeServiceImpl implements HomeService {
     public ServiceStatus<Object> getHomeWeeklyReport(String info) {
         try {
             logger.info("serverAResponse");
-            System.out.println("serverAResponse"+ info);
-            String url_path=environment.getProperty("gateway");
             if(info !=null){
 
                 serviceStatus.setStatus("success");

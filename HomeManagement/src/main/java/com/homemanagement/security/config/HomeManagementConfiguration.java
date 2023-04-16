@@ -29,13 +29,13 @@ public class HomeManagementConfiguration {
 
 	@Configuration
 	@EnableConfigurationProperties(MongoDBSettings.class)
-	/*@ConditionalOnProperty({
+	@ConditionalOnProperty({
 		"mongo.uri",
 		"mongo.host",
 		"mongo.port",
 		"mongo.database",
 		"mongo.username",
-	"mongo.password"})*/
+	"mongo.password"})
 	@Profile("!test")
 	static class MongoClientConfiguration {
 

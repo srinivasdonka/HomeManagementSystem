@@ -1,28 +1,15 @@
 package com.homemanagement.controller;
 
-import java.nio.file.FileSystems;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import com.homemanagement.dto.ServiceStatus;
 import com.homemanagement.service.HomeMasterService;
-import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-
-import com.google.gson.Gson;
-import com.homemanagement.domain.HomeExpendature;
-import com.homemanagement.domain.DeviceMaster;
-import com.homemanagement.dto.ServiceStatus;
-import com.homemanagement.repositories.DeviceMasterRepository;
-import com.homemanagement.repositories.HomeExpedatureRepository;
-import com.homemanagement.utils.HomeManagementUtil;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 public class HomeMasterController {

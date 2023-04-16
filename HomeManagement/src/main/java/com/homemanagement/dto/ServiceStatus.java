@@ -1,15 +1,7 @@
 package com.homemanagement.dto;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-import com.homemanagement.utils.HomeManagementUtil;
 
 @Data
 @NoArgsConstructor
