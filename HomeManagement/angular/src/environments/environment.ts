@@ -11,8 +11,8 @@ export const environment = {
   clientName: 'HomeManagement',
   client_secret: 'HomeManagement',
   siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
-  //apiUrl: hostName
-  apiUrl: "http://localhost:9090/"
+  apiUrl: hostName
+  //apiUrl: "http://localhost:9090/"
 };
 
 

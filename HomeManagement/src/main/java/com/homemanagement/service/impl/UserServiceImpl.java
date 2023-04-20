@@ -633,6 +633,7 @@ public class UserServiceImpl implements UserService {
                 MimeMessage message = sender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
                 helper.setTo(emailVo.getToUser());
+                helper.setFrom("donot_replay@zohomail.in"); 
                 String parseHtmlTemplate = HomeManagementUtil.parseHtmlTemplate(emailVo);
                 helper.setText(parseHtmlTemplate, true);
                 helper.setSubject(emailVo.getEmail_subject());
